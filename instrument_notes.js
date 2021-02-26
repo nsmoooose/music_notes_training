@@ -29,7 +29,7 @@ export class InstrumentNotes {
     draw() {
         let ctx = self.canvas.getContext("2d");
 
-        ctx.font = "30px Arial";
+        ctx.font = "100px Arial";
         ctx.lineWidth = 1;
 
         for(let i=0; i < this.notes.length; i++) {

@@ -92,12 +92,14 @@ function $(id) {
 function draw(canvas) {
     let ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "30px Arial";
+    ctx.font = "60px Arial";
     ctx.lineWidth = 1;
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
-    ctx.strokeText("Correct: " + answers_correct, 10, 50);
-    ctx.strokeText("FAILS: " + answers_fail, 10, 100);
+    ctx.fillStyle = "#00bb00";
+    ctx.fillText("Correct: " + answers_correct, 20, 70);
+    ctx.fillStyle = "#ff0000";
+    ctx.fillText("Fails: " + answers_fail, 20, 160);
 
     if(current_question) {
         g_staff.draw_tone(current_question.note);
