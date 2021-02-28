@@ -1,7 +1,11 @@
 canvas {
     width: 800px;
     height: 1000px;
-    border-width: 1px;
+    border-width: 5px;
     border-style: solid;
-    border-color: black;
+    border-color: gray;
+}
+
+body {
+    text-align: center;
 }

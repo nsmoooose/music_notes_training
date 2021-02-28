@@ -1,9 +1,15 @@
 import { InstrumentPiano } from "./instrument_piano.js"
 import { InstrumentNotes } from "./instrument_notes.js"
 import { Staff } from "./staff.js"
+import {
+    Button,
+    Rectangle
+} from "./base.js";
 
 let g_instrument = null;
 let g_staff = null;
+let g_button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
+let g_button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
 
 let answers_correct = 0;
 let answers_fail = 0;
@@ -38,6 +44,7 @@ let questions = [
     new Question("G2", 9),
     new Question("A2", 9),
     new Question("B2", 9),
+*/
 
     new Question("C3", 2),
     new Question("D3", 2),
@@ -46,7 +53,7 @@ let questions = [
     new Question("G3", 2),
     new Question("A3", 2),
     new Question("B3", 2),
-*/
+
     new Question("C4", 1),
     new Question("D4", 1),
     new Question("E4", 1),
@@ -106,18 +113,21 @@ function draw(canvas) {
     }
     g_staff.draw();
     g_instrument.draw();
+    g_button_instrument_notes.draw(ctx);
+    g_button_instrument_piano.draw(ctx);
 }
 
 window.addEventListener('load', (event) => {
     let canvas = $("canvas");
     g_instrument = new InstrumentPiano(canvas);
-    g_instrument = new InstrumentNotes(canvas);
     g_staff = new Staff(canvas);
 
     canvas.addEventListener("click", (event) => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
+        g_button_instrument_notes.click(x, y);
+        g_button_instrument_piano.click(x, y);
 
         const answer = g_instrument.click(x, y);
         if(answer == null) {
@@ -140,4 +150,14 @@ window.addEventListener('load', (event) => {
         */
     });
     draw(canvas);
+
+    g_button_instrument_notes.addEventListener("click", (event) => {
+        g_instrument = new InstrumentNotes(canvas);
+        draw(canvas);
+    });
+
+    g_button_instrument_piano.addEventListener("click", (event) => {
+        g_instrument = new InstrumentPiano(canvas);
+        draw(canvas);
+    });
 });

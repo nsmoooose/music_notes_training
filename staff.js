@@ -43,7 +43,7 @@ export class Staff {
                       (i >= 15 && i <= 19)) {
                 ctx.beginPath();
                 ctx.moveTo(this.left_offset, y);
-                ctx.lineTo(width, y);
+                ctx.lineTo(this.left_offset + width, y);
                 ctx.stroke();
             } else {
                 break;
