@@ -1,3 +1,7 @@
+import {
+    Widget
+} from "./base.js"
+
 export class Staff {
     constructor(canvas) {
         this.canvas = canvas;

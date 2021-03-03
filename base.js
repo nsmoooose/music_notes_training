@@ -34,6 +34,13 @@ export class EventTarget {
     }
 }
 
+export class Widget extends EventTarget {
+    constructor(rectangle) {
+        super();
+        this.rectangle = rectangle;
+    }
+}
+
 export class Rectangle {
     constructor(x, y, w, h) {
         this.x = x;
@@ -48,10 +55,9 @@ export class Rectangle {
     }
 };
 
-export class Button extends EventTarget {
+export class Button extends Widget {
     constructor(rectangle, text) {
-        super();
-        this.rectangle = rectangle;
+        super(rectangle);
         this.text = text;
     }
 

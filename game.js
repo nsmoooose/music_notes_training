@@ -111,15 +111,15 @@ function draw(canvas) {
     if(current_question) {
         g_staff.draw_tone(current_question.note);
     }
-    g_staff.draw();
-    g_instrument.draw();
+    g_staff.draw(canvas);
+    g_instrument.draw(canvas);
     g_button_instrument_notes.draw(ctx);
     g_button_instrument_piano.draw(ctx);
 }
 
 window.addEventListener('load', (event) => {
     let canvas = $("canvas");
-    g_instrument = new InstrumentPiano(canvas);
+    g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
     g_staff = new Staff(canvas);
 
     canvas.addEventListener("click", (event) => {
@@ -152,12 +152,12 @@ window.addEventListener('load', (event) => {
     draw(canvas);
 
     g_button_instrument_notes.addEventListener("click", (event) => {
-        g_instrument = new InstrumentNotes(canvas);
+        g_instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
         draw(canvas);
     });
 
     g_button_instrument_piano.addEventListener("click", (event) => {
-        g_instrument = new InstrumentPiano(canvas);
+        g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
         draw(canvas);
     });
 });

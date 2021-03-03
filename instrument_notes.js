@@ -1,17 +1,19 @@
-import { Rectangle } from "./base.js"
+import {
+    Rectangle,
+    Widget
+} from "./base.js"
 
-export class InstrumentNotes {
-    constructor(canvas) {
+export class InstrumentNotes extends Widget {
+    constructor(rectangle, canvas) {
+        super(rectangle);
         this.canvas = canvas;
-        this.top_offset = 700;
-        this.margin = 50;
         this.note_rects = [];
         this.notes = ["C", "D", "E", "F", "G", "A", "B"];
-        this.note_width = (this.canvas.width - (2 * this.margin)) / (this.notes.length - 1);
+        this.note_width = this.rectangle.w / (this.notes.length - 1);
 
         for(let i=0; i < this.notes.length; i++) {
-            let x = this.note_width * i + this.margin;
-            let y = this.top_offset;
+            let x = this.rectangle.x + this.note_width * i;
+            let y = this.rectangle.y;
             let r = new Rectangle(x - this.note_width / 2, y - this.note_width / 2, this.note_width, this.note_width);
             r.note = this.notes[i];
             this.note_rects.push(r);
@@ -33,10 +35,10 @@ export class InstrumentNotes {
         ctx.lineWidth = 1;
 
         for(let i=0; i < this.notes.length; i++) {
-            let x = this.note_width * i + this.margin;
+            let x = this.rectangle.x + this.note_width * i;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.strokeText(this.notes[i], x, this.top_offset);
+            ctx.strokeText(this.notes[i], x, this.rectangle.y);
         }
     }
 }
