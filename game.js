@@ -7,7 +7,7 @@ import {
 } from "./base.js";
 
 let g_instrument = null;
-let g_staff = null;
+let g_staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
 let g_button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
 let g_button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
 
@@ -109,7 +109,7 @@ function draw(canvas) {
     ctx.fillText("Fails: " + answers_fail, 20, 160);
 
     if(current_question) {
-        g_staff.draw_tone(current_question.note);
+        g_staff.draw_tone(canvas, current_question.note);
     }
     g_staff.draw(canvas);
     g_instrument.draw(canvas);
@@ -120,7 +120,6 @@ function draw(canvas) {
 window.addEventListener('load', (event) => {
     let canvas = $("canvas");
     g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
-    g_staff = new Staff(canvas);
 
     canvas.addEventListener("click", (event) => {
         const rect = canvas.getBoundingClientRect();
