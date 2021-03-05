@@ -1,3 +1,7 @@
+export function $(id) {
+    return document.getElementById(id);
+}
+
 export class EventTarget {
     constructor() {
         this.listeners = {};
@@ -47,9 +51,22 @@ export class Container extends Widget {
         this.children = [];
     }
 
+    removeChildByValue(child) {
+        let i = this.children.indexOf(child);
+        this.children.splice(i, 1);
+    }
+
     draw(ctx) {
         for (const widget of this.children) {
             widget.draw(ctx);
+        }
+    }
+
+    on_click(x, y) {
+        for (const widget of this.children) {
+            if(widget.rectangle.contains(x, y)) {
+                widget.dispatchEvent("click", null);
+            }
         }
     }
 }

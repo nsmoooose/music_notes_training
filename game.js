@@ -2,15 +2,21 @@ import { InstrumentPiano } from "./instrument_piano.js"
 import { InstrumentNotes } from "./instrument_notes.js"
 import { Staff } from "./staff.js"
 import {
+    $,
     Button,
     Container,
     Label,
     Rectangle
 } from "./base.js";
+import { g_questions } from "./questions.js"
 
 class MusicTrainer extends Container {
     constructor(rectangle) {
         super(rectangle);
+
+        this.answers_correct = 0;
+        this.answers_fail = 0;
+        this.current_question = g_questions[Math.floor(Math.random() * g_questions.length)];
 
         this.label_correct = new Label(new Rectangle(20, 60, 100, 50), "Correct: 0");
         this.label_correct.font = "60px Arial";
@@ -29,143 +35,61 @@ class MusicTrainer extends Container {
 
         this.button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
         this.button_instrument_notes.addEventListener("click", (event) => {
-            g_instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
+            this.removeChildByValue(this.instrument);
+            this.instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
+            this.children.push(this.instrument);
         });
         this.children.push(this.button_instrument_notes);
 
         this.button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
         this.button_instrument_piano.addEventListener("click", (event) => {
-            g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+            this.removeChildByValue(this.instrument);
+            this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+            this.children.push(this.instrument);
         });
         this.children.push(this.button_instrument_piano);
+
+        this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+        this.children.push(this.instrument);
+    }
+
+    on_click(x, y) {
+        super.on_click(x, y);
+
+        const answer = this.instrument.click(x, y);
+        if(answer == null) {
+            return;
+        }
+        if(answer == this.current_question.note[0]) {
+            this.current_question = g_questions[Math.floor(Math.random() * g_questions.length)];
+            this.answers_correct++;
+            this.label_correct.text = "Correct: " + this.answers_correct;
+        } else {
+            this.answers_fail++;
+            this.label_fails.text = "Fails: " + this.answers_fail;
+        }
+    }
+
+    draw(ctx) {
+        super.draw(ctx);
+
+        if(this.current_question) {
+            this.staff.draw_tone(ctx, this.current_question.note);
+        }
     }
 }
 
 let g_trainer = new MusicTrainer(new Rectangle(0, 0, 800, 1000));
 
-let g_instrument = null;
-
-let answers_correct = 0;
-let answers_fail = 0;
-
-class Question {
-    constructor(note, level) {
-        /* Scientific pitch notation:
-           https://en.wikipedia.org/wiki/Scientific_pitch_notation  */
-        this.note = note;
-        /* Difficulty level of question. */
-        this.level = level;
-    }
-}
-
-let questions = [
-    /*
-    new Question("A0", 9),
-    new Question("B0", 9),
-
-    new Question("C1", 9),
-    new Question("D1", 9),
-    new Question("E1", 9),
-    new Question("F1", 9),
-    new Question("G1", 9),
-    new Question("A1", 9),
-    new Question("B1", 9),
-
-    new Question("C2", 9),
-    new Question("D2", 9),
-    new Question("E2", 9),
-    new Question("F2", 9),
-    new Question("G2", 9),
-    new Question("A2", 9),
-    new Question("B2", 9),
-*/
-
-    new Question("C3", 2),
-    new Question("D3", 2),
-    new Question("E3", 2),
-    new Question("F3", 2),
-    new Question("G3", 2),
-    new Question("A3", 2),
-    new Question("B3", 2),
-
-    new Question("C4", 1),
-    new Question("D4", 1),
-    new Question("E4", 1),
-    new Question("F4", 1),
-    new Question("G4", 1),
-    new Question("A4", 1),
-    new Question("B4", 1),
-/*
-    new Question("C5", 3),
-    new Question("D5", 3),
-    new Question("E5", 3),
-    new Question("F5", 3),
-    new Question("G5", 3),
-    new Question("A5", 3),
-    new Question("B5", 3),
-
-    new Question("C6", 9),
-    new Question("D6", 9),
-    new Question("E6", 9),
-    new Question("F6", 9),
-    new Question("G6", 9),
-    new Question("A6", 9),
-    new Question("B6", 9),
-
-    new Question("C7", 9),
-    new Question("D7", 9),
-    new Question("E7", 9),
-    new Question("F7", 9),
-    new Question("G7", 9),
-    new Question("A7", 9),
-    new Question("B7", 9),
-
-    new Question("C8", 9),
-    */
-];
-
-let current_question = questions[Math.floor(Math.random() * questions.length)];
-
-function $(id) {
-    return document.getElementById(id);
-}
-
-function draw() {
-    let canvas = $("canvas");
-    let ctx = canvas.getContext("2d");
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    g_trainer.draw(ctx);
-
-    if(current_question) {
-        g_trainer.staff.draw_tone(canvas, current_question.note);
-    }
-    g_instrument.draw(ctx);
-}
-
 window.addEventListener('load', (event) => {
     let canvas = $("canvas");
-    g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
 
     canvas.addEventListener("click", (event) => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        g_trainer.button_instrument_notes.click(x, y);
-        g_trainer.button_instrument_piano.click(x, y);
-
-        const answer = g_instrument.click(x, y);
-        if(answer == null) {
-            return;
-        }
-        if(answer == current_question.note[0]) {
-            current_question = questions[Math.floor(Math.random() * questions.length)];
-            answers_correct++;
-            g_trainer.label_correct.text = "Correct: " + answers_correct;
-        } else {
-            answers_fail++;
-            g_trainer.label_fails.text = "Fails: " + answers_fail;
+        if(g_trainer.rectangle.contains(x, y)) {
+            g_trainer.on_click(x, y);
         }
     });
     canvas.addEventListener("mousemove", (event) => {
@@ -177,5 +101,9 @@ window.addEventListener('load', (event) => {
         */
     });
 
-    window.setInterval(draw, 100);
+    window.setInterval(() => {
+        let ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        g_trainer.draw(ctx);
+    }, 100);
 });

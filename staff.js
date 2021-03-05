@@ -11,7 +11,7 @@ export class Staff extends Widget {
         this.top_note = "C8";
     }
 
-    draw_tone(canvas, note) {
+    draw_tone(ctx, note) {
         const notes = ["C", "D", "E", "F", "G", "A", "B"];
 
         const octave_note_index = notes.indexOf(note[0]);
@@ -21,7 +21,6 @@ export class Staff extends Widget {
             (parseInt(this.top_note[1]) - octave) * 7 * this.line_space / 2 -
             octave_note_index * this.line_space / 2;
 
-        let ctx = canvas.getContext("2d");
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, 12.5, 10, 0, 0, Math.PI * 2);
