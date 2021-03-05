@@ -1,15 +1,15 @@
 export class Question {
-    constructor(note, level) {
-        /* Scientific pitch notation:
+	constructor(note, level) {
+		/* Scientific pitch notation:
            https://en.wikipedia.org/wiki/Scientific_pitch_notation  */
-        this.note = note;
-        /* Difficulty level of question. */
-        this.level = level;
-    }
+		this.note = note;
+		/* Difficulty level of question. */
+		this.level = level;
+	}
 }
 
 export let g_questions = [
-    /*
+	/*
     new Question("A0", 9),
     new Question("B0", 9),
 
@@ -30,21 +30,21 @@ export let g_questions = [
     new Question("B2", 9),
 */
 
-    new Question("C3", 2),
-    new Question("D3", 2),
-    new Question("E3", 2),
-    new Question("F3", 2),
-    new Question("G3", 2),
-    new Question("A3", 2),
-    new Question("B3", 2),
+	new Question("C3", 2),
+	new Question("D3", 2),
+	new Question("E3", 2),
+	new Question("F3", 2),
+	new Question("G3", 2),
+	new Question("A3", 2),
+	new Question("B3", 2),
 
-    new Question("C4", 1),
-    new Question("D4", 1),
-    new Question("E4", 1),
-    new Question("F4", 1),
-    new Question("G4", 1),
-    new Question("A4", 1),
-    new Question("B4", 1),
+	new Question("C4", 1),
+	new Question("D4", 1),
+	new Question("E4", 1),
+	new Question("F4", 1),
+	new Question("G4", 1),
+	new Question("A4", 1),
+	new Question("B4", 1),
 /*
     new Question("C5", 3),
     new Question("D5", 3),
