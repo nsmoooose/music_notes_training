@@ -28,8 +28,7 @@ export class InstrumentPiano extends Widget {
         }
     }
 
-    draw(canvas) {
-        let ctx = canvas.getContext("2d");
+    draw(ctx) {
         ctx.lineWidth = this.line_width;
 
         for(let i=0; i < 7; i++) {

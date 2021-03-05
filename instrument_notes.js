@@ -4,9 +4,8 @@ import {
 } from "./base.js"
 
 export class InstrumentNotes extends Widget {
-    constructor(rectangle, canvas) {
+    constructor(rectangle) {
         super(rectangle);
-        this.canvas = canvas;
         this.note_rects = [];
         this.notes = ["C", "D", "E", "F", "G", "A", "B"];
         this.note_width = this.rectangle.w / (this.notes.length - 1);
@@ -28,9 +27,7 @@ export class InstrumentNotes extends Widget {
         }
     }
 
-    draw() {
-        let ctx = self.canvas.getContext("2d");
-
+    draw(ctx) {
         ctx.font = "100px Arial";
         ctx.lineWidth = 1;
 

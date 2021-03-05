@@ -119,8 +119,8 @@ function draw(canvas) {
     if(current_question) {
         g_staff.draw_tone(canvas, current_question.note);
     }
-    g_staff.draw(canvas);
-    g_instrument.draw(canvas);
+    g_staff.draw(ctx);
+    g_instrument.draw(ctx);
     g_button_instrument_notes.draw(ctx);
     g_button_instrument_piano.draw(ctx);
 }

@@ -28,8 +28,7 @@ export class Staff extends Widget {
         ctx.stroke();
     }
 
-    draw(canvas) {
-        let ctx = canvas.getContext("2d");
+    draw(ctx) {
         ctx.lineWidth = this.line_width;
 
         for(let i=0; i < 26; i++) {
