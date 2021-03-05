@@ -3,9 +3,18 @@ import { InstrumentNotes } from "./instrument_notes.js"
 import { Staff } from "./staff.js"
 import {
     Button,
+    Label,
     Rectangle
 } from "./base.js";
 
+let g_label_correct = new Label(new Rectangle(20, 60, 100, 50), "");
+g_label_correct.font = "60px Arial";
+g_label_correct.textAlign = "left";
+g_label_correct.fillStyle = "#00bb00";
+let g_label_fails = new Label(new Rectangle(20, 150, 100, 50), "");
+g_label_fails.font = "60px Arial";
+g_label_fails.textAlign = "left";
+g_label_fails.fillStyle = "#ff0000";
 let g_instrument = null;
 let g_staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
 let g_button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
@@ -98,15 +107,14 @@ function $(id) {
 
 function draw(canvas) {
     let ctx = canvas.getContext("2d");
+
+    g_label_correct.text = "Correct: " + answers_correct;
+    g_label_fails.text = "Fails: " + answers_fail;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "60px Arial";
-    ctx.lineWidth = 1;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "#00bb00";
-    ctx.fillText("Correct: " + answers_correct, 20, 70);
-    ctx.fillStyle = "#ff0000";
-    ctx.fillText("Fails: " + answers_fail, 20, 160);
+
+    g_label_correct.draw(ctx);
+    g_label_fails.draw(ctx);
 
     if(current_question) {
         g_staff.draw_tone(canvas, current_question.note);

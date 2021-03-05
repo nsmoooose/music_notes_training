@@ -55,6 +55,41 @@ export class Rectangle {
     }
 };
 
+export class Label extends Widget {
+    constructor(rectangle, text) {
+        super(rectangle);
+        this.text = text;
+
+        this.font = "30px Arial";
+        this.textAlign = "center";
+        this.textBaseline = "middle";
+        this.fillStyle = "#000000";
+    }
+
+    draw(ctx) {
+        ctx.lineWidth = 1;
+        ctx.font = this.font
+        ctx.textAlign = this.textAlign;
+        ctx.textBaseline = this.textBaseline;
+        ctx.fillStyle = this.fillStyle;
+        let x = this.rectangle.x;
+        if(this.textAlign == "center") {
+            x = this.rectangle.x + this.rectangle.w / 2;
+        } else if(this.textAlign == "right") {
+            x = this.rectangle.x + this.rectangle.w;
+        }
+
+        let y = this.rectangle.y;
+        if(this.textBaseline == "middle") {
+            y = this.rectangle.y + this.rectangle.h / 2;
+        } else if(this.textBaseline == "bottom") {
+            y = this.rectangle.y + this.rectangle.h;
+        }
+
+        ctx.fillText(this.text, x, y);
+    }
+}
+
 export class Button extends Widget {
     constructor(rectangle, text) {
         super(rectangle);
