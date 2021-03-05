@@ -3,22 +3,47 @@ import { InstrumentNotes } from "./instrument_notes.js"
 import { Staff } from "./staff.js"
 import {
     Button,
+    Container,
     Label,
     Rectangle
 } from "./base.js";
 
-let g_label_correct = new Label(new Rectangle(20, 60, 100, 50), "");
-g_label_correct.font = "60px Arial";
-g_label_correct.textAlign = "left";
-g_label_correct.fillStyle = "#00bb00";
-let g_label_fails = new Label(new Rectangle(20, 150, 100, 50), "");
-g_label_fails.font = "60px Arial";
-g_label_fails.textAlign = "left";
-g_label_fails.fillStyle = "#ff0000";
+class MusicTrainer extends Container {
+    constructor(rectangle) {
+        super(rectangle);
+
+        this.label_correct = new Label(new Rectangle(20, 60, 100, 50), "Correct: 0");
+        this.label_correct.font = "60px Arial";
+        this.label_correct.textAlign = "left";
+        this.label_correct.fillStyle = "#00bb00";
+        this.children.push(this.label_correct);
+
+        this.label_fails = new Label(new Rectangle(20, 150, 100, 50), "Fails: 0");
+        this.label_fails.font = "60px Arial";
+        this.label_fails.textAlign = "left";
+        this.label_fails.fillStyle = "#ff0000";
+        this.children.push(this.label_fails);
+
+        this.staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
+        this.children.push(this.staff);
+
+        this.button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
+        this.button_instrument_notes.addEventListener("click", (event) => {
+            g_instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
+        });
+        this.children.push(this.button_instrument_notes);
+
+        this.button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
+        this.button_instrument_piano.addEventListener("click", (event) => {
+            g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+        });
+        this.children.push(this.button_instrument_piano);
+    }
+}
+
+let g_trainer = new MusicTrainer(new Rectangle(0, 0, 800, 1000));
+
 let g_instrument = null;
-let g_staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
-let g_button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
-let g_button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
 
 let answers_correct = 0;
 let answers_fail = 0;
@@ -109,21 +134,14 @@ function draw() {
     let canvas = $("canvas");
     let ctx = canvas.getContext("2d");
 
-    g_label_correct.text = "Correct: " + answers_correct;
-    g_label_fails.text = "Fails: " + answers_fail;
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    g_label_correct.draw(ctx);
-    g_label_fails.draw(ctx);
+    g_trainer.draw(ctx);
 
     if(current_question) {
-        g_staff.draw_tone(canvas, current_question.note);
+        g_trainer.staff.draw_tone(canvas, current_question.note);
     }
-    g_staff.draw(ctx);
     g_instrument.draw(ctx);
-    g_button_instrument_notes.draw(ctx);
-    g_button_instrument_piano.draw(ctx);
 }
 
 window.addEventListener('load', (event) => {
@@ -134,8 +152,8 @@ window.addEventListener('load', (event) => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        g_button_instrument_notes.click(x, y);
-        g_button_instrument_piano.click(x, y);
+        g_trainer.button_instrument_notes.click(x, y);
+        g_trainer.button_instrument_piano.click(x, y);
 
         const answer = g_instrument.click(x, y);
         if(answer == null) {
@@ -144,10 +162,11 @@ window.addEventListener('load', (event) => {
         if(answer == current_question.note[0]) {
             current_question = questions[Math.floor(Math.random() * questions.length)];
             answers_correct++;
+            g_trainer.label_correct.text = "Correct: " + answers_correct;
         } else {
             answers_fail++;
+            g_trainer.label_fails.text = "Fails: " + answers_fail;
         }
-        draw(canvas);
     });
     canvas.addEventListener("mousemove", (event) => {
         const rect = canvas.getBoundingClientRect();
@@ -159,12 +178,4 @@ window.addEventListener('load', (event) => {
     });
 
     window.setInterval(draw, 100);
-
-    g_button_instrument_notes.addEventListener("click", (event) => {
-        g_instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
-    });
-
-    g_button_instrument_piano.addEventListener("click", (event) => {
-        g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
-    });
 });

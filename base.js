@@ -41,6 +41,19 @@ export class Widget extends EventTarget {
     }
 }
 
+export class Container extends Widget {
+    constructor(rectangle) {
+        super(rectangle);
+        this.children = [];
+    }
+
+    draw(ctx) {
+        for (const widget of this.children) {
+            widget.draw(ctx);
+        }
+    }
+}
+
 export class Rectangle {
     constructor(x, y, w, h) {
         this.x = x;
