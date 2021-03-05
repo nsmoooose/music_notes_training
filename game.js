@@ -105,7 +105,8 @@ function $(id) {
     return document.getElementById(id);
 }
 
-function draw(canvas) {
+function draw() {
+    let canvas = $("canvas");
     let ctx = canvas.getContext("2d");
 
     g_label_correct.text = "Correct: " + answers_correct;
@@ -156,15 +157,14 @@ window.addEventListener('load', (event) => {
         console.log("x: " + x + " y: " + y)
         */
     });
-    draw(canvas);
+
+    window.setInterval(draw, 100);
 
     g_button_instrument_notes.addEventListener("click", (event) => {
         g_instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
-        draw(canvas);
     });
 
     g_button_instrument_piano.addEventListener("click", (event) => {
         g_instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
-        draw(canvas);
     });
 });
