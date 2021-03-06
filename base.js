@@ -41,7 +41,15 @@ export class EventTarget {
 export class Widget extends EventTarget {
 	constructor(rectangle) {
 		super();
+		this.parent = null;
 		this.rectangle = rectangle;
+	}
+
+	getRoot() {
+		if(this.parent == null) {
+			return this;
+		}
+		return this.parent.getRoot();
 	}
 }
 
@@ -51,9 +59,15 @@ export class Container extends Widget {
 		this.children = [];
 	}
 
+	appendChild(child) {
+		this.children.push(child);
+		child.parent = this;
+	}
+
 	removeChildByValue(child) {
 		let i = this.children.indexOf(child);
 		this.children.splice(i, 1);
+		child.parent = null;
 	}
 
 	draw(ctx) {

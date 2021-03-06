@@ -23,7 +23,12 @@ export class Staff extends Widget {
 
 		ctx.lineWidth = 4;
 		ctx.beginPath();
-		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, 12.5, 10, 0, 0, Math.PI * 2);
+
+		let now = this.getRoot().state.now;
+		let radius_x = 12.5 + Math.sin(now) * 2 + 2;
+		let radius_y = 10 + Math.sin(now) * 2;
+		let rotation = -0.2;
+		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 	}
 
