@@ -24,7 +24,8 @@ export class Staff extends Widget {
 		ctx.lineWidth = 4;
 		ctx.beginPath();
 
-		let now = this.getRoot().state.now;
+		let speed = 6;
+		let now = this.getRoot().state.now * speed;
 		let radius_x = 12.5 + Math.sin(now) * 2 + 2;
 		let radius_y = 10 + Math.sin(now) * 2;
 		let rotation = -0.2;
