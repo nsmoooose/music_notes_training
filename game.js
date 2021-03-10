@@ -9,10 +9,36 @@ import {
 	Rectangle
 } from "./base.js";
 import { g_questions } from "./questions.js";
+import { LevelInfo } from "./level.js";
 
 class MusicTrainerState {
 	constructor() {
 		this.now = 0;
+		this.level = 1;
+		this.level_results = [];
+		this.load();
+	}
+
+	result_reset() {
+		this.level_results = [];
+		this.persist();
+	}
+
+	load() {
+		let x = sessionStorage.getItem("results");
+		if(x != null) {
+			x = JSON.parse(x);
+			if(x.version == 1) {
+				this.level = x.level;
+				this.level_results = x.level_results;
+			}
+		}
+	}
+
+	persist() {
+		let x = {"version": 1, "level": this.level, "level_results": this.level_results};
+		let s = JSON.stringify(x);
+		sessionStorage.setItem("results", s);
 	}
 }
 
@@ -23,7 +49,9 @@ class MusicTrainer extends Container {
 		this.state = new MusicTrainerState();
 		this.answers_correct = 0;
 		this.answers_fail = 0;
-		this.current_question = g_questions[Math.floor(Math.random() * g_questions.length)];
+		this.current_question = null;
+		this.set_level(this.state.level);
+		this.new_question();
 
 		this.label_correct = new Label(new Rectangle(20, 60, 100, 50), "Correct: 0");
 		this.label_correct.font = "60px Arial";
@@ -56,25 +84,54 @@ class MusicTrainer extends Container {
 		});
 		this.appendChild(this.button_instrument_piano);
 
+		this.button_level_up = new Button(new Rectangle(580, 320, 200, 40), "Level up");
+		this.button_level_up.addEventListener("click", () => {
+			this.set_level(this.state.level + 1);
+		});
+		this.button_level_up.visible = false;
+		this.appendChild(this.button_level_up);
+
 		this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
 		this.appendChild(this.instrument);
+
+		this.appendChild(new LevelInfo(new Rectangle(580, 200, 200, 100)));
 	}
 
 	on_click(x, y) {
 		super.on_click(x, y);
+
+		if(this.current_question == null) {
+			return;
+		}
 
 		const answer = this.instrument.click(x, y);
 		if(answer == null) {
 			return;
 		}
 		if(answer == this.current_question.note[0]) {
-			this.current_question = g_questions[Math.floor(Math.random() * g_questions.length)];
 			this.answers_correct++;
 			this.label_correct.text = "Correct: " + this.answers_correct;
+			this.state.level_results.push(1.0);
+			this.new_question();
 		} else {
 			this.answers_fail++;
 			this.label_fails.text = "Fails: " + this.answers_fail;
+			this.state.level_results.push(0.0);
 		}
+		if(this.state.level_results.length > 100) {
+			this.state.level_results.shift();
+		}
+
+		let sum = 0;
+		this.state.level_results.forEach(element => (sum += element));
+		let average = Math.trunc(sum / this.state.level_results.length * 100);
+		if(average > 80 && this.state.level_results.length == 100) {
+			this.button_level_up.visible = true;
+		} else {
+			this.button_level_up.visible = false;
+		}
+
+		this.state.persist();
 	}
 
 	draw(ctx) {
@@ -87,6 +144,21 @@ class MusicTrainer extends Container {
 
 	step() {
 		this.state.now += 0.1;
+	}
+
+	set_level(level) {
+		this.questions = g_questions.filter((q) => (q.level == level));
+		if(level != this.state.level) {
+			this.state.result_reset();
+			this.state.level = level;
+		}
+	}
+
+	new_question() {
+		if(this.questions.length == 0) {
+			return;
+		}
+		this.current_question = this.questions[Math.floor(Math.random() * this.questions.length)];
 	}
 }
 

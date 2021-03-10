@@ -43,6 +43,7 @@ export class Widget extends EventTarget {
 		super();
 		this.parent = null;
 		this.rectangle = rectangle;
+		this.visible = true;
 	}
 
 	getRoot() {
@@ -72,13 +73,16 @@ export class Container extends Widget {
 
 	draw(ctx) {
 		for (const widget of this.children) {
+			if(widget.visible == false) {
+				continue;
+			}
 			widget.draw(ctx);
 		}
 	}
 
 	on_click(x, y) {
 		for (const widget of this.children) {
-			if(widget.rectangle.contains(x, y)) {
+			if(widget.visible == true && widget.rectangle.contains(x, y)) {
 				widget.dispatchEvent("click", null);
 			}
 		}
