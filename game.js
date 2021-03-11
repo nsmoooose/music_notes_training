@@ -151,6 +151,7 @@ class MusicTrainer extends Container {
 		if(level != this.state.level) {
 			this.state.result_reset();
 			this.state.level = level;
+			this.button_level_up.visible = false;
 		}
 	}
 
