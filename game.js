@@ -176,14 +176,14 @@ window.addEventListener("load", () => {
 			g_trainer.on_click(x, y);
 		}
 	});
-	/*
-	canvas.addEventListener("mousemove", (event) => {
-		const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        console.log("x: " + x + " y: " + y)
+
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+	window.addEventListener("resize", (event) => {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 	});
-    */
 
 	window.setInterval(() => {
 		let ctx = canvas.getContext("2d");
