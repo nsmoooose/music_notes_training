@@ -183,7 +183,10 @@ window.addEventListener("load", () => {
 	window.addEventListener("resize", (event) => {
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
+		g_trainer.resize(canvas.width, canvas.height);
 	});
+
+	g_trainer.resize(canvas.width, canvas.height);
 
 	window.setInterval(() => {
 		let ctx = canvas.getContext("2d");

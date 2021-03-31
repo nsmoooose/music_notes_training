@@ -52,6 +52,16 @@ export class Widget extends EventTarget {
 		}
 		return this.parent.getRoot();
 	}
+
+	resize(width, height) {
+		this.rectangle.w = width;
+		this.rectangle.h = height;
+	}
+
+	move(x, y) {
+		this.rectangle.x = x;
+		this.rectangle.y = y;
+	}
 }
 
 export class Container extends Widget {
