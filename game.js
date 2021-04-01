@@ -100,7 +100,7 @@ class MusicTrainer extends Container {
 		});
 		this.appendChild(this.button_reset);
 
-		this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+		this.instrument = new InstrumentPiano(new Rectangle(20, 600, 760, 370));
 		this.appendChild(this.instrument);
 
 		this.appendChild(new LevelInfo(new Rectangle(580, 200, 200, 100)));
@@ -111,6 +111,10 @@ class MusicTrainer extends Container {
 
 	resize(width, height) {
 		super.resize(width, height);
+
+		this.instrument.resize(
+			width - this.instrument.rectangle.x * 2,
+			height - this.instrument.rectangle.y - 20);
 	}
 
 	on_click(x, y) {

@@ -24,7 +24,7 @@ export let g_levels = [
 		new Question("A4"),
 		new Question("B4"),
 	]),
-	new Level("Ostrukna oktaven", 2, [
+	new Level("Lilla oktaven", 2, [
 		new Question("C3"),
 		new Question("D3"),
 		new Question("E3"),
