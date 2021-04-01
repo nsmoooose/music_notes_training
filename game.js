@@ -8,7 +8,7 @@ import {
 	Label,
 	Rectangle
 } from "./base.js";
-import { g_questions } from "./questions.js";
+import { g_levels } from "./questions.js";
 import { LevelInfo } from "./level.js";
 
 class MusicTrainerState {
@@ -50,16 +50,19 @@ class MusicTrainer extends Container {
 		this.answers_correct = 0;
 		this.answers_fail = 0;
 		this.current_question = null;
-		this.set_level(this.state.level);
-		this.new_question();
 
-		this.label_correct = new Label(new Rectangle(20, 60, 100, 50), "Correct: 0");
+		this.label_level = new Label(new Rectangle(20, 20, 100, 50), "dd");
+		this.label_level.font = "60px Arial";
+		this.label_level.textAlign = "left";
+		this.appendChild(this.label_level);
+
+		this.label_correct = new Label(new Rectangle(20, 90, 100, 50), "Rätt: 0");
 		this.label_correct.font = "60px Arial";
 		this.label_correct.textAlign = "left";
 		this.label_correct.fillStyle = "#00bb00";
 		this.appendChild(this.label_correct);
 
-		this.label_fails = new Label(new Rectangle(20, 150, 100, 50), "Fails: 0");
+		this.label_fails = new Label(new Rectangle(20, 160, 100, 50), "Fel: 0");
 		this.label_fails.font = "60px Arial";
 		this.label_fails.textAlign = "left";
 		this.label_fails.fillStyle = "#ff0000";
@@ -68,7 +71,7 @@ class MusicTrainer extends Container {
 		this.staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
 		this.appendChild(this.staff);
 
-		this.button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Notes");
+		this.button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Noter");
 		this.button_instrument_notes.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
 			this.instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
@@ -84,17 +87,30 @@ class MusicTrainer extends Container {
 		});
 		this.appendChild(this.button_instrument_piano);
 
-		this.button_level_up = new Button(new Rectangle(580, 320, 200, 40), "Level up");
+		this.button_level_up = new Button(new Rectangle(580, 320, 200, 40), "Nästa nivå");
 		this.button_level_up.addEventListener("click", () => {
 			this.set_level(this.state.level + 1);
 		});
 		this.button_level_up.visible = false;
 		this.appendChild(this.button_level_up);
 
+		this.button_reset = new Button(new Rectangle(580, 380, 200, 40), "Börja om");
+		this.button_reset.addEventListener("click", () => {
+			this.set_level(1);
+		});
+		this.appendChild(this.button_reset);
+
 		this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
 		this.appendChild(this.instrument);
 
 		this.appendChild(new LevelInfo(new Rectangle(580, 200, 200, 100)));
+
+		this.set_level(this.state.level);
+		this.new_question();
+	}
+
+	resize(width, height) {
+		super.resize(width, height);
 	}
 
 	on_click(x, y) {
@@ -110,12 +126,12 @@ class MusicTrainer extends Container {
 		}
 		if(answer == this.current_question.note[0]) {
 			this.answers_correct++;
-			this.label_correct.text = "Correct: " + this.answers_correct;
+			this.label_correct.text = "Rätt: " + this.answers_correct;
 			this.state.level_results.push(1.0);
 			this.new_question();
 		} else {
 			this.answers_fail++;
-			this.label_fails.text = "Fails: " + this.answers_fail;
+			this.label_fails.text = "Fel: " + this.answers_fail;
 			this.state.level_results.push(0.0);
 		}
 		if(this.state.level_results.length > 100) {
@@ -147,19 +163,21 @@ class MusicTrainer extends Container {
 	}
 
 	set_level(level) {
-		this.questions = g_questions.filter((q) => (q.level == level));
+		this.level = g_levels[level - 1];
+		this.label_level.text = this.level.name;
 		if(level != this.state.level) {
 			this.state.result_reset();
 			this.state.level = level;
 			this.button_level_up.visible = false;
+			this.new_question();
 		}
 	}
 
 	new_question() {
-		if(this.questions.length == 0) {
+		if(this.level.questions.length == 0) {
 			return;
 		}
-		this.current_question = this.questions[Math.floor(Math.random() * this.questions.length)];
+		this.current_question = this.level.questions[Math.floor(Math.random() * this.level.questions.length)];
 	}
 }
 

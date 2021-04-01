@@ -30,8 +30,8 @@ export class LevelInfo extends Widget {
 		} else {
 			ctx.fillStyle = "#00bb00";
 		}
-		ctx.fillText("Level: " + state.level, this.rectangle.x, this.rectangle.y);
-		ctx.fillText("Results: " + average + "%", this.rectangle.x, this.rectangle.y + 30);
-		ctx.fillText("Progress: " + state.level_results.length + "%", this.rectangle.x, this.rectangle.y + 60);
+		ctx.fillText("Nivå: " + state.level, this.rectangle.x, this.rectangle.y);
+		ctx.fillText("Resultat: " + average + "%", this.rectangle.x, this.rectangle.y + 30);
+		ctx.fillText("Nästa nivå: " + state.level_results.length + "%", this.rectangle.x, this.rectangle.y + 60);
 	}
 }
