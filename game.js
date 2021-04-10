@@ -106,6 +106,7 @@ class MusicTrainer extends Container {
 		this.button_reset = new Button(new Rectangle(580, 380, 200, 40), "Börja om");
 		this.button_reset.addEventListener("click", () => {
 			this.set_level(1);
+			this.state.result_reset();
 		});
 		this.appendChild(this.button_reset);
 
