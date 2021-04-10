@@ -52,19 +52,19 @@ class MusicTrainer extends Container {
 		this.answers_fail = 0;
 		this.current_question = null;
 
-		this.label_level = new Label(new Rectangle(20, 20, 100, 50), "dd");
+		this.label_level = new Label(new Rectangle(20, 20, 100, 50), "");
 		this.label_level.font = "60px Arial";
 		this.label_level.textAlign = "left";
 		this.appendChild(this.label_level);
 
 		this.label_correct = new Label(new Rectangle(20, 90, 100, 50), "Rätt: 0");
-		this.label_correct.font = "60px Arial";
+		this.label_correct.font = "40px Arial";
 		this.label_correct.textAlign = "left";
 		this.label_correct.fillStyle = "#00bb00";
 		this.appendChild(this.label_correct);
 
-		this.label_fails = new Label(new Rectangle(20, 160, 100, 50), "Fel: 0");
-		this.label_fails.font = "60px Arial";
+		this.label_fails = new Label(new Rectangle(20, 135, 100, 50), "Fel: 0");
+		this.label_fails.font = "40px Arial";
 		this.label_fails.textAlign = "left";
 		this.label_fails.fillStyle = "#ff0000";
 		this.appendChild(this.label_fails);
