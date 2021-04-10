@@ -1,5 +1,6 @@
 import { InstrumentPiano } from "./instrument_piano.js";
 import { InstrumentNotes } from "./instrument_notes.js";
+import { InstrumentViolin } from "./instrument_violin.js";
 import { Staff } from "./staff.js";
 import {
 	$,
@@ -86,6 +87,14 @@ class MusicTrainer extends Container {
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_piano);
+
+		this.button_instrument_violin = new Button(new Rectangle(580, 140, 200, 40), "Fiol");
+		this.button_instrument_violin.addEventListener("click", () => {
+			this.removeChildByValue(this.instrument);
+			this.instrument = new InstrumentViolin(new Rectangle(50, 600, 700, 370));
+			this.appendChild(this.instrument);
+		});
+		this.appendChild(this.button_instrument_violin);
 
 		this.button_level_up = new Button(new Rectangle(580, 320, 200, 40), "Nästa nivå");
 		this.button_level_up.addEventListener("click", () => {
