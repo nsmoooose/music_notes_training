@@ -143,11 +143,15 @@ class MusicTrainer extends Container {
 			this.label_correct.text = "Rätt: " + this.answers_correct;
 			this.state.level_results.push(1.0);
 			this.new_question();
+			this.staff.extra_note_size = 50;
+			this.staff.note_color = [0, 255, 0];
 		} else {
 			this.answers_fail++;
 			this.label_fails.text = "Fel: " + this.answers_fail;
 			this.state.level_results.push(0.0);
 			this.new_question();
+			this.staff.extra_note_size = 50;
+			this.staff.note_color = [255, 0, 0];
 		}
 		if(this.state.level_results.length > 100) {
 			this.state.level_results.shift();
@@ -175,6 +179,7 @@ class MusicTrainer extends Container {
 
 	step() {
 		this.state.now += 0.1;
+		return 0.1;
 	}
 
 	set_level(level) {
@@ -224,7 +229,8 @@ window.addEventListener("load", () => {
 	window.setInterval(() => {
 		let ctx = canvas.getContext("2d");
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		g_trainer.step();
+		let step = g_trainer.step();
+		g_trainer.update(step);
 		g_trainer.draw(ctx);
 	}, 100);
 });

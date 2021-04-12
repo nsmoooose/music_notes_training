@@ -62,6 +62,9 @@ export class Widget extends EventTarget {
 		this.rectangle.x = x;
 		this.rectangle.y = y;
 	}
+
+	update(delta) {
+	}
 }
 
 export class Container extends Widget {
@@ -87,6 +90,12 @@ export class Container extends Widget {
 				continue;
 			}
 			widget.draw(ctx);
+		}
+	}
+
+	update(delta) {
+		for (const widget of this.children) {
+			widget.update(delta);
 		}
 	}
 

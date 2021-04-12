@@ -9,6 +9,15 @@ export class Staff extends Widget {
 		this.line_space = this.rectangle.h / 26;
 		this.line_width = 1;
 		this.top_note = "C8";
+		this.extra_note_size = 0;
+		this.note_color = [0, 0, 0];
+	}
+
+	update(delta) {
+		this.extra_note_size = Math.max(0, this.extra_note_size - delta * 100);
+		this.note_color[0] = Math.max(0, this.note_color[0] - delta * 100);
+		this.note_color[1] = Math.max(0, this.note_color[1] - delta * 100);
+		this.note_color[2] = Math.max(0, this.note_color[2] - delta * 100);
 	}
 
 	draw_tone(ctx, note) {
@@ -23,17 +32,22 @@ export class Staff extends Widget {
 
 		ctx.lineWidth = 4;
 		ctx.beginPath();
+		ctx.strokeStyle = "#" +
+			this.note_color[0].toString(16).padStart(2, "0") +
+			this.note_color[1].toString(16).padStart(2, "0") +
+			this.note_color[2].toString(16).padStart(2, "0");
 
 		let speed = 6;
 		let now = this.getRoot().state.now * speed;
-		let radius_x = 12.5 + Math.sin(now) * 2 + 2;
-		let radius_y = 10 + Math.sin(now) * 2;
+		let radius_x = 12.5 + Math.sin(now) * 2 + 2 + this.extra_note_size;
+		let radius_y = 10 + Math.sin(now) * 2 + this.extra_note_size;
 		let rotation = -0.2;
 		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 	}
 
 	draw(ctx) {
+		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = this.line_width;
 		ctx.fillStyle = "#000000";
 
