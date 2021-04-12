@@ -147,6 +147,7 @@ class MusicTrainer extends Container {
 			this.answers_fail++;
 			this.label_fails.text = "Fel: " + this.answers_fail;
 			this.state.level_results.push(0.0);
+			this.new_question();
 		}
 		if(this.state.level_results.length > 100) {
 			this.state.level_results.shift();
