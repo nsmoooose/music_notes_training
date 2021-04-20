@@ -49,6 +49,7 @@ export class Staff extends Widget {
 	draw(ctx) {
 		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = this.line_width;
+		ctx.strokeStyle = "#000000";
 		ctx.fillStyle = "#000000";
 
 		let p = new Path2D();

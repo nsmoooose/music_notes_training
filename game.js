@@ -7,6 +7,7 @@ import {
 	Button,
 	Container,
 	Label,
+	OptionsButton,
 	Rectangle
 } from "./base.js";
 import { g_levels } from "./questions.js";
@@ -52,6 +53,10 @@ class MusicTrainer extends Container {
 		this.answers_fail = 0;
 		this.current_question = null;
 
+		let s = this.rectangle.w * 0.1;
+		this.button_options = new OptionsButton(new Rectangle(this.rectangle.w - s - 2, 2, s, s), "");
+		this.appendChild(this.button_options);
+
 		this.label_level = new Label(new Rectangle(20, 20, 100, 50), "");
 		this.label_level.font = "60px Arial";
 		this.label_level.textAlign = "left";
@@ -69,41 +74,41 @@ class MusicTrainer extends Container {
 		this.label_fails.fillStyle = "#ff0000";
 		this.appendChild(this.label_fails);
 
-		this.staff = new Staff(new Rectangle(100, 50, 400, 520), 250);
+		this.staff = new Staff(new Rectangle(100, 80, 400, 520), 250);
 		this.appendChild(this.staff);
 
-		this.button_instrument_notes = new Button(new Rectangle(580, 20, 200, 40), "Noter");
+		this.button_instrument_notes = new Button(new Rectangle(580, 90, 200, 40), "Noter");
 		this.button_instrument_notes.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentNotes(new Rectangle(50, 700, 700, 370));
+			this.instrument = new InstrumentNotes(new Rectangle(50, 730, 700, 370));
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_notes);
 
-		this.button_instrument_piano = new Button(new Rectangle(580, 80, 200, 40), "Piano");
+		this.button_instrument_piano = new Button(new Rectangle(580, 150, 200, 40), "Piano");
 		this.button_instrument_piano.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentPiano(new Rectangle(50, 600, 700, 370));
+			this.instrument = new InstrumentPiano(new Rectangle(50, 630, 700, 370));
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_piano);
 
-		this.button_instrument_violin = new Button(new Rectangle(580, 140, 200, 40), "Fiol");
+		this.button_instrument_violin = new Button(new Rectangle(580, 210, 200, 40), "Fiol");
 		this.button_instrument_violin.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentViolin(new Rectangle(50, 600, 700, 370));
+			this.instrument = new InstrumentViolin(new Rectangle(50, 630, 700, 370));
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_violin);
 
-		this.button_level_up = new Button(new Rectangle(580, 320, 200, 40), "Nästa nivå");
+		this.button_level_up = new Button(new Rectangle(580, 390, 200, 40), "Nästa nivå");
 		this.button_level_up.addEventListener("click", () => {
 			this.set_level(this.state.level + 1);
 		});
 		this.button_level_up.visible = false;
 		this.appendChild(this.button_level_up);
 
-		this.button_reset = new Button(new Rectangle(580, 380, 200, 40), "Börja om");
+		this.button_reset = new Button(new Rectangle(580, 450, 200, 40), "Börja om");
 		this.button_reset.addEventListener("click", () => {
 			this.set_level(1);
 			this.state.result_reset();
@@ -113,7 +118,7 @@ class MusicTrainer extends Container {
 		this.instrument = new InstrumentPiano(new Rectangle(20, 600, 760, 370));
 		this.appendChild(this.instrument);
 
-		this.appendChild(new LevelInfo(new Rectangle(580, 200, 200, 100)));
+		this.appendChild(new LevelInfo(new Rectangle(580, 270, 200, 100)));
 
 		this.set_level(this.state.level);
 		this.new_question();
