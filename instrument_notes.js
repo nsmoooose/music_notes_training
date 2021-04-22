@@ -60,7 +60,9 @@ export class InstrumentNotes extends Widget {
 	}
 
 	draw(ctx) {
-		ctx.font = Math.abs(this.rectangle.h / this.h * 0.6) + "px Arial";
+		ctx.font = Math.min(
+			Math.abs(this.rectangle.h / this.h * 0.6),
+			Math.abs(this.rectangle.w / this.w * 0.6)) + "px Arial";
 		ctx.lineWidth = Math.min(this.rectangle.h, this.rectangle.w) * 0.003;
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
