@@ -80,7 +80,7 @@ class MusicTrainer extends Container {
 		this.button_instrument_notes = new Button(new Rectangle(580, 90, 200, 40), "Noter");
 		this.button_instrument_notes.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentNotes(new Rectangle(50, 630, 700, 370));
+			this.instrument = new InstrumentNotes(this.instrument.rectangle);
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_notes);
@@ -88,7 +88,7 @@ class MusicTrainer extends Container {
 		this.button_instrument_piano = new Button(new Rectangle(580, 150, 200, 40), "Piano");
 		this.button_instrument_piano.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentPiano(new Rectangle(50, 630, 700, 370));
+			this.instrument = new InstrumentPiano(this.instrument.rectangle);
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_piano);
@@ -96,7 +96,7 @@ class MusicTrainer extends Container {
 		this.button_instrument_violin = new Button(new Rectangle(580, 210, 200, 40), "Fiol");
 		this.button_instrument_violin.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentViolin(new Rectangle(50, 630, 700, 370));
+			this.instrument = new InstrumentViolin(this.instrument.rectangle);
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_violin);
