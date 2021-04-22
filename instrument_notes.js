@@ -6,10 +6,17 @@ import {
 export class InstrumentNotes extends Widget {
 	constructor(rectangle) {
 		super(rectangle);
+		/*
 		this.notes = [
 			"C", "D", "E", "F", "G", "A", "B",
 			"C♯", "D♭", "D♯", "E♭", "F♯", "G♭",
 			"G♯", "A♭",	"A♯", "B♭"
+		];
+		*/
+		this.notes = [
+			"C", "C♯", "D♭", "D", "D♯", "E♭", "E",
+			"F", "F♯", "G♭", "G", "G♯", "A♭", "A",
+			"A♯", "B♭", "B"
 		];
 
 		this.w = 5;
