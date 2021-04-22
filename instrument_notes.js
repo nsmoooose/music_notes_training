@@ -6,21 +6,46 @@ import {
 export class InstrumentNotes extends Widget {
 	constructor(rectangle) {
 		super(rectangle);
-		this.note_rects = [];
-		this.notes = ["C", "D", "E", "F", "G", "A", "B"];
-		this.note_width = this.rectangle.w / (this.notes.length - 1);
+		this.notes = [
+			"C", "D", "E", "F", "G", "A", "B",
+			"C♯", "D♭", "D♯", "E♭", "F♯", "G♭",
+			"G♯", "A♭",	"A♯", "B♭"
+		];
 
-		for(let i=0; i < this.notes.length; i++) {
-			let x = this.rectangle.x + this.note_width * i;
-			let y = this.rectangle.y;
-			let r = new Rectangle(x - this.note_width / 2, y - this.note_width / 2, this.note_width, this.note_width);
-			r.note = this.notes[i];
-			this.note_rects.push(r);
+		this.w = 5;
+		this.h = 4;
+	}
+
+	calc_rects() {
+		const note_width = this.rectangle.w / this.w;
+		const note_height = this.rectangle.h / this.h;
+		let rects = [];
+		let i = 0;
+		for(let row=0; row < this.h; row++) {
+			for(let col=0; col < this.w; col++) {
+				if(i >= this.notes.length) {
+					return rects;
+				}
+				const x = this.rectangle.x + note_width * col;
+				const y = this.rectangle.y + note_height * row;
+				let r = new Rectangle(
+					x,
+					y,
+					note_width,
+					note_height
+				);
+				r.note = this.notes[i];
+				rects.push(r);
+
+				i++;
+			}
 		}
+		return rects;
 	}
 
 	click(x, y) {
-		for(let r of this.note_rects) {
+		const note_rects = this.calc_rects();
+		for(let r of note_rects) {
 			if(r.contains(x, y)) {
 				return r.note;
 			}
@@ -28,14 +53,19 @@ export class InstrumentNotes extends Widget {
 	}
 
 	draw(ctx) {
-		ctx.font = "100px Arial";
-		ctx.lineWidth = 1;
+		ctx.font = Math.abs(this.rectangle.h / this.h * 0.6) + "px Arial";
+		ctx.lineWidth = Math.min(this.rectangle.h, this.rectangle.w) * 0.003;
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
 
-		for(let i=0; i < this.notes.length; i++) {
-			let x = this.rectangle.x + this.note_width * i;
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
-			ctx.strokeText(this.notes[i], x, this.rectangle.y);
+		for(let r of this.calc_rects()) {
+			ctx.beginPath();
+			ctx.rect(r.x, r.y, r.w, r.h);
+			ctx.stroke();
+
+			const x = r.x + r.w / 2;
+			const y = r.y + r.h / 2;
+			ctx.strokeText(r.note, x, y);
 		}
 	}
 }

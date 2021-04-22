@@ -80,7 +80,7 @@ class MusicTrainer extends Container {
 		this.button_instrument_notes = new Button(new Rectangle(580, 90, 200, 40), "Noter");
 		this.button_instrument_notes.addEventListener("click", () => {
 			this.removeChildByValue(this.instrument);
-			this.instrument = new InstrumentNotes(new Rectangle(50, 730, 700, 370));
+			this.instrument = new InstrumentNotes(new Rectangle(50, 630, 700, 370));
 			this.appendChild(this.instrument);
 		});
 		this.appendChild(this.button_instrument_notes);
