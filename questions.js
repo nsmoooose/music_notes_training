@@ -6,11 +6,18 @@ export class Question {
 	}
 }
 
+export const Hints = {
+	instrument_notes_show_flat: 1 << 0,
+	instrument_notes_show_sharp: 1 << 1
+}
+
 export class Level {
-	constructor(name, level, questions) {
+	constructor(name, level, questions, hints) {
+		hints = hints || 0;
 		this.name = name;
 		this.level = level;
 		this.questions = questions;
+		this.hints = hints;
 	}
 }
 
@@ -33,6 +40,34 @@ export let g_levels = [
 		new Question("A3"),
 		new Question("B3"),
 	]),
+	new Level("Ettstruket + höjningar", 1, [
+		new Question("C4"),
+		new Question("D4"),
+		new Question("E4"),
+		new Question("F4"),
+		new Question("G4"),
+		new Question("A4"),
+		new Question("B4"),
+		new Question("C4♯"),
+		new Question("D4♯"),
+		new Question("F4♯"),
+		new Question("G4♯"),
+		new Question("A4♯"),
+	], Hints.instrument_notes_show_sharp),
+	new Level("Ettstruket + sänkningar", 1, [
+		new Question("C4"),
+		new Question("D4"),
+		new Question("E4"),
+		new Question("F4"),
+		new Question("G4"),
+		new Question("A4"),
+		new Question("B4"),
+		new Question("D4♭"),
+		new Question("E4♭"),
+		new Question("G4♭"),
+		new Question("A4♭"),
+		new Question("B4♭"),
+	], Hints.instrument_notes_show_flat),
 	new Level("Tvåstrukna oktaven", 3, [
 		new Question("C5"),
 		new Question("D5"),

@@ -13,6 +13,10 @@ import {
 import { g_levels } from "./questions.js";
 import { LevelInfo } from "./level.js";
 
+function note_without_octave(note) {
+	return note.substring(0, 1) + note.substring(2, 3);
+}
+
 class MusicTrainerState {
 	constructor() {
 		this.now = 0;
@@ -143,7 +147,8 @@ class MusicTrainer extends Container {
 		if(answer == null) {
 			return;
 		}
-		if(answer == this.current_question.note[0]) {
+		let correct_answer = note_without_octave(this.current_question.note);
+		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			this.answers_correct++;
 			this.label_correct.text = "Rätt: " + this.answers_correct;
 			this.state.level_results.push(1.0);

@@ -22,7 +22,6 @@ export class Staff extends Widget {
 
 	draw_tone(ctx, note) {
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
-
 		const octave_note_index = notes.indexOf(note[0]);
 		const octave = parseInt(note[1]);
 
@@ -44,6 +43,65 @@ export class Staff extends Widget {
 		let rotation = -0.2;
 		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
+
+		if(note.length == 3) {
+			ctx.fillStyle = ctx.strokeStyle;
+
+			let x = this.rectangle.x + this.center - radius_x * 2;
+			let y = this.rectangle.y + diff;
+			if(note[2] == "♯") {
+				const character_half_width = 5;
+				const character_half_height = 7;
+				const x_extra = 4;
+				const y_extra = 7;
+				const tilt = 3;
+				ctx.lineWidth = 3;
+				ctx.moveTo(x - character_half_width - x_extra, y - character_half_height + tilt);
+				ctx.lineTo(x + character_half_width + x_extra, y - character_half_height - tilt);
+				ctx.stroke();
+
+				ctx.moveTo(x - character_half_width - x_extra, y + character_half_height + tilt);
+				ctx.lineTo(x + character_half_width + x_extra, y + character_half_height - tilt);
+				ctx.stroke();
+
+				ctx.lineWidth = 2;
+				ctx.moveTo(x + character_half_width, y - character_half_height - y_extra - tilt * (tilt / y_extra));
+				ctx.lineTo(x + character_half_width, y + character_half_height + y_extra - tilt * (tilt / y_extra));
+				ctx.stroke();
+
+				ctx.moveTo(x - character_half_width, y - character_half_height - y_extra + tilt * (tilt / y_extra));
+				ctx.lineTo(x - character_half_width, y + character_half_height + y_extra + tilt * (tilt / y_extra));
+				ctx.stroke();
+			}
+			else if(note[2] == "♭") {
+				const character_half_width = 5;
+				const character_half_height = 13;
+				const extra = 6;
+				const tilt = 10;
+				const badjust = 0.5;
+
+				ctx.lineWidth = 2;
+				ctx.moveTo(x - character_half_width, y - character_half_height);
+				ctx.lineTo(x - character_half_width, y + character_half_height);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.moveTo(
+					x - character_half_width,
+					y + character_half_height - character_half_height * badjust);
+				ctx.bezierCurveTo(
+					x + character_half_width, y + character_half_height - character_half_height * badjust - tilt,
+					x + character_half_width, y + character_half_height - character_half_height * badjust,
+					x - character_half_width, y + character_half_height
+				);
+				ctx.bezierCurveTo(
+					x + character_half_width + extra, y + character_half_height - character_half_height * badjust,
+					x + character_half_width + extra, y + character_half_height - character_half_height * badjust - tilt - extra,
+					x - character_half_width, y + character_half_height - character_half_height * badjust
+				);
+				ctx.fill();
+			}
+		}
 	}
 
 	draw(ctx) {
