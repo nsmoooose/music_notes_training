@@ -6,7 +6,6 @@ export class Staff extends Widget {
 	constructor(rectangle, center) {
 		super(rectangle);
 		this.center = center;
-		this.line_space = this.rectangle.h / 26;
 		this.line_width = 1;
 		this.top_note = "C8";
 		this.extra_note_size = 0;
@@ -20,7 +19,12 @@ export class Staff extends Widget {
 		this.note_color[2] = Math.max(0, this.note_color[2] - delta * 100);
 	}
 
+	_calc() {
+		this.line_space = this.rectangle.h / 26;
+	}
+
 	draw_tone(ctx, note) {
+		this._calc();
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
 		const octave_note_index = notes.indexOf(note[0]);
 		const octave = parseInt(note[1]);
@@ -38,8 +42,8 @@ export class Staff extends Widget {
 
 		let speed = 6;
 		let now = this.getRoot().state.now * speed;
-		let radius_x = 12.5 + Math.sin(now) * 2 + 2 + this.extra_note_size;
-		let radius_y = 10 + Math.sin(now) * 2 + this.extra_note_size;
+		let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
+		let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
 		let rotation = -0.2;
 		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
@@ -105,6 +109,8 @@ export class Staff extends Widget {
 	}
 
 	draw(ctx) {
+		this._calc();
+
 		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = this.line_width;
 		ctx.strokeStyle = "#000000";
