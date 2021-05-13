@@ -3,7 +3,7 @@ import {
 } from "./base.js";
 
 export class Staff extends Widget {
-	constructor(rectangle, center) {
+	constructor(rectangle) {
 		super(rectangle);
 		this.line_width = 1;
 		this.top_note = "C8";
@@ -119,8 +119,12 @@ export class Staff extends Widget {
 		ctx.strokeStyle = "#000000";
 		ctx.fillStyle = "#000000";
 
+		let clef_scale = rectangle.h / 520; // 1.0;
+		let treble_y = 7.25 * this.line_space;
+		let bass_y = 13.25 * this.line_space;
+
 		let p = new Path2D();
-		let m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + 145);
+		let m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + treble_y).scale(clef_scale);
 		let treble_clef = new Path2D("m51.688 5.25c-5.427-0.1409-11.774 12.818-11.563 24.375 0.049 3.52 1.16 10.659 2.781 19.625-10.223 " +
 			"10.581-22.094 21.44-22.094 35.688-0.163 13.057 7.817 29.692 26.75 29.532 2.906-0.02 5.521-0.38 7.844-1 1.731 9.49 2.882 " +
 			"16.98 2.875 20.44 0.061 13.64-17.86 14.99-18.719 7.15 3.777-0.13 6.782-3.13 6.782-6.84 0-3.79-3.138-6.88-7.032-6.88-2.141 " +
@@ -135,7 +139,7 @@ export class Staff extends Widget {
 		ctx.fill(p);
 
 		p = new Path2D();
-		m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + 265).scale(0.13);
+		m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + bass_y).scale(0.13).scale(clef_scale);
 		let bass_clef = new Path2D("m190.85 451.25c11.661 14.719 32.323 24.491 55.844 24.491 36.401 0 65.889-23.372 " +
 			"65.889-52.214s-29.488-52.214-65.889-52.214c-20.314 4.1522-28.593 9.0007-33.143-2.9091 17.976-54.327 " +
 			"46.918-66.709 96.546-66.709 65.914 0 96.969 59.897 96.969 142.97-18.225 190.63-205.95 286.75-246.57 " +
