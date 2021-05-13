@@ -5,7 +5,6 @@ import {
 export class Staff extends Widget {
 	constructor(rectangle, center) {
 		super(rectangle);
-		this.center = center;
 		this.line_width = 1;
 		this.top_note = "C8";
 		this.extra_note_size = 0;
@@ -19,12 +18,14 @@ export class Staff extends Widget {
 		this.note_color[2] = Math.max(0, this.note_color[2] - delta * 100);
 	}
 
-	_calc() {
-		this.line_space = this.rectangle.h / 26;
+	_calc(rectangle) {
+		this.line_space = rectangle.h / 26;
 	}
 
 	draw_tone(ctx, note) {
-		this._calc();
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		let center = rectangle.x + rectangle.w / 2;
+		this._calc(rectangle);
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
 		const octave_note_index = notes.indexOf(note[0]);
 		const octave = parseInt(note[1]);
@@ -45,14 +46,14 @@ export class Staff extends Widget {
 		let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
 		let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
 		let rotation = -0.2;
-		ctx.ellipse(this.rectangle.x + this.center, this.rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
+		ctx.ellipse(rectangle.x + center, rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
 		if(note.length == 3) {
 			ctx.fillStyle = ctx.strokeStyle;
 
-			let x = this.rectangle.x + this.center - radius_x * 2;
-			let y = this.rectangle.y + diff;
+			let x = rectangle.x + center - radius_x * 2;
+			let y = rectangle.y + diff;
 			if(note[2] == "♯") {
 				const character_half_width = 5;
 				const character_half_height = 7;
@@ -109,7 +110,9 @@ export class Staff extends Widget {
 	}
 
 	draw(ctx) {
-		this._calc();
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		let center = rectangle.x + rectangle.w / 2;
+		this._calc(rectangle);
 
 		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = this.line_width;
@@ -117,7 +120,7 @@ export class Staff extends Widget {
 		ctx.fillStyle = "#000000";
 
 		let p = new Path2D();
-		let m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(this.rectangle.x, this.rectangle.y + 145);
+		let m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + 145);
 		let treble_clef = new Path2D("m51.688 5.25c-5.427-0.1409-11.774 12.818-11.563 24.375 0.049 3.52 1.16 10.659 2.781 19.625-10.223 " +
 			"10.581-22.094 21.44-22.094 35.688-0.163 13.057 7.817 29.692 26.75 29.532 2.906-0.02 5.521-0.38 7.844-1 1.731 9.49 2.882 " +
 			"16.98 2.875 20.44 0.061 13.64-17.86 14.99-18.719 7.15 3.777-0.13 6.782-3.13 6.782-6.84 0-3.79-3.138-6.88-7.032-6.88-2.141 " +
@@ -132,7 +135,7 @@ export class Staff extends Widget {
 		ctx.fill(p);
 
 		p = new Path2D();
-		m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(this.rectangle.x, this.rectangle.y + 265).scale(0.13);
+		m1 = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix().translate(rectangle.x, rectangle.y + 265).scale(0.13);
 		let bass_clef = new Path2D("m190.85 451.25c11.661 14.719 32.323 24.491 55.844 24.491 36.401 0 65.889-23.372 " +
 			"65.889-52.214s-29.488-52.214-65.889-52.214c-20.314 4.1522-28.593 9.0007-33.143-2.9091 17.976-54.327 " +
 			"46.918-66.709 96.546-66.709 65.914 0 96.969 59.897 96.969 142.97-18.225 190.63-205.95 286.75-246.57 " +
@@ -144,19 +147,19 @@ export class Staff extends Widget {
 		ctx.fill(p);
 
 		for(let i=0; i < 26; i++) {
-			let y = this.rectangle.y + i * this.line_space;
+			let y = rectangle.y + i * this.line_space;
 			if((i >= 0 && i <= 8) ||
                 i == 14 ||
                (i >= 20 && i <= 25)) {
 				ctx.beginPath();
-				ctx.moveTo(this.rectangle.x + this.center - 30, y);
-				ctx.lineTo(this.rectangle.x + this.center + 30, y);
+				ctx.moveTo(rectangle.x + center - this.line_space * 1.5, y);
+				ctx.lineTo(rectangle.x + center + this.line_space * 1.5, y);
 				ctx.stroke();
 			} else if((i >= 9 && i <= 13) ||
                       (i >= 15 && i <= 19)) {
 				ctx.beginPath();
-				ctx.moveTo(this.rectangle.x, y);
-				ctx.lineTo(this.rectangle.x + this.rectangle.w, y);
+				ctx.moveTo(rectangle.x, y);
+				ctx.lineTo(rectangle.x + rectangle.w, y);
 				ctx.stroke();
 			} else {
 				break;

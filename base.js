@@ -43,6 +43,7 @@ export class Widget extends EventTarget {
 		super();
 		this.parent = null;
 		this.rectangle = rectangle;
+		this.margin = new Margin(0, 0, 0, 0);
 		this.visible = true;
 	}
 
@@ -64,6 +65,41 @@ export class Widget extends EventTarget {
 	}
 
 	update(delta) {
+	}
+}
+
+export class AspectRatioControlContainer extends Widget {
+	/*
+	ratio = positive ratio means that the containing control will be
+		    higher than wider. A ratio of 1 means that width is equal
+			to the height.
+	*/
+	constructor(rectangle, ratio) {
+		super(rectangle);
+		this.child = null;
+		this.ratio = ratio;
+	}
+
+	draw(ctx) {
+		if(this.child && this.child.visible) {
+			this.child.draw(ctx);
+		}
+	}
+
+	resize(width, height) {
+		super.resize(width, height);
+		if(this.child) {
+			if(width * this.ratio <= height) {
+				this.child.resize(width, width * this.ratio);
+			} else {
+				this.child.resize(height / this.ratio, height);
+			}
+		}
+	}
+
+	setChild(child) {
+		this.child = child;
+		child.parent = this;
 	}
 }
 
@@ -108,12 +144,66 @@ export class Container extends Widget {
 	}
 }
 
+export class StackContainer extends Container {
+	constructor(rectangle, direction) {
+		super(rectangle);
+		this.direction = direction;
+	}
+
+	appendChild(child, amount) {
+		super.appendChild(child);
+		child.stackAmount = amount;
+	}
+
+	resize(width, height) {
+		super.resize(width, height);
+
+		console.log("w: " + width + " h: " + height);
+
+		let y = this.rectangle.y;
+
+		for(let widget of this.children) {
+			widget.rectangle.w = width;
+			widget.rectangle.h = height * widget.stackAmount;
+			widget.rectangle.x = this.rectangle.x;
+			widget.rectangle.y = y;
+
+			y += widget.rectangle.h;
+		}
+	}
+}
+
+export class Margin {
+	constructor(top, right, bottom, left) {
+		this.top = top;
+		this.right = right;
+		this.bottom = bottom;
+		this.left = left;
+	}
+
+	getRectangle(rectangle) {
+		return new Rectangle(
+			rectangle.x + this.left,
+			rectangle.y + this.top,
+			rectangle.w - this.left - this.right,
+			rectangle.h - this.top - this.bottom
+		);
+	}
+
+	setMargin(margin) {
+		this.top = margin;
+		this.right = margin;
+		this.bottom = margin;
+		this.left = margin;
+	}
+}
+
 export class Rectangle {
 	constructor(x, y, w, h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+		this.x = x || 0;
+		this.y = y || 0;
+		this.w = w || 0;
+		this.h = h || 0;
 	}
 
 	contains(x, y) {

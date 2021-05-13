@@ -49,15 +49,16 @@ export class InstrumentPiano extends Widget {
 	}
 
 	draw(ctx) {
-		let key_width = this.rectangle.w / 7;
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		let key_width = rectangle.w / 7;
 
 		ctx.lineWidth = this.line_width;
 
 		for(let i=0; i < 7; i++) {
 			ctx.beginPath();
-			let x = i * key_width + this.rectangle.x;
-			let y = this.rectangle.y;
-			ctx.rect(x, y, key_width, this.rectangle.h);
+			let x = i * key_width + rectangle.x;
+			let y = rectangle.y;
+			ctx.rect(x, y, key_width, rectangle.h);
 			ctx.stroke();
 		}
 
@@ -67,8 +68,8 @@ export class InstrumentPiano extends Widget {
 			}
 			ctx.fillStyle = "rgb(0, 0, 0)";
 			ctx.fillRect(
-				(i + 1) * key_width + this.rectangle.x - key_width / 4, this.rectangle.y,
-				key_width / 2, this.rectangle.h * 0.6);
+				(i + 1) * key_width + rectangle.x - key_width / 4, rectangle.y,
+				key_width / 2, rectangle.h * 0.6);
 		}
 	}
 }
