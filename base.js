@@ -47,11 +47,21 @@ export class Widget extends EventTarget {
 		this.visible = true;
 	}
 
+	draw(/* ctx */) {}
+
 	getRoot() {
 		if(this.parent == null) {
 			return this;
 		}
 		return this.parent.getRoot();
+	}
+
+	getState() {
+		return this.getRoot().state;
+	}
+
+	setState(state) {
+		this.getRoot().state = state;
 	}
 
 	resize(width, height) {
@@ -64,20 +74,19 @@ export class Widget extends EventTarget {
 		this.rectangle.y = y;
 	}
 
-	update(delta) {
+	update(/* delta */) {}
+
+	on_click(x, y) {
+		if(this.visible == true && this.rectangle.contains(x, y)) {
+			this.dispatchEvent("click", null);
+		}
 	}
 }
 
-export class AspectRatioControlContainer extends Widget {
-	/*
-	ratio = positive ratio means that the containing control will be
-		    higher than wider. A ratio of 1 means that width is equal
-			to the height.
-	*/
-	constructor(rectangle, ratio) {
-		super(rectangle);
+export class SingleControlContainer extends Widget {
+	constructor() {
+		super(new Rectangle());
 		this.child = null;
-		this.ratio = ratio;
 	}
 
 	draw(ctx) {
@@ -89,17 +98,67 @@ export class AspectRatioControlContainer extends Widget {
 	resize(width, height) {
 		super.resize(width, height);
 		if(this.child) {
-			if(width * this.ratio <= height) {
-				this.child.resize(width, width * this.ratio);
-			} else {
-				this.child.resize(height / this.ratio, height);
-			}
+			this.child.resize(width, height);
 		}
 	}
 
 	setChild(child) {
 		this.child = child;
 		child.parent = this;
+		child.resize(this.rectangle.w, this.rectangle.h);
+	}
+
+	on_click(x, y) {
+		if(this.child) {
+			this.child.on_click(x, y);
+		}
+	}
+
+	update(delta) {
+		if(this.child) {
+			this.child.update(delta);
+		}
+	}
+}
+
+export class State {
+	constructor() {
+		this.now = 0;
+	}
+
+	step() {
+		this.now += 0.1;
+		return 0.1;
+	}
+}
+
+export class Root extends SingleControlContainer {
+	constructor() {
+		super(new Rectangle());
+		this.state = new State();
+	}
+}
+
+export class AspectRatioControlContainer extends SingleControlContainer {
+	/*
+	ratio = positive ratio means that the containing control will be
+		    higher than wider. A ratio of 1 means that width is equal
+			to the height.
+	*/
+	constructor(ratio) {
+		super();
+		this.ratio = ratio;
+	}
+
+	resize(width, height) {
+		super.resize(width, height);
+		if(this.child) {
+			if(width * this.ratio <= height) {
+				this.child.resize(width, width * this.ratio);
+			} else {
+				this.child.resize(height / this.ratio, height);
+			}
+		}
 	}
 }
 
@@ -137,9 +196,7 @@ export class Container extends Widget {
 
 	on_click(x, y) {
 		for (const widget of this.children) {
-			if(widget.visible == true && widget.rectangle.contains(x, y)) {
-				widget.dispatchEvent("click", null);
-			}
+			widget.on_click(x, y);
 		}
 	}
 }
@@ -158,17 +215,28 @@ export class StackContainer extends Container {
 	resize(width, height) {
 		super.resize(width, height);
 
-		console.log("w: " + width + " h: " + height);
+		let rectangle = this.margin.getRectangle(this.rectangle);
 
-		let y = this.rectangle.y;
+		if(this.direction == "down") {
+			let y = rectangle.y;
 
-		for(let widget of this.children) {
-			widget.rectangle.w = width;
-			widget.rectangle.h = height * widget.stackAmount;
-			widget.rectangle.x = this.rectangle.x;
-			widget.rectangle.y = y;
+			for(let widget of this.children) {
+				widget.rectangle.x = rectangle.x;
+				widget.rectangle.y = y;
+				widget.resize(rectangle.w, rectangle.h * widget.stackAmount);
 
-			y += widget.rectangle.h;
+				y += widget.rectangle.h;
+			}
+		} else if(this.direction == "right") {
+			let x = rectangle.x;
+
+			for(let widget of this.children) {
+				widget.rectangle.x = x;
+				widget.rectangle.y = rectangle.y;
+				widget.resize(rectangle.w * widget.stackAmount, rectangle.h);
+
+				x += widget.rectangle.w;
+			}
 		}
 	}
 }
@@ -216,31 +284,35 @@ export class Label extends Widget {
 	constructor(rectangle, text) {
 		super(rectangle);
 		this.text = text;
-
-		this.font = "30px Arial";
+		this.font = null;
 		this.textAlign = "center";
 		this.textBaseline = "middle";
 		this.fillStyle = "#000000";
 	}
 
 	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
 		ctx.lineWidth = 1;
-		ctx.font = this.font;
+		if(this.font == null) {
+			ctx.font = rectangle.h + "px Arial";
+		} else  {
+			ctx.font = this.font;
+		}
 		ctx.textAlign = this.textAlign;
 		ctx.textBaseline = this.textBaseline;
 		ctx.fillStyle = this.fillStyle;
-		let x = this.rectangle.x;
+		let x = rectangle.x;
 		if(this.textAlign == "center") {
-			x = this.rectangle.x + this.rectangle.w / 2;
+			x = rectangle.x + rectangle.w / 2;
 		} else if(this.textAlign == "right") {
-			x = this.rectangle.x + this.rectangle.w;
+			x = rectangle.x + rectangle.w;
 		}
 
 		let y = this.rectangle.y;
 		if(this.textBaseline == "middle") {
-			y = this.rectangle.y + this.rectangle.h / 2;
+			y = rectangle.y + rectangle.h / 2;
 		} else if(this.textBaseline == "bottom") {
-			y = this.rectangle.y + this.rectangle.h;
+			y = rectangle.y + rectangle.h;
 		}
 
 		ctx.fillText(this.text, x, y);
@@ -254,17 +326,24 @@ export class Button extends Widget {
 	}
 
 	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		const padding = 0.3;
+
 		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = 1;
 		ctx.fillStyle = "#ccc";
-		this.roundRect(ctx, this.rectangle.x, this.rectangle.y, this.rectangle.w, this.rectangle.h, 5, true);
-		ctx.font = "30px Arial";
+		this.roundRect(ctx, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 5, true);
+		if(this.font == null) {
+			ctx.font = rectangle.h - padding * rectangle.h + "px Arial";
+		} else  {
+			ctx.font = this.font;
+		}
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		ctx.fillStyle = "#000000";
 		ctx.fillText(this.text,
-			this.rectangle.x + this.rectangle.w / 2,
-			this.rectangle.y + this.rectangle.h / 2);
+			rectangle.x + rectangle.w / 2,
+			rectangle.y + rectangle.h / 2);
 	}
 
 	click(x, y) {
@@ -297,6 +376,34 @@ export class Button extends Widget {
 			ctx.fill();
 		}
 		ctx.stroke();
+	}
+}
+
+export class ProgressBar extends Widget {
+	constructor(rectangle) {
+		super(rectangle);
+		this.progress = 0;
+		this.style = "black";
+	}
+
+	setProgress(progress) {
+		this.progress = progress;
+	}
+
+	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		ctx.beginPath();
+		ctx.strokeStyle = this.style;
+		ctx.fillStyle = this.style;
+		ctx.rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.rect(
+			rectangle.x + 2,
+			rectangle.y + 2,
+			Math.max(rectangle.w * this.progress - 4, 1),
+			rectangle.h - 4);
+		ctx.fill();
 	}
 }
 

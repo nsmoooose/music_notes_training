@@ -6,6 +6,7 @@ import {
 	g_levels,
 	Hints
 } from "./questions.js"
+import { MusicTrainerState } from "./state.js";
 
 export class InstrumentNotes extends Widget {
 	constructor(rectangle) {
@@ -36,7 +37,7 @@ export class InstrumentNotes extends Widget {
 		];
 
 
-		let level = g_levels[this.getRoot().state.level - 1];
+		let level = MusicTrainerState.level - 1;
 		let notes = [];
 		for(let note of all_notes) {
 			if(note[1] != 0) {

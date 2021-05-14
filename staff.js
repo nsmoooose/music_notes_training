@@ -42,10 +42,11 @@ export class Staff extends Widget {
 			this.note_color[2].toString(16).padStart(2, "0");
 
 		let speed = 6;
-		let now = this.getRoot().state.now * speed;
+		let now = this.getState().now * speed;
 		let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
 		let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
 		let rotation = -0.2;
+		// ctx.fillStyle = "#0000000";
 		ctx.ellipse(rectangle.x + center, rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
