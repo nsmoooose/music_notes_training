@@ -24,7 +24,7 @@ export class Staff extends Widget {
 
 	draw_tone(ctx, note) {
 		let rectangle = this.margin.getRectangle(this.rectangle);
-		let center = rectangle.x + rectangle.w / 2;
+		let center = rectangle.w / 2;
 		this._calc(rectangle);
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
 		const octave_note_index = notes.indexOf(note[0]);
@@ -112,7 +112,7 @@ export class Staff extends Widget {
 
 	draw(ctx) {
 		let rectangle = this.margin.getRectangle(this.rectangle);
-		let center = rectangle.x + rectangle.w / 2;
+		let center = rectangle.w / 2;
 		this._calc(rectangle);
 
 		ctx.strokeStyle = "#000000";

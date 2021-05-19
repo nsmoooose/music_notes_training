@@ -156,6 +156,8 @@ export class AspectRatioControlContainer extends SingleControlContainer {
 			if(width * this.ratio <= height) {
 				this.child.resize(width, width * this.ratio);
 			} else {
+				this.child.rectangle.x = this.rectangle.x + (width - (height / this.ratio)) / 2;
+				this.child.rectangle.y = this.rectangle.y;
 				this.child.resize(height / this.ratio, height);
 			}
 		}
