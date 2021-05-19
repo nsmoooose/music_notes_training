@@ -27,6 +27,8 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.current_question = null;
 
+		MusicTrainerState.load();
+
 		this.stack = new StackContainer(new Rectangle(), "down");
 		this.setChild(this.stack);
 
