@@ -55,11 +55,14 @@ export class InstrumentPiano extends Widget {
 		ctx.lineWidth = this.line_width;
 
 		for(let i=0; i < 7; i++) {
+			ctx.strokeStyle = "gray";
 			ctx.beginPath();
 			let x = i * key_width + rectangle.x;
 			let y = rectangle.y;
 			ctx.rect(x, y, key_width, rectangle.h);
 			ctx.stroke();
+			ctx.fillStyle = "white";
+			ctx.fillRect(x + this.line_width / 2, y + this.line_width / 2, key_width - this.line_width, rectangle.h - this.line_width);
 		}
 
 		for(let i=0; i < 6; i++) {
