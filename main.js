@@ -9,7 +9,10 @@ import { InstrumentPiano } from "./instrument_piano.js";
 import { InstrumentNotes } from "./instrument_notes.js";
 import { Staff } from "./staff.js";
 
-const filter = "drop-shadow(9px 9px 3px #aaa)";
+/* Níce but slow on mobile.
+ "drop-shadow(9px 9px 3px #aaa)" 
+ */
+const filter = null;
 
 Label.filter = filter
 Button.filter = filter;
