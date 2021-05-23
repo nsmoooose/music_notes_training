@@ -3,6 +3,8 @@ import {
 } from "./base.js";
 
 export class Staff extends Widget {
+	static filter = null;
+
 	constructor(rectangle) {
 		super(rectangle);
 		this.line_width = 1;
@@ -23,6 +25,9 @@ export class Staff extends Widget {
 	}
 
 	draw_tone(ctx, note) {
+		if(Staff.filter != null) {
+			ctx.filter = Staff.filter;
+		}
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
@@ -108,9 +113,13 @@ export class Staff extends Widget {
 				ctx.fill();
 			}
 		}
+		ctx.filter = "none";
 	}
 
 	draw(ctx) {
+		if(Staff.filter != null) {
+			ctx.filter = Staff.filter;
+		}
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
@@ -170,5 +179,6 @@ export class Staff extends Widget {
 				break;
 			}
 		}
+		ctx.filter = "none";
 	}
 }

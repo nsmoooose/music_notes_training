@@ -1,8 +1,20 @@
 import {
 	$,
+	Button,
+	Label,
     Root
 } from "./base.js";
 import { MainMenu } from "./view_main_menu.js";
+import { InstrumentPiano } from "./instrument_piano.js";
+import { InstrumentNotes } from "./instrument_notes.js";
+import { Staff } from "./staff.js";
+
+const filter = "drop-shadow(9px 9px 3px #aaa)";
+
+Label.filter = filter
+Button.filter = filter;
+InstrumentPiano.filter = filter;
+Staff.filter = filter;
 
 let g_root = new Root();
 g_root.setChild(new MainMenu());

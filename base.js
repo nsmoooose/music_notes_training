@@ -283,6 +283,8 @@ export class Rectangle {
 }
 
 export class Label extends Widget {
+	static filter = null;
+
 	constructor(rectangle, text) {
 		super(rectangle);
 		this.text = text;
@@ -317,11 +319,17 @@ export class Label extends Widget {
 			y = rectangle.y + rectangle.h;
 		}
 
+		if(Label.filter != null) {
+			ctx.filter = Label.filter;
+		}
 		ctx.fillText(this.text, x, y);
+		ctx.filter = "none";
 	}
 }
 
 export class Button extends Widget {
+	static filter = null;
+
 	constructor(rectangle, text) {
 		super(rectangle);
 		this.text = text;
@@ -331,10 +339,15 @@ export class Button extends Widget {
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		const padding = 0.3;
 
+		if(Button.filter != null) {
+			ctx.filter = Button.filter;
+		}
 		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = 1;
 		ctx.fillStyle = "#ccc";
 		this.roundRect(ctx, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 5, true);
+		ctx.filter = "none";
+
 		if(this.font == null) {
 			ctx.font = rectangle.h - padding * rectangle.h + "px Arial";
 		} else  {
