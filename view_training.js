@@ -56,37 +56,13 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.staff.margin.setMargin(10);
 		this.stack.appendChild(this.staff, 0.545);
 
-		// this.button_instrument_notes = new Button(new Rectangle(580, 90, 200, 40), "Noter");
-		// this.button_instrument_notes.addEventListener("click", () => {
-		// 	this.removeChildByValue(this.instrument);
-		// 	this.instrument = new InstrumentNotes(this.instrument.rectangle);
-		// 	this.appendChild(this.instrument);
-		// });
-		// this.appendChild(this.button_instrument_notes);
-
-		// this.button_instrument_piano = new Button(new Rectangle(580, 150, 200, 40), "Piano");
-		// this.button_instrument_piano.addEventListener("click", () => {
-		// 	this.removeChildByValue(this.instrument);
-		// 	this.instrument = new InstrumentPiano(this.instrument.rectangle);
-		// 	this.appendChild(this.instrument);
-		// });
-		// this.appendChild(this.button_instrument_piano);
-
-		// this.button_instrument_violin = new Button(new Rectangle(580, 210, 200, 40), "Fiol");
-		// this.button_instrument_violin.addEventListener("click", () => {
-		// 	this.removeChildByValue(this.instrument);
-		// 	this.instrument = new InstrumentViolin(this.instrument.rectangle);
-		// 	this.appendChild(this.instrument);
-		// });
-		// this.appendChild(this.button_instrument_violin);
-
 		switch(MusicTrainerState.instrument) {
 			case "piano": this.instrument = new InstrumentPiano(new Rectangle()); break;
 			case "notes": this.instrument = new InstrumentNotes(new Rectangle()); break;
 			case "violin": this.instrument = new InstrumentViolin(new Rectangle()); break;
 			default: this.instrument = new InstrumentPiano(new Rectangle()); break;
 		}
-		this.instrument.margin.setMargin(10);
+		this.instrument.margin.setMargin(20);
 		this.stack.appendChild(this.instrument, 0.375);
 
 		this.set_level(MusicTrainerState.level);
