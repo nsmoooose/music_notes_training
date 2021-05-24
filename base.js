@@ -125,11 +125,6 @@ export class State {
 	constructor() {
 		this.now = 0;
 	}
-
-	step() {
-		this.now += 0.1;
-		return 0.1;
-	}
 }
 
 export class Root extends SingleControlContainer {

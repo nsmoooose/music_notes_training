@@ -22,6 +22,19 @@ Staff.filter = filter;
 let g_root = new Root();
 g_root.setChild(new MainMenu());
 
+function step(ts) {
+	let delta = ts / 1000 - g_root.state.now;
+	g_root.state.now = ts / 1000;
+
+	let canvas = $("canvas");
+
+	let ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	g_root.update(delta);
+	g_root.draw(ctx);
+	window.requestAnimationFrame(step);
+}
+
 window.addEventListener("load", () => {
 	let canvas = $("canvas");
 
@@ -45,11 +58,5 @@ window.addEventListener("load", () => {
 
 	g_root.resize(canvas.width, canvas.height);
 
-	window.setInterval(() => {
-		let ctx = canvas.getContext("2d");
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		let step = g_root.state.step();
-		g_root.update(step);
-		g_root.draw(ctx);
-	}, 100);
+	window.requestAnimationFrame(step);
 });
