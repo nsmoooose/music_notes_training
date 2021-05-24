@@ -42,9 +42,9 @@ export class Staff extends Widget {
 		ctx.lineWidth = 4;
 		ctx.beginPath();
 		ctx.strokeStyle = "#" +
-			this.note_color[0].toString(16).padStart(2, "0") +
-			this.note_color[1].toString(16).padStart(2, "0") +
-			this.note_color[2].toString(16).padStart(2, "0");
+			Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
+			Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +
+			Math.trunc(this.note_color[2]).toString(16).padStart(2, "0");
 
 		let speed = 6;
 		let now = this.getState().now * speed;
