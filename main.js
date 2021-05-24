@@ -36,6 +36,13 @@ function step(ts) {
 }
 
 window.addEventListener("load", () => {
+	if ("serviceWorker" in navigator) {
+		navigator
+		.serviceWorker.register("/service_worker.js")
+		.then(res => console.log("service worker registered"))
+		.catch(err => console.log("service worker not registered", err));
+	}
+
 	let canvas = $("canvas");
 
 	canvas.addEventListener("click", (event) => {
