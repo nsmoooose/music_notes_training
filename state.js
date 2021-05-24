@@ -7,11 +7,11 @@ export class MusicTrainerState {
 		MusicTrainerState.level = 1;
 		MusicTrainerState.level_results = [];
 		MusicTrainerState.instrument = "piano";
-		sessionStorage.removeItem("results");
+		localStorage.removeItem("results");
 	}
 
 	static load() {
-		let x = sessionStorage.getItem("results");
+		let x = localStorage.getItem("results");
 		if(x != null) {
 			x = JSON.parse(x);
 			if(x.version == 1) {
@@ -33,6 +33,6 @@ export class MusicTrainerState {
 			"instrument": MusicTrainerState.instrument
 		};
 		let s = JSON.stringify(x);
-		sessionStorage.setItem("results", s);
+		localStorage.setItem("results", s);
 	}
 }
