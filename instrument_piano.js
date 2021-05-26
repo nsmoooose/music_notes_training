@@ -6,8 +6,8 @@ import {
 export class InstrumentPiano extends Widget {
 	static filter = null;
 
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 		this.line_width = 3;
 	}
 

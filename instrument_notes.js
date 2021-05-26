@@ -3,14 +3,13 @@ import {
 	Widget
 } from "./base.js";
 import {
-	g_levels,
 	Hints
 } from "./questions.js"
 import { MusicTrainerState } from "./state.js";
 
 export class InstrumentNotes extends Widget {
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 		this.w = 5;
 		this.h = 4;
 	}

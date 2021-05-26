@@ -5,11 +5,8 @@ import { Staff } from "./staff.js";
 import {
 	AspectRatioControlContainer,
 	Button,
-	Container,
 	Label,
-	OptionsButton,
 	ProgressBar,
-	Rectangle,
 	StackContainer
 } from "./base.js";
 import { g_levels } from "./questions.js";
@@ -29,38 +26,38 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		MusicTrainerState.load();
 
-		this.stack = new StackContainer(new Rectangle(), "down");
+		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
-		this.header_stack = new StackContainer(new Rectangle(), "right");
+		this.header_stack = new StackContainer("right");
 		this.stack.appendChild(this.header_stack, 0.05);
 
-		this.button_back = new Button(new Rectangle(), "<");
+		this.button_back = new Button("<");
 		this.button_back.margin.setMargin(10);
 		this.button_back.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
 		this.header_stack.appendChild(this.button_back, 0.1);
 
-		this.label_level = new Label(new Rectangle(), "");
+		this.label_level = new Label("");
 		this.label_level.textAlign = "center";
 		this.label_level.margin.setMargin(5);
 		this.header_stack.appendChild(this.label_level, 0.90);
 
-		this.progress = new ProgressBar(new Rectangle());
+		this.progress = new ProgressBar();
 		this.progress.margin.setMargin(5);
 		this.progress.setProgress(MusicTrainerState.level_results.length / 100);
 		this.stack.appendChild(this.progress, 0.03);
 
-		this.staff = new Staff(new Rectangle());
+		this.staff = new Staff();
 		this.staff.margin.setMargin(10);
 		this.stack.appendChild(this.staff, 0.545);
 
 		switch(MusicTrainerState.instrument) {
-			case "piano": this.instrument = new InstrumentPiano(new Rectangle()); break;
-			case "notes": this.instrument = new InstrumentNotes(new Rectangle()); break;
-			case "violin": this.instrument = new InstrumentViolin(new Rectangle()); break;
-			default: this.instrument = new InstrumentPiano(new Rectangle()); break;
+			case "piano": this.instrument = new InstrumentPiano(); break;
+			case "notes": this.instrument = new InstrumentNotes(); break;
+			case "violin": this.instrument = new InstrumentViolin(); break;
+			default: this.instrument = new InstrumentPiano(); break;
 		}
 		this.instrument.margin.setMargin(20);
 		this.stack.appendChild(this.instrument, 0.375);

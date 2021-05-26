@@ -3,8 +3,8 @@ import {
 } from "./base.js";
 
 export class InstrumentViolin extends Widget {
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 	}
 
 	click(x, y) {

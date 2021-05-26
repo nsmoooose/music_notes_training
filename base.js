@@ -39,10 +39,10 @@ export class EventTarget {
 }
 
 export class Widget extends EventTarget {
-	constructor(rectangle) {
+	constructor() {
 		super();
 		this.parent = null;
-		this.rectangle = rectangle;
+		this.rectangle = new Rectangle();
 		this.margin = new Margin(0, 0, 0, 0);
 		this.visible = true;
 	}
@@ -85,7 +85,7 @@ export class Widget extends EventTarget {
 
 export class SingleControlContainer extends Widget {
 	constructor() {
-		super(new Rectangle());
+		super();
 		this.child = null;
 	}
 
@@ -129,7 +129,7 @@ export class State {
 
 export class Root extends SingleControlContainer {
 	constructor() {
-		super(new Rectangle());
+		super();
 		this.state = new State();
 	}
 }
@@ -160,8 +160,8 @@ export class AspectRatioControlContainer extends SingleControlContainer {
 }
 
 export class Container extends Widget {
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 		this.children = [];
 	}
 
@@ -199,8 +199,8 @@ export class Container extends Widget {
 }
 
 export class StackContainer extends Container {
-	constructor(rectangle, direction) {
-		super(rectangle);
+	constructor(direction) {
+		super();
 		this.direction = direction;
 	}
 
@@ -280,8 +280,8 @@ export class Rectangle {
 export class Label extends Widget {
 	static filter = null;
 
-	constructor(rectangle, text) {
-		super(rectangle);
+	constructor(text) {
+		super();
 		this.text = text;
 		this.font = null;
 		this.textAlign = "center";
@@ -325,8 +325,8 @@ export class Label extends Widget {
 export class Button extends Widget {
 	static filter = null;
 
-	constructor(rectangle, text) {
-		super(rectangle);
+	constructor(text) {
+		super();
 		this.text = text;
 	}
 
@@ -390,8 +390,8 @@ export class Button extends Widget {
 }
 
 export class ProgressBar extends Widget {
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 		this.progress = 0;
 		this.style = "black";
 	}
