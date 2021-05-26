@@ -14,12 +14,15 @@ import {
 export class MainMenu extends AspectRatioControlContainer {
     constructor() {
         super(2);
+        this.background_fillStyle = "black";
 
         this.stack = new StackContainer("down");
         this.setChild(this.stack);
 
         this.title = new Label("Not träning");
         this.title.margin.setMargin(10);
+        this.title.background_fillStyle = "black";
+        this.title.text_fillStyle = "white";
         this.stack.appendChild(this.title, 0.10);
 
         this.button_train = new Button("Fortsätt träna");

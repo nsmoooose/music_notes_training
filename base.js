@@ -45,9 +45,16 @@ export class Widget extends EventTarget {
 		this.rectangle = new Rectangle();
 		this.margin = new Margin(0, 0, 0, 0);
 		this.visible = true;
+
+		this.background_fillStyle = null;
 	}
 
-	draw(/* ctx */) {}
+	draw(ctx) {
+		if(this.background_fillStyle != null) {
+			ctx.fillStyle = this.background_fillStyle;
+			ctx.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.w, this.rectangle.h);
+		}
+	}
 
 	getRoot() {
 		if(this.parent == null) {
@@ -90,6 +97,7 @@ export class SingleControlContainer extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		if(this.child && this.child.visible) {
 			this.child.draw(ctx);
 		}
@@ -177,6 +185,7 @@ export class Container extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		for (const widget of this.children) {
 			if(widget.visible == false) {
 				continue;
@@ -286,10 +295,11 @@ export class Label extends Widget {
 		this.font = null;
 		this.textAlign = "center";
 		this.textBaseline = "middle";
-		this.fillStyle = "#000000";
+		this.text_fillStyle = "#000000";
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		ctx.lineWidth = 1;
 		if(this.font == null) {
@@ -299,7 +309,7 @@ export class Label extends Widget {
 		}
 		ctx.textAlign = this.textAlign;
 		ctx.textBaseline = this.textBaseline;
-		ctx.fillStyle = this.fillStyle;
+		ctx.fillStyle = this.text_fillStyle;
 		let x = rectangle.x;
 		if(this.textAlign == "center") {
 			x = rectangle.x + rectangle.w / 2;
@@ -331,6 +341,7 @@ export class Button extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		const padding = 0.3;
 
@@ -401,6 +412,7 @@ export class ProgressBar extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw();
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		ctx.beginPath();
 		ctx.strokeStyle = this.style;
@@ -419,6 +431,7 @@ export class ProgressBar extends Widget {
 
 export class OptionsButton extends Button {
 	draw(ctx) {
+		super.draw(ctx);
 		let cx = this.rectangle.w / 2 + this.rectangle.x;
 		let cy = this.rectangle.h / 2 + this.rectangle.y;
 
