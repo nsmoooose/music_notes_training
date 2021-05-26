@@ -29,6 +29,12 @@ export class MainMenu extends AspectRatioControlContainer {
         });
         this.stack.appendChild(this.button_train, 0.10);
 
+        this.button_excercises = new Button(new Rectangle(), "Övningar");
+        this.button_excercises.margin.setMargin(10);
+        this.button_excercises.addEventListener("click", () => {
+        });
+        this.stack.appendChild(this.button_excercises, 0.10);
+
         this.button_options = new Button(new Rectangle(), "Inställningar");
         this.button_options.margin.setMargin(10);
         this.button_options.addEventListener("click", () => {
