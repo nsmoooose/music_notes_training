@@ -24,6 +24,10 @@ self.addEventListener("install", installEvent => {
 });
 
 self.addEventListener("fetch", fetchEvent => {
+	/* No caching when developing this application. */
+	if(fetchEvent.request.url.startsWith("http://127.0.0.1")) {
+		return fetch(fetchEvent.request);
+	}
     fetchEvent.respondWith(
         caches.match(fetchEvent.request).then(res => {
             return res || fetch(fetchEvent.request);
