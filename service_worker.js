@@ -12,6 +12,8 @@ const assets = [
   "/instrument_notes.js",
   "/instrument_piano.js",
   "/instrument_violin.js",
+  "/view_excercises.js",
+  "/view_levels.js",
   "/view_main_menu.js",
   "/view_settings.js",
   "/view_training.js"

@@ -1,9 +1,11 @@
 export class MusicTrainerState {
+	static excercise = 1;
 	static level = 1;
 	static level_results = [];
 	static instrument = "piano";
 
 	static result_reset() {
+		MusicTrainerState.excercise = 1;
 		MusicTrainerState.level = 1;
 		MusicTrainerState.level_results = [];
 		MusicTrainerState.instrument = "piano";
@@ -21,13 +23,19 @@ export class MusicTrainerState {
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.level_results = x.level_results;
 				MusicTrainerState.instrument = x.instrument;
+			} else if(x.version == 3) {
+				MusicTrainerState.excercise = x.excercise;
+				MusicTrainerState.level = x.level;
+				MusicTrainerState.level_results = x.level_results;
+				MusicTrainerState.instrument = x.instrument;
 			}
 		}
 	}
 
 	static persist() {
 		let x = {
-			"version": 2,
+			"version": 3,
+			"excercise": MusicTrainerState.excercise,
 			"level": MusicTrainerState.level,
 			"level_results": MusicTrainerState.level_results,
 			"instrument": MusicTrainerState.instrument

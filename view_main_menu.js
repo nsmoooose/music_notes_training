@@ -2,9 +2,9 @@ import {
 	AspectRatioControlContainer,
 	Button,
 	Label,
-	Rectangle,
 	StackContainer
 } from "./base.js";
+import { Excercises } from "./view_excercises.js";
 import { Settings } from "./view_settings.js";
 
 import {
@@ -35,6 +35,7 @@ export class MainMenu extends AspectRatioControlContainer {
         this.button_excercises = new Button("Övningar");
         this.button_excercises.margin.setMargin(10);
         this.button_excercises.addEventListener("click", () => {
+            this.getRoot().setChild(new Excercises(this));
         });
         this.stack.appendChild(this.button_excercises, 0.10);
 

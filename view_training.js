@@ -9,7 +9,7 @@ import {
 	ProgressBar,
 	StackContainer
 } from "./base.js";
-import { g_levels } from "./questions.js";
+import { g_excercises } from "./questions.js";
 import { MusicTrainerState } from "./state.js";
 
 function note_without_octave(note) {
@@ -62,7 +62,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.instrument.margin.setMargin(20);
 		this.stack.appendChild(this.instrument, 0.375);
 
-		this.set_level(MusicTrainerState.level);
+		this.set_level(MusicTrainerState.excercise, MusicTrainerState.level);
 		this.new_question();
 	}
 
@@ -108,7 +108,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		}
 
 		if(average > 80 && MusicTrainerState.level_results.length == 100) {
-			this.set_level(MusicTrainerState.level + 1);
+			this.set_level(MusicTrainerState.excercise, MusicTrainerState.level + 1);
 		}
 
 		MusicTrainerState.persist();
@@ -122,8 +122,9 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		}
 	}
 
-	set_level(level) {
-		this.level = g_levels[level - 1];
+	set_level(excercise, level) {
+		this.excercise = g_excercises[excercise - 1];
+		this.level = this.excercise.levels[level - 1];
 		this.label_level.text = this.level.name;
 		if(level != MusicTrainerState.level) {
 			MusicTrainerState.result_reset();
