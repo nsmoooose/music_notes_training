@@ -8,8 +8,8 @@ export class InstrumentViolin extends Widget {
 	}
 
 	click(x, y) {
-    }
+	}
 
-    draw(ctx) {
-    }
+	draw(ctx) {
+	}
 }

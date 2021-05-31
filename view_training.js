@@ -54,10 +54,10 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.stack.appendChild(this.staff, 0.545);
 
 		switch(MusicTrainerState.instrument) {
-			case "piano": this.instrument = new InstrumentPiano(); break;
-			case "notes": this.instrument = new InstrumentNotes(); break;
-			case "violin": this.instrument = new InstrumentViolin(); break;
-			default: this.instrument = new InstrumentPiano(); break;
+		case "piano": this.instrument = new InstrumentPiano(); break;
+		case "notes": this.instrument = new InstrumentNotes(); break;
+		case "violin": this.instrument = new InstrumentViolin(); break;
+		default: this.instrument = new InstrumentPiano(); break;
 		}
 		this.instrument.margin.setMargin(20);
 		this.stack.appendChild(this.instrument, 0.375);

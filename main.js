@@ -2,7 +2,7 @@ import {
 	$,
 	Button,
 	Label,
-    Root
+	Root
 } from "./base.js";
 import { MainMenu } from "./view_main_menu.js";
 import { InstrumentPiano } from "./instrument_piano.js";
@@ -14,7 +14,7 @@ import { Staff } from "./staff.js";
  */
 const filter = null;
 
-Label.filter = filter
+Label.filter = filter;
 Button.filter = filter;
 InstrumentPiano.filter = filter;
 Staff.filter = filter;
@@ -38,9 +38,9 @@ function step(ts) {
 window.addEventListener("load", () => {
 	if ("serviceWorker" in navigator) {
 		navigator
-		.serviceWorker.register("service_worker.js")
-		.then(res => console.log("service worker registered"))
-		.catch(err => console.log("service worker not registered", err));
+			.serviceWorker.register("service_worker.js")
+			.then(res => console.log("service worker registered"))
+			.catch(err => console.log("service worker not registered", err));
 	}
 
 	let canvas = $("canvas");

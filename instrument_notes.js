@@ -4,7 +4,7 @@ import {
 } from "./base.js";
 import {
 	Hints
-} from "./questions.js"
+} from "./questions.js";
 import { MusicTrainerState } from "./state.js";
 
 export class InstrumentNotes extends Widget {

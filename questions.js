@@ -9,7 +9,7 @@ export class Question {
 export const Hints = {
 	instrument_notes_show_flat: 1 << 0,
 	instrument_notes_show_sharp: 1 << 1
-}
+};
 
 export class Level {
 	constructor(name, level, questions, hints) {

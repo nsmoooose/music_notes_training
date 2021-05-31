@@ -8,46 +8,46 @@ import { Excercises } from "./view_excercises.js";
 import { Settings } from "./view_settings.js";
 
 import {
-    MusicTrainer
+	MusicTrainer
 } from "./view_training.js";
 
 export class MainMenu extends AspectRatioControlContainer {
-    constructor() {
-        super(2);
-        this.background_fillStyle = "black";
+	constructor() {
+		super(2);
+		this.background_fillStyle = "black";
 
-        this.stack = new StackContainer("down");
-        this.setChild(this.stack);
+		this.stack = new StackContainer("down");
+		this.setChild(this.stack);
 
-        this.title = new Label("Not träning");
-        this.title.margin.setMargin(10);
-        this.title.background_fillStyle = "black";
-        this.title.text_fillStyle = "white";
-        this.stack.appendChild(this.title, 0.10);
+		this.title = new Label("Not träning");
+		this.title.margin.setMargin(10);
+		this.title.background_fillStyle = "black";
+		this.title.text_fillStyle = "white";
+		this.stack.appendChild(this.title, 0.10);
 
-        this.button_train = new Button("Fortsätt träna");
-        this.button_train.margin.setMargin(10);
-        this.button_train.addEventListener("click", () => {
-            this.getRoot().setChild(new MusicTrainer(this));
-        });
-        this.stack.appendChild(this.button_train, 0.10);
+		this.button_train = new Button("Fortsätt träna");
+		this.button_train.margin.setMargin(10);
+		this.button_train.addEventListener("click", () => {
+			this.getRoot().setChild(new MusicTrainer(this));
+		});
+		this.stack.appendChild(this.button_train, 0.10);
 
-        this.button_excercises = new Button("Övningar");
-        this.button_excercises.margin.setMargin(10);
-        this.button_excercises.addEventListener("click", () => {
-            this.getRoot().setChild(new Excercises(this));
-        });
-        this.stack.appendChild(this.button_excercises, 0.10);
+		this.button_excercises = new Button("Övningar");
+		this.button_excercises.margin.setMargin(10);
+		this.button_excercises.addEventListener("click", () => {
+			this.getRoot().setChild(new Excercises(this));
+		});
+		this.stack.appendChild(this.button_excercises, 0.10);
 
-        this.button_options = new Button("Inställningar");
-        this.button_options.margin.setMargin(10);
-        this.button_options.addEventListener("click", () => {
-            this.getRoot().setChild(new Settings(this));
-        });
-        this.stack.appendChild(this.button_options, 0.10);
+		this.button_options = new Button("Inställningar");
+		this.button_options.margin.setMargin(10);
+		this.button_options.addEventListener("click", () => {
+			this.getRoot().setChild(new Settings(this));
+		});
+		this.stack.appendChild(this.button_options, 0.10);
 
-        this.button_help = new Button("Hjälp");
-        this.button_help.margin.setMargin(10);
-        this.stack.appendChild(this.button_help, 0.10);
-    }
+		this.button_help = new Button("Hjälp");
+		this.button_help.margin.setMargin(10);
+		this.stack.appendChild(this.button_help, 0.10);
+	}
 }
