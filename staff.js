@@ -5,8 +5,8 @@ import {
 export class Staff extends Widget {
 	static filter = null;
 
-	constructor(rectangle) {
-		super(rectangle);
+	constructor() {
+		super();
 		this.line_width = 1;
 		this.top_note = "C8";
 		this.extra_note_size = 0;
