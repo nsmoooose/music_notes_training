@@ -1,16 +1,16 @@
-import { InstrumentPiano } from "./instrument_piano.js";
-import { InstrumentNotes } from "./instrument_notes.js";
-import { InstrumentViolin } from "./instrument_violin.js";
-import { Staff } from "./staff.js";
+import { InstrumentPiano } from "./instrument_piano.mjs";
+import { InstrumentNotes } from "./instrument_notes.mjs";
+import { InstrumentViolin } from "./instrument_violin.mjs";
+import { Staff } from "./staff.mjs";
 import {
 	AspectRatioControlContainer,
 	Button,
 	Label,
 	ProgressBar,
 	StackContainer
-} from "./base.js";
-import { g_excercises } from "./questions.js";
-import { MusicTrainerState } from "./state.js";
+} from "./base.mjs";
+import { g_excercises } from "./questions.mjs";
+import { MusicTrainerState } from "./state.mjs";
 
 function note_without_octave(note) {
 	return note.substring(0, 1) + note.substring(2, 3);

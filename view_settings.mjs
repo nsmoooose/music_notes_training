@@ -3,8 +3,8 @@ import {
 	Button,
 	Label,
 	StackContainer
-} from "./base.js";
-import { MusicTrainerState } from "./state.js";
+} from "./base.mjs";
+import { MusicTrainerState } from "./state.mjs";
 
 export class Settings extends AspectRatioControlContainer {
 	constructor(back) {

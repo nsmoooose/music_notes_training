@@ -1,6 +1,6 @@
 import {
 	Widget
-} from "./base.js";
+} from "./base.mjs";
 
 export class InstrumentViolin extends Widget {
 	constructor() {

@@ -1,11 +1,11 @@
 import {
 	Rectangle,
 	Widget
-} from "./base.js";
+} from "./base.mjs";
 import {
 	Hints
-} from "./questions.js";
-import { MusicTrainerState } from "./state.js";
+} from "./questions.mjs";
+import { MusicTrainerState } from "./state.mjs";
 
 export class InstrumentNotes extends Widget {
 	constructor() {

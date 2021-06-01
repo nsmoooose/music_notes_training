@@ -3,9 +3,9 @@ import {
 	Button,
 	Label,
 	StackContainer
-} from "./base.js";
-import { g_excercises } from "./questions.js";
-import { ExcerciseLevels } from "./view_levels.js";
+} from "./base.mjs";
+import { g_excercises } from "./questions.mjs";
+import { ExcerciseLevels } from "./view_levels.mjs";
 
 export class Excercises extends AspectRatioControlContainer {
 	constructor(back) {

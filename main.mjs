@@ -3,11 +3,11 @@ import {
 	Button,
 	Label,
 	Root
-} from "./base.js";
-import { MainMenu } from "./view_main_menu.js";
-import { InstrumentPiano } from "./instrument_piano.js";
-import { InstrumentNotes } from "./instrument_notes.js";
-import { Staff } from "./staff.js";
+} from "./base.mjs";
+import { MainMenu } from "./view_main_menu.mjs";
+import { InstrumentPiano } from "./instrument_piano.mjs";
+import { InstrumentNotes } from "./instrument_notes.mjs";
+import { Staff } from "./staff.mjs";
 
 /* Níce but slow on mobile.
  "drop-shadow(9px 9px 3px #aaa)" 

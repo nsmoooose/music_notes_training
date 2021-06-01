@@ -3,13 +3,13 @@ import {
 	Button,
 	Label,
 	StackContainer
-} from "./base.js";
-import { Excercises } from "./view_excercises.js";
-import { Settings } from "./view_settings.js";
+} from "./base.mjs";
+import { Excercises } from "./view_excercises.mjs";
+import { Settings } from "./view_settings.mjs";
 
 import {
 	MusicTrainer
-} from "./view_training.js";
+} from "./view_training.mjs";
 
 export class MainMenu extends AspectRatioControlContainer {
 	constructor() {

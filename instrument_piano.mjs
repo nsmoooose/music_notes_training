@@ -1,11 +1,9 @@
 import {
 	Rectangle,
 	Widget
-} from "./base.js";
+} from "./base.mjs";
 
 export class InstrumentPiano extends Widget {
-	static filter = null;
-
 	constructor() {
 		super();
 		this.line_width = 3;
@@ -82,3 +80,5 @@ export class InstrumentPiano extends Widget {
 		ctx.filter = "none";
 	}
 }
+
+InstrumentPiano.filter = null;

@@ -3,10 +3,10 @@ import {
 	Button,
 	Label,
 	StackContainer
-} from "./base.js";
-import { g_excercises } from "./questions.js";
-import { MusicTrainerState } from "./state.js";
-import { MusicTrainer } from "./view_training.js";
+} from "./base.mjs";
+import { g_excercises } from "./questions.mjs";
+import { MusicTrainerState } from "./state.mjs";
+import { MusicTrainer } from "./view_training.mjs";
 
 export class ExcerciseLevels extends AspectRatioControlContainer {
 	constructor(back, excercise) {

@@ -287,8 +287,6 @@ export class Rectangle {
 }
 
 export class Label extends Widget {
-	static filter = null;
-
 	constructor(text) {
 		super();
 		this.text = text;
@@ -332,9 +330,9 @@ export class Label extends Widget {
 	}
 }
 
-export class Button extends Widget {
-	static filter = null;
+Label.filter = null;
 
+export class Button extends Widget {
 	constructor(text) {
 		super();
 		this.text = text;
@@ -399,6 +397,8 @@ export class Button extends Widget {
 		ctx.stroke();
 	}
 }
+
+Button.filter = null;
 
 export class ProgressBar extends Widget {
 	constructor() {

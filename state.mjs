@@ -1,9 +1,4 @@
 export class MusicTrainerState {
-	static excercise = 1;
-	static level = 1;
-	static level_results = [];
-	static instrument = "piano";
-
 	static result_reset() {
 		MusicTrainerState.excercise = 1;
 		MusicTrainerState.level = 1;
@@ -44,3 +39,8 @@ export class MusicTrainerState {
 		localStorage.setItem("results", s);
 	}
 }
+
+MusicTrainerState.excercise = 1;
+MusicTrainerState.level = 1;
+MusicTrainerState.level_results = [];
+MusicTrainerState.instrument = "piano";

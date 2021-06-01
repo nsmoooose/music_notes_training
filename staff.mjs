@@ -1,10 +1,8 @@
 import {
 	Widget
-} from "./base.js";
+} from "./base.mjs";
 
 export class Staff extends Widget {
-	static filter = null;
-
 	constructor() {
 		super();
 		this.line_width = 1;
@@ -161,7 +159,7 @@ export class Staff extends Widget {
 
 		p = new Path2D();
 		m1 = this.bass_clef_m.translate(rectangle.x, rectangle.y + bass_y).scale(0.13).scale(clef_scale);
-		p.addPath(this.bass_clef, m1)
+		p.addPath(this.bass_clef, m1);
 		ctx.fill(p);
 
 		for(let i=0; i < 26; i++) {
@@ -186,3 +184,5 @@ export class Staff extends Widget {
 		ctx.filter = "none";
 	}
 }
+
+Staff.filter = null;

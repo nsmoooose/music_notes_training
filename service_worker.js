@@ -4,19 +4,19 @@ const assets = [
 	"/",
 	"/index.html",
 	"/style.css",
-	"/base.js",
-	"/main.js",
-	"/questions.js",
-	"/staff.js",
-	"/state.js",
-	"/instrument_notes.js",
-	"/instrument_piano.js",
-	"/instrument_violin.js",
-	"/view_excercises.js",
-	"/view_levels.js",
-	"/view_main_menu.js",
-	"/view_settings.js",
-	"/view_training.js"
+	"/base.mjs",
+	"/main.mjs",
+	"/questions.mjs",
+	"/staff.mjs",
+	"/state.mjs",
+	"/instrument_notes.mjs",
+	"/instrument_piano.mjs",
+	"/instrument_violin.mjs",
+	"/view_excercises.mjs",
+	"/view_levels.mjs",
+	"/view_main_menu.mjs",
+	"/view_settings.mjs",
+	"/view_training.mjs"
 ];
 
 self.addEventListener("install", installEvent => {
