@@ -14,11 +14,13 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 
 		this.back = back;
 
+		let margin = 3;
+
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
 		this.title = new Label("Övningar");
-		this.title.margin.setMargin(10);
+		this.title.margin.setMargin(margin);
 		this.stack.appendChild(this.title, 0.10);
 
 		let x = 0;
@@ -29,18 +31,19 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 			}
 			if(x == 0) {
 				stack = new StackContainer("right");
-				stack.margin.left = 10;
+				stack.margin.left = margin;
+				stack.margin.right = margin;
 				this.stack.appendChild(stack, 0.1);
 			}
 
 			let button = new Button(level.name);
 			button.font = "30px Arial";
 			if(x == 0) {
-				button.margin.right = 5;
+				button.margin.right = margin / 2;
 			} else {
-				button.margin.left = 5;
+				button.margin.left = margin / 2;
 			}
-			button.margin.bottom = 10;
+			button.margin.bottom = margin;
 			button.addEventListener("click", () => {
 				MusicTrainerState.excercise = g_excercises.indexOf(excercise) + 1;
 				MusicTrainerState.level = excercise.levels.indexOf(level) + 1;
@@ -52,7 +55,7 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 		}
 
 		this.button_back = new Button("< Tillbaka");
-		this.button_back.margin.setMargin(10);
+		this.button_back.margin.setMargin(margin);
 		this.button_back.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});

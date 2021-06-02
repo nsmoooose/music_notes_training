@@ -19,7 +19,7 @@ Button.filter = filter;
 InstrumentPiano.filter = filter;
 Staff.filter = filter;
 
-let g_root = new Root();
+export let g_root = new Root();
 g_root.setChild(new MainMenu());
 
 function step(ts) {

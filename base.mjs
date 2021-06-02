@@ -157,6 +157,8 @@ export class AspectRatioControlContainer extends SingleControlContainer {
 		super.resize(width, height);
 		if(this.child) {
 			if(width * this.ratio <= height) {
+				this.child.rectangle.x = 0;
+				this.child.rectangle.y = 0;
 				this.child.resize(width, width * this.ratio);
 			} else {
 				this.child.rectangle.x = this.rectangle.x + (width - (height / this.ratio)) / 2;
@@ -256,11 +258,12 @@ export class Margin {
 	}
 
 	getRectangle(rectangle) {
+		// console.log("Actual: " + rectangle.w + " Changed: " + (rectangle.w - (this.left / 100 * rectangle.w) - (this.right / 100 * rectangle.w)));
 		return new Rectangle(
-			rectangle.x + this.left,
-			rectangle.y + this.top,
-			rectangle.w - this.left - this.right,
-			rectangle.h - this.top - this.bottom
+			rectangle.x + this.left / 100 * rectangle.w,
+			rectangle.y + this.top / 100 * rectangle.h,
+			rectangle.w - (this.left / 100 * rectangle.w) - (this.right / 100 * rectangle.w),
+			rectangle.h - (this.top / 100 * rectangle.h) - (this.bottom / 100 * rectangle.h)
 		);
 	}
 
