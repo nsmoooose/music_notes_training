@@ -10,7 +10,8 @@ export class InstrumentPiano extends Widget {
 	}
 
 	click(x, y) {
-		let key_width = this.rectangle.w / 7;
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		let key_width = rectangle.w / 7;
 		let note_rects = [];
 
 		const notes_2 = [
@@ -25,18 +26,18 @@ export class InstrumentPiano extends Widget {
 			if(i == 2) {
 				continue;
 			}
-			let x = (i + 1) * key_width + this.rectangle.x - key_width / 4;
-			let y = this.rectangle.y;
-			let r = new Rectangle(x, y, key_width / 2, this.rectangle.h * 0.6);
+			let x = (i + 1) * key_width + rectangle.x - key_width / 4;
+			let y = rectangle.y;
+			let r = new Rectangle(x, y, key_width / 2, rectangle.h * 0.6);
 			r.note = notes_2[i];
 			note_rects.push(r);
 		}
 
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
 		for(let i = 0; i < 7; i++) {
-			let x = i * key_width + this.rectangle.x;
-			let y = this.rectangle.y;
-			let r = new Rectangle(x, y, key_width, this.rectangle.h);
+			let x = i * key_width + rectangle.x;
+			let y = rectangle.y;
+			let r = new Rectangle(x, y, key_width, rectangle.h);
 			r.note = notes[i];
 			note_rects.push(r);
 		}
