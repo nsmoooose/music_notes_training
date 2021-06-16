@@ -258,7 +258,6 @@ export class Margin {
 	}
 
 	getRectangle(rectangle) {
-		// console.log("Actual: " + rectangle.w + " Changed: " + (rectangle.w - (this.left / 100 * rectangle.w) - (this.right / 100 * rectangle.w)));
 		return new Rectangle(
 			rectangle.x + this.left / 100 * rectangle.w,
 			rectangle.y + this.top / 100 * rectangle.h,
@@ -339,6 +338,10 @@ export class Button extends Widget {
 	constructor(text) {
 		super();
 		this.text = text;
+		this.text_color = "black";
+		this.border_color = "black";
+		this.button_color = "#ccc";
+		this.border_radius = 5;
 	}
 
 	draw(ctx) {
@@ -349,10 +352,10 @@ export class Button extends Widget {
 		if(Button.filter != null) {
 			ctx.filter = Button.filter;
 		}
-		ctx.strokeStyle = "#000000";
+		ctx.strokeStyle = this.border_color;
 		ctx.lineWidth = 1;
-		ctx.fillStyle = "#ccc";
-		this.roundRect(ctx, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 5, true);
+		ctx.fillStyle = this.button_color;
+		this.roundRect(ctx, rectangle.x, rectangle.y, rectangle.w, rectangle.h,  this.border_radius, true);
 		ctx.filter = "none";
 
 		if(this.font == null) {
@@ -362,7 +365,7 @@ export class Button extends Widget {
 		}
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
-		ctx.fillStyle = "#000000";
+		ctx.fillStyle = this.text_color;
 		ctx.fillText(this.text,
 			rectangle.x + rectangle.w / 2,
 			rectangle.y + rectangle.h / 2);
