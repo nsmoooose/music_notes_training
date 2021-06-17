@@ -38,6 +38,37 @@ export class EventTarget {
 	}
 }
 
+export class Gfx {
+	static round_rect(ctx, stroke_style, fill_style, rectangle, radius, fill) {
+		ctx.strokeStyle = stroke_style;
+		ctx.lineWidth = 1;
+		ctx.fillStyle = fill_style;
+		if (typeof radius === "number") {
+			radius = {tl: radius, tr: radius, br: radius, bl: radius};
+		} else {
+			var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
+			for (var side in defaultRadius) {
+				radius[side] = radius[side] || defaultRadius[side];
+			}
+		}
+		ctx.beginPath();
+		ctx.moveTo(rectangle.x + radius.tl, rectangle.y);
+		ctx.lineTo(rectangle.x + rectangle.w - radius.tr, rectangle.y);
+		ctx.quadraticCurveTo(rectangle.x + rectangle.w, rectangle.y, rectangle.x + rectangle.w, rectangle.y + radius.tr);
+		ctx.lineTo(rectangle.x + rectangle.w, rectangle.y + rectangle.h - radius.br);
+		ctx.quadraticCurveTo(rectangle.x + rectangle.w, rectangle.y + rectangle.h, rectangle.x + rectangle.w - radius.br, rectangle.y + rectangle.h);
+		ctx.lineTo(rectangle.x + radius.bl, rectangle.y + rectangle.h);
+		ctx.quadraticCurveTo(rectangle.x, rectangle.y + rectangle.h, rectangle.x, rectangle.y + rectangle.h - radius.bl);
+		ctx.lineTo(rectangle.x, rectangle.y + radius.tl);
+		ctx.quadraticCurveTo(rectangle.x, rectangle.y, rectangle.x + radius.tl, rectangle.y);
+		ctx.closePath();
+		if (fill) {
+			ctx.fill();
+		}
+		ctx.stroke();
+	}
+}
+
 export class Widget extends EventTarget {
 	constructor() {
 		super();
@@ -352,10 +383,7 @@ export class Button extends Widget {
 		if(Button.filter != null) {
 			ctx.filter = Button.filter;
 		}
-		ctx.strokeStyle = this.border_color;
-		ctx.lineWidth = 1;
-		ctx.fillStyle = this.button_color;
-		this.roundRect(ctx, rectangle.x, rectangle.y, rectangle.w, rectangle.h,  this.border_radius, true);
+		Gfx.round_rect(ctx, this.border_color, this.button_color, rectangle, this.border_radius, true);
 		ctx.filter = "none";
 
 		if(this.font == null) {
@@ -375,32 +403,6 @@ export class Button extends Widget {
 		if(this.rectangle.contains(x, y)) {
 			this.dispatchEvent("click", null);
 		}
-	}
-
-	roundRect(ctx, x, y, width, height, radius, fill) {
-		if (typeof radius === "number") {
-			radius = {tl: radius, tr: radius, br: radius, bl: radius};
-		} else {
-			var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
-			for (var side in defaultRadius) {
-				radius[side] = radius[side] || defaultRadius[side];
-			}
-		}
-		ctx.beginPath();
-		ctx.moveTo(x + radius.tl, y);
-		ctx.lineTo(x + width - radius.tr, y);
-		ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
-		ctx.lineTo(x + width, y + height - radius.br);
-		ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
-		ctx.lineTo(x + radius.bl, y + height);
-		ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
-		ctx.lineTo(x, y + radius.tl);
-		ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-		ctx.closePath();
-		if (fill) {
-			ctx.fill();
-		}
-		ctx.stroke();
 	}
 }
 
