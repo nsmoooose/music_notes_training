@@ -5,19 +5,6 @@ import {
 	Root
 } from "./base.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
-import { InstrumentPiano } from "./instrument_piano.mjs";
-import { InstrumentNotes } from "./instrument_notes.mjs";
-import { Staff } from "./staff.mjs";
-
-/* Níce but slow on mobile.
- "drop-shadow(9px 9px 3px #aaa)" 
- */
-const filter = null;
-
-Label.filter = filter;
-Button.filter = filter;
-InstrumentPiano.filter = filter;
-Staff.filter = filter;
 
 export let g_root = new Root();
 g_root.setChild(new MainMenu());

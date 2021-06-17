@@ -78,12 +78,21 @@ export class Widget extends EventTarget {
 		this.visible = true;
 
 		this.background_fillStyle = null;
+
+		this.border = false;
+		this.border_fillStyle = "black";
+		this.content_fillStyle = "#ccc";
+		this.border_radius = 5;
 	}
 
 	draw(ctx) {
 		if(this.background_fillStyle != null) {
 			ctx.fillStyle = this.background_fillStyle;
 			ctx.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.w, this.rectangle.h);
+		}
+		if(this.border) {
+			let rectangle = this.margin.getRectangle(this.rectangle);
+			Gfx.round_rect(ctx, this.border_fillStyle, this.content_fillStyle, rectangle, this.border_radius, true);
 		}
 	}
 
@@ -363,28 +372,18 @@ export class Label extends Widget {
 	}
 }
 
-Label.filter = null;
-
 export class Button extends Widget {
 	constructor(text) {
 		super();
 		this.text = text;
 		this.text_color = "black";
-		this.border_color = "black";
-		this.button_color = "#ccc";
-		this.border_radius = 5;
+		this.border = true;
 	}
 
 	draw(ctx) {
 		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		const padding = 0.3;
-
-		if(Button.filter != null) {
-			ctx.filter = Button.filter;
-		}
-		Gfx.round_rect(ctx, this.border_color, this.button_color, rectangle, this.border_radius, true);
-		ctx.filter = "none";
 
 		if(this.font == null) {
 			ctx.font = rectangle.h - padding * rectangle.h + "px Arial";
@@ -405,8 +404,6 @@ export class Button extends Widget {
 		}
 	}
 }
-
-Button.filter = null;
 
 export class ProgressBar extends Widget {
 	constructor() {

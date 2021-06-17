@@ -38,8 +38,8 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_train = new Button("Fortsätt träna");
 		this.button_train.margin.setMargin(margin);
 		this.button_train.background_fillStyle = color2;
-		this.button_train.button_color = color1;
-		this.button_train.border_color = color1;
+		this.button_train.content_fillStyle = color1;
+		this.button_train.border_fillStyle = color1;
 		this.button_train.text_color = text_color;
 		this.button_train.border_radius = radius;
 		this.button_train.addEventListener("click", () => {
@@ -50,8 +50,8 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_excercises = new Button("Övningar");
 		this.button_excercises.margin.setMargin(margin);
 		this.button_excercises.background_fillStyle = color3;
-		this.button_excercises.button_color = color2;
-		this.button_excercises.border_color = color2;
+		this.button_excercises.content_fillStyle = color2;
+		this.button_excercises.border_fillStyle = color2;
 		this.button_excercises.text_color = text_color;
 		this.button_excercises.border_radius = radius;
 		this.button_excercises.addEventListener("click", () => {
@@ -62,8 +62,8 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_options = new Button("Inställningar");
 		this.button_options.margin.setMargin(margin);
 		this.button_options.background_fillStyle = color4;
-		this.button_options.button_color = color3;
-		this.button_options.border_color = color3;
+		this.button_options.content_fillStyle = color3;
+		this.button_options.border_fillStyle = color3;
 		this.button_options.text_color = text_color;
 		this.button_options.border_radius = radius;
 		this.button_options.addEventListener("click", () => {
@@ -74,8 +74,8 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_help = new Button("Hjälp");
 		this.button_help.margin.setMargin(margin);
 		this.button_help.background_fillStyle = "black";
-		this.button_help.button_color = color4;
-		this.button_help.border_color = color4;
+		this.button_help.content_fillStyle = color4;
+		this.button_help.border_fillStyle = color4;
 		this.button_help.text_color = text_color;
 		this.button_help.border_radius = radius;
 		this.stack.appendChild(this.button_help, 0.10);
