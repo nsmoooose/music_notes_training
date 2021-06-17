@@ -22,6 +22,8 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.back = back;
 
+		let margin = 3;
+
 		this.current_question = null;
 
 		MusicTrainerState.load();
@@ -33,7 +35,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.stack.appendChild(this.header_stack, 0.05);
 
 		this.button_back = new Button("<");
-		this.button_back.margin.setMargin(10);
+		this.button_back.margin.setMargin(margin);
 		this.button_back.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
@@ -41,16 +43,16 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.label_level = new Label("");
 		this.label_level.textAlign = "center";
-		this.label_level.margin.setMargin(5);
+		this.label_level.margin.setMargin(margin);
 		this.header_stack.appendChild(this.label_level, 0.90);
 
 		this.progress = new ProgressBar();
-		this.progress.margin.setMargin(5);
+		this.progress.margin.setMargin(margin);
 		this.progress.setProgress(MusicTrainerState.level_results.length / 100);
 		this.stack.appendChild(this.progress, 0.03);
 
 		this.staff = new Staff();
-		this.staff.margin.setMargin(10);
+		this.staff.margin.setMargin(margin);
 		this.stack.appendChild(this.staff, 0.545);
 
 		switch(MusicTrainerState.instrument) {
@@ -59,7 +61,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		case "violin": this.instrument = new InstrumentViolin(); break;
 		default: this.instrument = new InstrumentPiano(); break;
 		}
-		this.instrument.margin.setMargin(20);
+		this.instrument.margin.setMargin(margin);
 		this.stack.appendChild(this.instrument, 0.375);
 
 		this.set_level(MusicTrainerState.excercise, MusicTrainerState.level);
