@@ -16,9 +16,6 @@ export class MainMenu extends AspectRatioControlContainer {
 	constructor() {
 		super(2);
 
-		let margin = 0;
-		let radius = {tl: 0, tr: 0, bl: 80, br: 0};
-
 		let color0 = "#ffaaaa";
 		let color1 = "#ff8888";
 		let color2 = "#ee6666";

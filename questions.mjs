@@ -22,14 +22,15 @@ export class Level {
 }
 
 export class Excercise {
-	constructor(name, levels) {
+	constructor(name, description, levels) {
 		this.name = name;
+		this.description = description;
 		this.levels = levels;
 	}
 }
 
 export let g_excercises = [
-	new Excercise("Rena noter", [
+	new Excercise("Rena noter", "Enkla noter utan konstigheter", [
 		new Level("Ettstrukna", 1, [
 			new Question("C4"),
 			new Question("D4"),
@@ -156,7 +157,7 @@ export let g_excercises = [
 			new Question("C8")
 		])
 	]),
-	new Excercise("b och #", [
+	new Excercise("b och #", "Höjningar och sänkningar", [
 		new Level("Ettstruket + #", 1, [
 			new Question("C4"),
 			new Question("D4"),
@@ -242,5 +243,5 @@ export let g_excercises = [
 			new Question("B5♭"),
 		], Hints.instrument_notes_show_flat)
 	]),
-	new Excercise("Tonarter", [])
+	new Excercise("Tonarter", "Dur och moll, har du koll?", [])
 ];

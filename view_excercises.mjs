@@ -2,6 +2,7 @@ import {
 	AspectRatioControlContainer,
 	Button,
 	Label,
+	MenuOption,
 	StackContainer
 } from "./base.mjs";
 import { g_excercises } from "./questions.mjs";
@@ -13,48 +14,49 @@ export class Excercises extends AspectRatioControlContainer {
 
 		this.back = back;
 
-		let margin = 3;
+		let colors = [
+			"#66ee66",
+			"#44cc44",
+			"#22aa22",
+			"#008800",
+			"#006600",
+			"black"
+		];
+		let text_color = "#ffffff"
+
+		this.background_fillStyle = "black";
 
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
 		this.title = new Label("Övningar");
-		this.title.margin.setMargin(margin);
-		this.stack.appendChild(this.title, 0.10);
+		this.title.margin.setMargin(30);
+		this.title.background_fillStyle = colors[0];
+		this.title.text_fillStyle = "white";
+		this.stack.appendChild(this.title, 0.20);
 
-		let x = 0;
-		let stack = null;
+		let index = 1;
 		for(let excercise of g_excercises) {
-			if(x == 2) {
-				x = 0;
-			}
-			if(x == 0) {
-				stack = new StackContainer("right");
-				stack.margin.left = margin;
-				stack.margin.right = margin;
-				this.stack.appendChild(stack, 0.1);
-			}
-
-			let button = new Button(excercise.name);
-			button.font = "30px Arial";
-			if(x == 0) {
-				button.margin.right = margin / 2;
-			} else {
-				button.margin.left = margin / 2;
-			}
-			button.margin.bottom = margin;
-			button.addEventListener("click", () => {
+			let menu = new MenuOption(excercise.name, excercise.description, new Label(""));
+			menu.background_fillStyle = colors[index + 1];
+			menu.content_fillStyle = colors[index];
+			menu.border_fillStyle = colors[index];
+			menu.content_text_color = text_color;
+			menu.addEventListener("click", () => {
 				this.getRoot().setChild(new ExcerciseLevels(this, excercise));
 			});
-			stack.appendChild(button, 0.5);
-			x++;
+			this.stack.appendChild(menu, 0.14);
+			index += 1;
 		}
 
-		this.button_back = new Button("< Tillbaka");
-		this.button_back.margin.setMargin(margin);
-		this.button_back.addEventListener("click", () => {
+		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new Label(""));
+		menu.background_fillStyle = colors[index + 1];
+		menu.content_fillStyle = colors[index];
+		menu.border_fillStyle = colors[index];
+		menu.content_text_color = text_color;
+		menu.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
-		this.stack.appendChild(this.button_back, 0.10);
+		this.stack.appendChild(menu, 0.14);
 	}
 }
