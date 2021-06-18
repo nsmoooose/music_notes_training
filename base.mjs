@@ -462,15 +462,15 @@ export class MenuOption extends StackContainer {
 		this.appendChild(stack2);
 
 		this.label_title = new Label(title);
-		this.label_title.margin.top = 15;
-		this.label_title.margin.bottom = 15;
+		this.label_title.margin.top = 17;
+		this.label_title.margin.bottom = 17;
 		this.label_title.margin.left = 8;
 		this.label_title.textAlign = "left";
 		stack2.appendChild(this.label_title, 0.7);
 
 		this.label_help = new Label(help);
-		this.label_help.margin.top = 15;
-		this.label_help.margin.bottom = 15;
+		this.label_help.margin.top = 17;
+		this.label_help.margin.bottom = 17;
 		this.label_help.margin.left = 20;
 		this.label_help.textAlign = "left";
 		stack2.appendChild(this.label_help, 0.3);
