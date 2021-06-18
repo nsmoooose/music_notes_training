@@ -93,3 +93,44 @@ export class ImageBack extends Widget {
 		ctx.globalAlpha = 1.0;
 	}
 }
+
+export class ImageHelp extends Widget {
+	constructor() {
+		super();
+		this.change = 0;
+	}
+
+	update(delta) {
+		this.change += delta;
+	}
+
+	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
+
+		let q = rectangle.h / 4;
+		let xd = q * Math.sin(this.change);
+		let c = rectangle.w / 2;
+
+		ctx.globalAlpha = 0.3;
+		ctx.beginPath();
+		ctx.strokeStyle = "#ffffff";
+		ctx.lineWidth = rectangle.h / 10;
+		ctx.moveTo(rectangle.x + c - xd, rectangle.y + q);
+		ctx.bezierCurveTo(
+			rectangle.x + c - xd, rectangle.y,
+			rectangle.x + c + xd, rectangle.y,
+			rectangle.x + c + xd, rectangle.y + q);
+		ctx.bezierCurveTo(
+			rectangle.x + c + xd, rectangle.y + q * 2,
+			rectangle.x + c, rectangle.y + q * 2,
+			rectangle.x + c, rectangle.y + q * 3);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.fillStyle = ctx.strokeStyle;
+		ctx.arc(rectangle.x + c, rectangle.y + rectangle.h, rectangle.h / 15, 0, 2 * Math.PI);
+		ctx.fill();
+
+		ctx.globalAlpha = 1.0;
+	}
+}

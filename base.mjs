@@ -446,7 +446,10 @@ export class MenuOption extends StackContainer {
 		this.border = true;
 		this.border_radius = {tl: 0, tr: 0, bl: 10, br: 0};
 
-		image.margin.setMargin(20);
+		image.margin.left = 20;
+		image.margin.right = 20;
+		image.margin.top = 20;
+		image.margin.bottom = 30;
 
 		/* A stack in the right direction with an image icon on the right side. */
 		let stack1 = new StackContainer("right");
