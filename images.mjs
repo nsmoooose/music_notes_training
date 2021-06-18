@@ -65,3 +65,31 @@ export class ImageSettings extends Widget {
 		ctx.globalAlpha = 1.0;
 	}
 }
+
+export class ImageBack extends Widget {
+	constructor() {
+		super();
+		this.position = 0;
+	}
+
+	update(delta) {
+		this.position -= delta * 8;
+	}
+
+	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		if(this.position < rectangle.x || this.position > rectangle.x + rectangle.w) {
+			this.position = rectangle.x + rectangle.w;
+		}
+
+		ctx.globalAlpha = 0.3;
+		ctx.beginPath();
+		ctx.strokeStyle = "#ffffff";
+		ctx.lineWidth = rectangle.h / 10;
+		ctx.lineTo(this.position, rectangle.y);
+		ctx.lineTo(this.position - rectangle.h / 3, rectangle.y + rectangle.h / 2);
+		ctx.lineTo(this.position, rectangle.y + rectangle.h);
+		ctx.stroke();
+		ctx.globalAlpha = 1.0;
+	}
+}

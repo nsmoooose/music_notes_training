@@ -5,6 +5,7 @@ import {
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { ImageBack } from "./images.mjs";
 import { g_excercises } from "./questions.mjs";
 import { ExcerciseLevels } from "./view_levels.mjs";
 
@@ -49,7 +50,7 @@ export class Excercises extends AspectRatioControlContainer {
 			index += 1;
 		}
 
-		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new Label(""));
+		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
 		menu.background_fillStyle = colors[index + 1];
 		menu.content_fillStyle = colors[index];
 		menu.border_fillStyle = colors[index];
