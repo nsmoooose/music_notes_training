@@ -69,15 +69,18 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	on_click(x, y) {
-		super.on_click(x, y);
+		let handled = super.on_click(x, y);
+		if(handled) {
+			return handled;
+		}
 
 		if(this.current_question == null) {
-			return;
+			return true;
 		}
 
 		const answer = this.instrument.click(x, y);
 		if(answer == null) {
-			return;
+			return true;
 		}
 		let correct_answer = note_without_octave(this.current_question.note);
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
@@ -114,6 +117,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		}
 
 		MusicTrainerState.persist();
+		return true;
 	}
 
 	draw(ctx) {

@@ -29,12 +29,13 @@ export class EventTarget {
 
 	dispatchEvent(type, event) {
 		if (!(type in this.listeners)) {
-			return true;
+			return false;
 		}
 		var stack = this.listeners[type].slice();
 		for (var i = 0, l = stack.length; i < l; i++) {
 			stack[i].call(this, event);
 		}
+		return true;
 	}
 }
 
@@ -124,9 +125,11 @@ export class Widget extends EventTarget {
 	update(/* delta */) {}
 
 	on_click(x, y) {
+		let handled = false;
 		if(this.visible == true && this.rectangle.contains(x, y)) {
-			this.dispatchEvent("click", null);
+			handled = this.dispatchEvent("click", null);
 		}
+		return handled;
 	}
 }
 
@@ -158,8 +161,9 @@ export class SingleControlContainer extends Widget {
 
 	on_click(x, y) {
 		if(this.child) {
-			this.child.on_click(x, y);
+			return this.child.on_click(x, y);
 		}
+		return false;
 	}
 
 	update(delta) {
@@ -243,9 +247,14 @@ export class Container extends Widget {
 	}
 
 	on_click(x, y) {
+		let handled = false;
 		for (const widget of this.children) {
-			widget.on_click(x, y);
+			handled = widget.on_click(x, y);
+			if(handled) {
+				return handled;
+			}
 		}
+		return super.on_click(x, y);
 	}
 }
 
@@ -398,12 +407,6 @@ export class Button extends Widget {
 		ctx.fillText(this.text,
 			rectangle.x + rectangle.w / 2,
 			rectangle.y + rectangle.h / 2);
-	}
-
-	click(x, y) {
-		if(this.rectangle.contains(x, y)) {
-			this.dispatchEvent("click", null);
-		}
 	}
 }
 
