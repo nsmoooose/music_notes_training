@@ -285,6 +285,12 @@ export class StackContainer extends Container {
 
 				x += widget.rectangle.w;
 			}
+		} else if(this.direction == "none") {
+			for(let widget of this.children) {
+				widget.rectangle.x = rectangle.x;
+				widget.rectangle.y = rectangle.y;
+				widget.resize(rectangle.w, rectangle.h);
+			}
 		}
 	}
 }
@@ -364,11 +370,7 @@ export class Label extends Widget {
 			y = rectangle.y + rectangle.h;
 		}
 
-		if(Label.filter != null) {
-			ctx.filter = Label.filter;
-		}
 		ctx.fillText(this.text, x, y);
-		ctx.filter = "none";
 	}
 }
 
@@ -477,5 +479,48 @@ export class OptionsButton extends Button {
 		ctx.stroke();
 		ctx.fillStyle = "white";
 		ctx.fill();
+	}
+}
+
+export class MenuOption extends StackContainer {
+	constructor(title, help, image, cb) {
+		super("none");
+
+		this.border = true;
+		this.border_radius = {tl: 0, tr: 0, bl: 10, br: 0};
+
+		/* A stack in the right direction with an image icon on the right side. */
+		let stack1 = new StackContainer("right");
+		stack1.appendChild(new Widget(), 0.7);
+		stack1.appendChild(image, 0.3);
+		this.appendChild(stack1);
+
+		/* A stack in down direction with two labels describing their use. */
+		let stack2 = new StackContainer("down");
+		this.appendChild(stack2);
+
+		this.label_title = new Label(title);
+		this.label_title.margin.top = 15;
+		this.label_title.margin.bottom = 15;
+		this.label_title.margin.left = 8;
+		this.label_title.textAlign = "left";
+		stack2.appendChild(this.label_title, 0.7);
+
+		this.label_help = new Label(help);
+		this.label_help.margin.top = 15;
+		this.label_help.margin.bottom = 15;
+		this.label_help.margin.left = 20;
+		this.label_help.textAlign = "left";
+		stack2.appendChild(this.label_help, 0.3);
+	}
+
+	set content_text_color(value) {
+		this.label_title.text_fillStyle = value;
+		this.label_help.text_fillStyle = value;
+	}
+
+	resize(width, height) {
+		super.resize(width, height);
+		this.border_radius.bl = height;
 	}
 }
