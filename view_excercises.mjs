@@ -1,6 +1,5 @@
 import {
 	AspectRatioControlContainer,
-	Button,
 	Label,
 	MenuOption,
 	StackContainer
@@ -23,7 +22,7 @@ export class Excercises extends AspectRatioControlContainer {
 			"#006600",
 			"black"
 		];
-		let text_color = "#ffffff"
+		let text_color = "#ffffff";
 
 		this.background_fillStyle = "black";
 

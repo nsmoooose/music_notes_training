@@ -7,9 +7,9 @@ export class InstrumentViolin extends Widget {
 		super();
 	}
 
-	click(x, y) {
+	click(/*x, y*/) {
 	}
 
-	draw(ctx) {
+	draw(/*ctx*/) {
 	}
 }

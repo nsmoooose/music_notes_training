@@ -24,7 +24,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		let color2 = "#ee6666";
 		let color3 = "#cc4444";
 		let color4 = "#aa2222";
-		let text_color = "#ffffff"
+		let text_color = "#ffffff";
 
 		this.background_fillStyle = "black";
 

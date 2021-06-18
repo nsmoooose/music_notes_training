@@ -1,7 +1,5 @@
 import {
 	$,
-	Button,
-	Label,
 	Root
 } from "./base.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
@@ -26,7 +24,7 @@ window.addEventListener("load", () => {
 	if ("serviceWorker" in navigator) {
 		navigator
 			.serviceWorker.register("service_worker.js")
-			.then(res => console.log("service worker registered"))
+			.then(() => console.log("service worker registered"))
 			.catch(err => console.log("service worker not registered", err));
 	}
 
@@ -44,7 +42,7 @@ window.addEventListener("load", () => {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 
-	window.addEventListener("resize", (event) => {
+	window.addEventListener("resize", () => {
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		g_root.resize(canvas.width, canvas.height);
