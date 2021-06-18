@@ -1,10 +1,10 @@
 import {
 	AspectRatioControlContainer,
-	Button,
 	Label,
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { ImageSettings } from "./images.mjs";
 import { Excercises } from "./view_excercises.mjs";
 import { Settings } from "./view_settings.mjs";
 
@@ -54,7 +54,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_excercises, 0.14);
 
-		this.button_options = new MenuOption("Inställningar", "Språk och instrument", new Label(""));
+		this.button_options = new MenuOption("Inställningar", "Språk och instrument", new ImageSettings());
 		this.button_options.background_fillStyle = color4;
 		this.button_options.content_fillStyle = color3;
 		this.button_options.border_fillStyle = color3;

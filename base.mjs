@@ -439,58 +439,14 @@ export class ProgressBar extends Widget {
 	}
 }
 
-export class OptionsButton extends Button {
-	draw(ctx) {
-		super.draw(ctx);
-		let cx = this.rectangle.w / 2 + this.rectangle.x;
-		let cy = this.rectangle.h / 2 + this.rectangle.y;
-
-		let r = Math.min(this.rectangle.w, this.rectangle.h) / 2;
-		let r2 = r * 0.8;
-		let r3 = r * 0.4;
-		ctx.beginPath();
-		ctx.lineWidth = Math.min(this.rectangle.w, this.rectangle.h) * 0.02;
-		ctx.strokeStyle = "#aaaaaa";
-		ctx.fillStyle = "#aaaaaa";
-
-		let segments = 22;
-		let segment_angle = Math.PI * 2 / segments;
-		for(let i = 0; i < segments; i++) {
-			let x = Math.sin(i * segment_angle) * r + cx;
-			let y = Math.cos(i * segment_angle) * r + cy;
-			ctx.lineTo(x, y);
-
-			x = Math.sin(i * segment_angle) * r2 + cx;
-			y = Math.cos(i * segment_angle) * r2 + cy;
-			ctx.lineTo(x, y);
-
-			i++;
-			x = Math.sin(i * segment_angle) * r2 + cx;
-			y = Math.cos(i * segment_angle) * r2 + cy;
-			ctx.lineTo(x, y);
-
-			x = Math.sin(i * segment_angle) * r + cx;
-			y = Math.cos(i * segment_angle) * r + cy;
-			ctx.lineTo(x, y);
-		}
-		ctx.closePath();
-		ctx.stroke();
-		ctx.fill();
-
-		ctx.beginPath();
-		ctx.arc(cx, cy, r3, 0, 2 * Math.PI);
-		ctx.stroke();
-		ctx.fillStyle = "white";
-		ctx.fill();
-	}
-}
-
 export class MenuOption extends StackContainer {
-	constructor(title, help, image, cb) {
+	constructor(title, help, image) {
 		super("none");
 
 		this.border = true;
 		this.border_radius = {tl: 0, tr: 0, bl: 10, br: 0};
+
+		image.margin.setMargin(20);
 
 		/* A stack in the right direction with an image icon on the right side. */
 		let stack1 = new StackContainer("right");
