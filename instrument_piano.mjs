@@ -50,9 +50,6 @@ export class InstrumentPiano extends Widget {
 	}
 
 	draw(ctx) {
-		if(InstrumentPiano.filter != null) {
-			ctx.filter = InstrumentPiano.filter;
-		}
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let key_width = rectangle.w / 7;
 
@@ -78,8 +75,5 @@ export class InstrumentPiano extends Widget {
 				(i + 1) * key_width + rectangle.x - key_width / 4, rectangle.y,
 				key_width / 2, rectangle.h * 0.6);
 		}
-		ctx.filter = "none";
 	}
 }
-
-InstrumentPiano.filter = null;

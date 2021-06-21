@@ -1,9 +1,10 @@
 import {
 	AspectRatioControlContainer,
-	Button,
 	Label,
+	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { ImageBack } from "./images.mjs";
 import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
 import { MusicTrainer } from "./view_training.mjs";
@@ -14,51 +15,59 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 
 		this.back = back;
 
-		let margin = 3;
+		let colors = [
+			"#6666ee",
+			"#4444cc",
+			"#2222aa",
+			"#000099",
+			"#000088",
+			"#000077",
+			"#000066",
+			"#000055",
+			"#000044",
+		];
+		let text_color = "#ffffff";
+
+		this.background_fillStyle = "black";
 
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
 		this.title = new Label("Övningar");
-		this.title.margin.setMargin(margin);
-		this.stack.appendChild(this.title, 0.10);
+		this.title.margin.setMargin(30);
+		this.title.background_fillStyle = colors[0];
+		this.title.text_fillStyle = text_color;
+		this.stack.appendChild(this.title, 0.20);
 
-		let x = 0;
-		let stack = null;
+		colors[excercise.levels.length + 1] = "black";
+		colors[excercise.levels.length + 2] = "black";
+
+		let index = 1;
 		for(let level of excercise.levels) {
-			if(x == 2) {
-				x = 0;
-			}
-			if(x == 0) {
-				stack = new StackContainer("right");
-				stack.margin.left = margin;
-				stack.margin.right = margin;
-				this.stack.appendChild(stack, 0.1);
-			}
+			let menu = new MenuOption(level.name, excercise.description, new Label(""));
+			menu.background_fillStyle = colors[index + 1];
+			menu.content_fillStyle = colors[index];
+			menu.border_fillStyle = colors[index];
+			menu.content_text_color = text_color;
 
-			let button = new Button(level.name);
-			button.font = "30px Arial";
-			if(x == 0) {
-				button.margin.right = margin / 2;
-			} else {
-				button.margin.left = margin / 2;
-			}
-			button.margin.bottom = margin;
-			button.addEventListener("click", () => {
+			menu.addEventListener("click", () => {
 				MusicTrainerState.excercise = g_excercises.indexOf(excercise) + 1;
 				MusicTrainerState.level = excercise.levels.indexOf(level) + 1;
 				MusicTrainerState.persist();
 				this.getRoot().setChild(new MusicTrainer(this));
 			});
-			stack.appendChild(button, 0.5);
-			x++;
+			this.stack.appendChild(menu, (1.0 - 0.20 - 0.14) / excercise.levels.length);
+			index += 1;
 		}
 
-		this.button_back = new Button("< Tillbaka");
-		this.button_back.margin.setMargin(margin);
-		this.button_back.addEventListener("click", () => {
+		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		menu.background_fillStyle = colors[index + 1];
+		menu.content_fillStyle = colors[index];
+		menu.border_fillStyle = colors[index];
+		menu.content_text_color = text_color;
+		menu.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
-		this.stack.appendChild(this.button_back, 0.10);
+		this.stack.appendChild(menu, 0.14);
 	}
 }

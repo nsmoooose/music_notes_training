@@ -32,8 +32,11 @@ export class Excercises extends AspectRatioControlContainer {
 		this.title = new Label("Övningar");
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = colors[0];
-		this.title.text_fillStyle = "white";
+		this.title.text_fillStyle = text_color;
 		this.stack.appendChild(this.title, 0.20);
+
+		colors[g_excercises.length + 1] = "black";
+		colors[g_excercises.length + 2] = "black";
 
 		let index = 1;
 		for(let excercise of g_excercises) {
