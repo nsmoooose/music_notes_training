@@ -22,6 +22,8 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.back = back;
 
+		this.background_fillStyle = "black";
+
 		let margin = 3;
 
 		this.current_question = null;
@@ -29,6 +31,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		MusicTrainerState.load();
 
 		this.stack = new StackContainer("down");
+		this.stack.background_fillStyle = "white";
 		this.setChild(this.stack);
 
 		this.header_stack = new StackContainer("right");
