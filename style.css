@@ -6,8 +6,12 @@ canvas {
     display: block;
 }
 
-body {
+body.canvas {
     margin: 0px;
     padding: 0px;
-    text-align: center;
 }
+
+body.help {
+	font-family: "Arial";
+}
+

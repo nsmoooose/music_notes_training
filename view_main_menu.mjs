@@ -72,6 +72,9 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_help.content_fillStyle = color4;
 		this.button_help.border_fillStyle = color4;
 		this.button_help.content_text_color = text_color;
+		this.button_help.addEventListener("click", () => {
+			window.location = "help-sv.html";
+		});
 		this.stack.appendChild(this.button_help, 0.14);
 	}
 }

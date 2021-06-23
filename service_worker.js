@@ -5,6 +5,7 @@ const assets = [
 	"/index.html",
 	"/style.css",
 	"/base.mjs",
+	"/help-sv.html",
 	"/main.mjs",
 	"/questions.mjs",
 	"/staff.mjs",
