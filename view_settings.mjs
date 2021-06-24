@@ -2,8 +2,10 @@ import {
 	AspectRatioControlContainer,
 	Button,
 	Label,
+	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { ImageBack } from "./images.mjs";
 import { MusicTrainerState } from "./state.mjs";
 
 export class Settings extends AspectRatioControlContainer {
@@ -12,63 +14,77 @@ export class Settings extends AspectRatioControlContainer {
 
 		this.back = back;
 
+		let colors = [
+			"#6666ee",
+			"#4444cc",
+			"#2222aa",
+			"#000099",
+			"#aa0000",
+			"#000077",
+			"#000066",
+			"#000055",
+			"#000044",
+		];
+		let text_color = "#ffffff";
+
 		let margin = 3;
+		this.background_fillStyle = "black";
 
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
 		this.title = new Label("Inställningar");
-		this.title.margin.setMargin(margin);
-		this.stack.appendChild(this.title, 0.10);
+		this.title.margin.setMargin(30);
+		this.title.background_fillStyle = colors[0];
+		this.title.text_fillStyle = text_color;
+		this.stack.appendChild(this.title, 0.20);
 
 		// TODO Language
 
-		// TODO Instrument
-		this.instrument_stack = new StackContainer("right");
-		this.instrument_stack.margin.setMargin(margin);
-		this.stack.appendChild(this.instrument_stack, 0.10);
+		let instruments = [
+			{id: "notes", name: "Noter", description: "Lär dig noternas namn"},
+			{id: "piano", name: "Piano", description: "Tangenterna placering"},
+			{id: "violin", name: "Fiol", description: "Var ska jag trycka"}
+		];
 
-		this.button_notes = new Button("Noter");
-		this.button_notes.margin.right = margin;
-		this.button_notes.addEventListener("click", () => {
-			MusicTrainerState.instrument = "notes";
-			MusicTrainerState.persist();
-		});
-		this.instrument_stack.appendChild(this.button_notes, 0.33);
+		colors[instruments.length + 1 + 1] = "black";
+		colors[instruments.length + 1 + 2] = "black";
 
-		this.button_piano = new Button("Piano");
-		this.button_piano.margin.right = margin;
-		this.button_piano.addEventListener("click", () => {
-			MusicTrainerState.instrument = "piano";
-			MusicTrainerState.persist();
-		});
-		this.instrument_stack.appendChild(this.button_piano, 0.33);
+		let index = 1;
+		for(let instrument of instruments) {
+			let menu = new MenuOption(instrument.name, instrument.description, new Label(""));
+			menu.background_fillStyle = colors[index + 1];
+			menu.content_fillStyle = colors[index];
+			menu.border_fillStyle = colors[index];
+			menu.content_text_color = text_color;
+			menu.addEventListener("click", () => {
+				MusicTrainerState.instrument = instrument.id;
+				MusicTrainerState.persist();
+			});
+			this.stack.appendChild(menu, 0.1);
+			index += 1;
+		}
 
-		this.button_violin = new Button("Fiol");
-		this.button_violin.addEventListener("click", () => {
-			MusicTrainerState.instrument = "violin";
-			MusicTrainerState.persist();
-		});
-		this.instrument_stack.appendChild(this.button_violin, 0.33);
-
-		this.label_space_1 = new Label("");
-		this.stack.appendChild(this.label_space_1, 0.10);
-
-		this.button_reset_progress = new Button("!! Starta om !!");
-		this.button_reset_progress.margin.setMargin(margin);
-		this.button_reset_progress.addEventListener("click", () => {
+		let menu = new MenuOption("!! Starta om !!", "Din lagrade statistik försvinner", new Label(""));
+		menu.background_fillStyle = colors[index + 1];
+		menu.content_fillStyle = colors[index];
+		menu.border_fillStyle = colors[index];
+		menu.content_text_color = text_color;
+		menu.addEventListener("click", () => {
 			MusicTrainerState.result_reset();
-		});
-		this.stack.appendChild(this.button_reset_progress, 0.10);
-
-		this.label_space_2 = new Label("");
-		this.stack.appendChild(this.label_space_2, 0.10);
-
-		this.button_back = new Button("< Tillbaka");
-		this.button_back.margin.setMargin(margin);
-		this.button_back.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
-		this.stack.appendChild(this.button_back, 0.10);
+		this.stack.appendChild(menu, 0.1);
+		index += 1;
+
+		menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		menu.background_fillStyle = colors[index + 1];
+		menu.content_fillStyle = colors[index];
+		menu.border_fillStyle = colors[index];
+		menu.content_text_color = text_color;
+		menu.addEventListener("click", () => {
+			this.getRoot().setChild(this.back);
+		});
+		this.stack.appendChild(menu, 0.14);
 	}
 }

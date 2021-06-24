@@ -34,7 +34,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.title = new Label("Not träning");
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = color0;
-		this.title.text_fillStyle = "white";
+		this.title.text_fillStyle = text_color;
 		this.stack.appendChild(this.title, 0.20);
 
 		this.button_train = new MenuOption("Träna", "Fortsätt där du slutade", new Label(""));
