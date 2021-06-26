@@ -12,8 +12,9 @@ export const Hints = {
 };
 
 export class Level {
-	constructor(name, questions, hints) {
+	constructor(id, name, questions, hints) {
 		hints = hints || 0;
+		this.id = id;
 		this.name = name;
 		this.questions = questions;
 		this.hints = hints;
@@ -21,7 +22,8 @@ export class Level {
 }
 
 export class Excercise {
-	constructor(name, description, levels) {
+	constructor(id, name, description, levels) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.levels = levels;
@@ -29,8 +31,8 @@ export class Excercise {
 }
 
 export let g_excercises = [
-	new Excercise("Rena noter", "Enkla noter utan konstigheter", [
-		new Level("Ettstrukna oktaven", [
+	new Excercise("c907f608-0b1f-4a88-8bb2-f32c354fe1b5", "Rena noter", "Enkla noter utan konstigheter", [
+		new Level("8a807dc8-81da-4625-8928-5330af09d940", "Ettstrukna oktaven", [
 			new Question("C4"),
 			new Question("D4"),
 			new Question("E4"),
@@ -39,7 +41,7 @@ export let g_excercises = [
 			new Question("A4"),
 			new Question("B4"),
 		]),
-		new Level("Lilla oktaven", [
+		new Level("8ce445fe-0698-4a1b-9361-4bf110a0b79c", "Lilla oktaven", [
 			new Question("C3"),
 			new Question("D3"),
 			new Question("E3"),
@@ -48,7 +50,7 @@ export let g_excercises = [
 			new Question("A3"),
 			new Question("B3"),
 		]),
-		new Level("Tvåstrukna oktaven", [
+		new Level("203425b0-dc1c-4005-a6a9-999dfaabb0fb", "Tvåstrukna oktaven", [
 			new Question("C5"),
 			new Question("D5"),
 			new Question("E5"),
@@ -57,7 +59,7 @@ export let g_excercises = [
 			new Question("A5"),
 			new Question("B5"),
 		]),
-		new Level("Stora oktaven", [
+		new Level("fd3c9e42-010d-4a98-92fa-d1dded166182", "Stora oktaven", [
 			new Question("C2"),
 			new Question("D2"),
 			new Question("E2"),
@@ -66,7 +68,7 @@ export let g_excercises = [
 			new Question("A2"),
 			new Question("B2"),
 		]),
-		new Level("Trestrukna oktaven", [
+		new Level("a8f6ddd5-a9e7-4c8c-ac37-93990fdbebfe", "Trestrukna oktaven", [
 			new Question("C6"),
 			new Question("D6"),
 			new Question("E6"),
@@ -75,7 +77,7 @@ export let g_excercises = [
 			new Question("A6"),
 			new Question("B6"),
 		]),
-		new Level("Kontra oktaven", [
+		new Level("0b8297cc-7c2e-43b6-8c8d-b71689bf9647", "Kontra oktaven", [
 			new Question("C1"),
 			new Question("D1"),
 			new Question("E1"),
@@ -84,7 +86,7 @@ export let g_excercises = [
 			new Question("A1"),
 			new Question("B1"),
 		]),
-		new Level("Fyrstrukna oktaven", [
+		new Level("d4fd3d99-a77b-4416-8682-a09f637743c6", "Fyrstrukna oktaven", [
 			new Question("C7"),
 			new Question("D7"),
 			new Question("E7"),
@@ -93,7 +95,7 @@ export let g_excercises = [
 			new Question("A7"),
 			new Question("B7"),
 		]),
-		new Level("Allt för piano", [
+		new Level("f294dd38-8036-44d5-9e31-0391762ab6c3", "Allt för piano", [
 			new Question("A0"),
 			new Question("B0"),
 
@@ -156,8 +158,8 @@ export let g_excercises = [
 			new Question("C8")
 		])
 	]),
-	new Excercise("b och #", "Höjningar och sänkningar", [
-		new Level("Ettstruket + #", [
+	new Excercise("7acf818a-d4d6-4c52-bffc-15fbfab9a879", "b och #", "Höjningar och sänkningar", [
+		new Level("e19dbc29-9765-4622-b4ff-ed112a07abe6", "Ettstruket + #", [
 			new Question("C4"),
 			new Question("D4"),
 			new Question("E4"),
@@ -171,7 +173,7 @@ export let g_excercises = [
 			new Question("G4♯"),
 			new Question("A4♯"),
 		], Hints.instrument_notes_show_sharp),
-		new Level("Ettstruket + b", [
+		new Level("7c77d684-bd46-4148-a92c-79d28694c5bc", "Ettstruket + b", [
 			new Question("C4"),
 			new Question("D4"),
 			new Question("E4"),
@@ -185,7 +187,7 @@ export let g_excercises = [
 			new Question("A4♭"),
 			new Question("B4♭"),
 		], Hints.instrument_notes_show_flat),
-		new Level("Lilla + #", [
+		new Level("2de499bd-f7d6-4e61-93de-4d887f28289b", "Lilla + #", [
 			new Question("C3"),
 			new Question("D3"),
 			new Question("E3"),
@@ -199,7 +201,7 @@ export let g_excercises = [
 			new Question("G3♯"),
 			new Question("A3♯"),
 		], Hints.instrument_notes_show_sharp),
-		new Level("Lilla + b", [
+		new Level("969d08ea-f32c-465c-b6ce-20cda51944c4", "Lilla + b", [
 			new Question("C3"),
 			new Question("D3"),
 			new Question("E3"),
@@ -213,7 +215,7 @@ export let g_excercises = [
 			new Question("A3♭"),
 			new Question("B3♭"),
 		], Hints.instrument_notes_show_flat),
-		new Level("Tvåstruket + #", [
+		new Level("2366e46f-5902-48ec-a83f-87818742b4e7", "Tvåstruket + #", [
 			new Question("C5"),
 			new Question("D5"),
 			new Question("E5"),
@@ -227,7 +229,7 @@ export let g_excercises = [
 			new Question("G5♯"),
 			new Question("A5♯"),
 		], Hints.instrument_notes_show_sharp),
-		new Level("Tvåstruket + b", [
+		new Level("124fbf91-d042-4583-85ce-23b3fed265cd", "Tvåstruket + b", [
 			new Question("C5"),
 			new Question("D5"),
 			new Question("E5"),
@@ -242,5 +244,5 @@ export let g_excercises = [
 			new Question("B5♭"),
 		], Hints.instrument_notes_show_flat)
 	]),
-	new Excercise("Tonarter", "Dur och moll, har du koll?", [])
+	new Excercise("400a02dc-848a-48da-93f6-c3ba70d3ab3c", "Tonarter", "Dur och moll, har du koll?", [])
 ];
