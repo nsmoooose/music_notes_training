@@ -203,11 +203,11 @@ export class AspectRatioControlContainer extends SingleControlContainer {
 			if(width * this.ratio <= height) {
 				this.child.rectangle.x = 0;
 				this.child.rectangle.y = 0;
-				this.child.resize(width, width * this.ratio);
+				this.child.resize(width, (width * this.ratio) | 0);
 			} else {
-				this.child.rectangle.x = this.rectangle.x + (width - (height / this.ratio)) / 2;
+				this.child.rectangle.x = (this.rectangle.x + (width - (height / this.ratio)) / 2) | 0;
 				this.child.rectangle.y = this.rectangle.y;
-				this.child.resize(height / this.ratio, height);
+				this.child.resize((height / this.ratio) | 0, height);
 			}
 		}
 	}
@@ -280,7 +280,7 @@ export class StackContainer extends Container {
 			for(let widget of this.children) {
 				widget.rectangle.x = rectangle.x;
 				widget.rectangle.y = y;
-				widget.resize(rectangle.w, rectangle.h * widget.stackAmount);
+				widget.resize(rectangle.w, (rectangle.h * widget.stackAmount) | 0);
 
 				y += widget.rectangle.h;
 			}
@@ -290,7 +290,7 @@ export class StackContainer extends Container {
 			for(let widget of this.children) {
 				widget.rectangle.x = x;
 				widget.rectangle.y = rectangle.y;
-				widget.resize(rectangle.w * widget.stackAmount, rectangle.h);
+				widget.resize((rectangle.w * widget.stackAmount) | 0, rectangle.h);
 
 				x += widget.rectangle.w;
 			}
@@ -314,10 +314,10 @@ export class Margin {
 
 	getRectangle(rectangle) {
 		return new Rectangle(
-			rectangle.x + this.left / 100 * rectangle.w,
-			rectangle.y + this.top / 100 * rectangle.h,
-			rectangle.w - (this.left / 100 * rectangle.w) - (this.right / 100 * rectangle.w),
-			rectangle.h - (this.top / 100 * rectangle.h) - (this.bottom / 100 * rectangle.h)
+			(rectangle.x + this.left / 100 * rectangle.w) | 0,
+			(rectangle.y + this.top / 100 * rectangle.h) | 0,
+			(rectangle.w - (this.left / 100 * rectangle.w) - (this.right / 100 * rectangle.w)) | 0,
+			(rectangle.h - (this.top / 100 * rectangle.h) - (this.bottom / 100 * rectangle.h)) | 0
 		);
 	}
 
@@ -367,14 +367,14 @@ export class Label extends Widget {
 		ctx.fillStyle = this.text_fillStyle;
 		let x = rectangle.x;
 		if(this.textAlign == "center") {
-			x = rectangle.x + rectangle.w / 2;
+			x = (rectangle.x + rectangle.w / 2) | 0;
 		} else if(this.textAlign == "right") {
 			x = rectangle.x + rectangle.w;
 		}
 
 		let y = this.rectangle.y;
 		if(this.textBaseline == "middle") {
-			y = rectangle.y + rectangle.h / 2;
+			y = (rectangle.y + rectangle.h / 2) | 0;
 		} else if(this.textBaseline == "bottom") {
 			y = rectangle.y + rectangle.h;
 		}
@@ -397,7 +397,7 @@ export class Button extends Widget {
 		const padding = 0.3;
 
 		if(this.font == null) {
-			ctx.font = rectangle.h - padding * rectangle.h + "px Arial";
+			ctx.font = ((rectangle.h - padding * rectangle.h) | 0) + "px Arial";
 		} else  {
 			ctx.font = this.font;
 		}
@@ -405,8 +405,8 @@ export class Button extends Widget {
 		ctx.textBaseline = "middle";
 		ctx.fillStyle = this.text_color;
 		ctx.fillText(this.text,
-			rectangle.x + rectangle.w / 2,
-			rectangle.y + rectangle.h / 2);
+			(rectangle.x + rectangle.w / 2) | 0,
+			(rectangle.y + rectangle.h / 2) | 0);
 	}
 }
 
@@ -433,7 +433,7 @@ export class ProgressBar extends Widget {
 		ctx.rect(
 			rectangle.x + 2,
 			rectangle.y + 2,
-			Math.max(rectangle.w * this.progress - 4, 1),
+			Math.max(rectangle.w * this.progress - 4, 1) | 0,
 			rectangle.h - 4);
 		ctx.fill();
 	}
