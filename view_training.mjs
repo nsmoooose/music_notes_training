@@ -87,11 +87,13 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		}
 		let correct_answer = note_without_octave(this.current_question.note);
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
+			MusicTrainerState.add_answer(this.level.id, true);
 			MusicTrainerState.level_results.push(1.0);
 			this.new_question();
 			this.staff.extra_note_size = 50;
 			this.staff.note_color = [0, 255, 0];
 		} else {
+			MusicTrainerState.add_answer(this.level.id, false);
 			MusicTrainerState.level_results.push(0.0);
 			this.new_question();
 			this.staff.extra_note_size = 50;
