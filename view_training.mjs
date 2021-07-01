@@ -75,12 +75,36 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.new_question();
 
 		if(navigator.requestMIDIAccess) {
-			navigator.requestMIDIAccess().then(this.on_midi_success);
+			navigator.requestMIDIAccess().then((midi_access) => {
+				this.midi.connected = true;
+
+				for(let input of midi_access.inputs.values()) {
+					input.onmidimessage = this.on_midimessage.bind(this);
+				}
+			});
 		}
 	}
 
-	on_midi_success(midi_access) {
-		this.midi.connected = true;
+	on_midimessage(message) {
+		let command = message.data[0];
+		let note = message.data[1];
+		let velocity = (message.data.length > 2) ? message.data[2] : 0;
+
+		const midi_tones = {60: "C", 62: "D"};
+
+		switch (command) {
+		case 144:
+			if (velocity > 0) {
+				if(note in midi_tones) {
+					this.process_answer(midi_tones[note]);
+				}
+			} else {
+				/* off */
+			}
+			break;
+		case 128:
+			break;
+		}
 	}
 
 	on_click(x, y) {
@@ -97,6 +121,11 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		if(answer == null) {
 			return true;
 		}
+
+		this.process_answer(answer);
+	}
+
+	process_answer(answer) {
 		let correct_answer = note_without_octave(this.current_question.note);
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			MusicTrainerState.add_answer(this.level.id, true);
