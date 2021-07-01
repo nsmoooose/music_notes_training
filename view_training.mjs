@@ -137,7 +137,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.level = this.excercise.levels[level - 1];
 		this.label_level.text = this.level.name;
 		if(level != MusicTrainerState.level) {
-			MusicTrainerState.result_reset();
+			MusicTrainerState.level_results = [];
 			MusicTrainerState.level = level;
 			this.new_question();
 		}

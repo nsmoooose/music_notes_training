@@ -71,7 +71,7 @@ export class Settings extends AspectRatioControlContainer {
 		menu.border_fillStyle = colors[index];
 		menu.content_text_color = text_color;
 		menu.addEventListener("click", () => {
-			MusicTrainerState.result_reset();
+			MusicTrainerState.reset();
 			this.getRoot().setChild(this.back);
 		});
 		this.stack.appendChild(menu, 0.1);

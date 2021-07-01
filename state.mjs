@@ -7,7 +7,7 @@ export class MusicTrainerState {
 		MusicTrainerState.results[id].pass += pass ? 1 : 0;
 	}
 
-	static result_reset() {
+	static reset() {
 		MusicTrainerState.excercise = 1;
 		MusicTrainerState.level = 1;
 		MusicTrainerState.level_results = [];
