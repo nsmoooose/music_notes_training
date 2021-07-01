@@ -12,6 +12,7 @@ import {
 import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
+import { MidiSupported } from "./images.mjs";
 
 function note_without_octave(note) {
 	return note.substring(0, 1) + note.substring(2, 3);
@@ -41,12 +42,16 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.button_back.addEventListener("click", () => {
 			this.getRoot().setChild(new MainMenu());
 		});
-		this.header_stack.appendChild(this.button_back, 0.1);
+		this.header_stack.appendChild(this.button_back, 0.15);
 
 		this.label_level = new Label("");
 		this.label_level.textAlign = "center";
-		this.label_level.margin.setMargin(margin);
-		this.header_stack.appendChild(this.label_level, 0.90);
+		this.label_level.margin.setMargin(10);
+		this.header_stack.appendChild(this.label_level, 0.7);
+
+		this.midi = new MidiSupported();
+		this.midi.margin.setMargin(20);
+		this.header_stack.appendChild(this.midi, 0.15);
 
 		this.progress = new ProgressBar();
 		this.progress.margin.setMargin(margin);

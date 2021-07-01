@@ -134,3 +134,26 @@ export class ImageHelp extends Widget {
 		ctx.globalAlpha = 1.0;
 	}
 }
+
+export class MidiSupported extends Widget {
+	constructor() {
+		super();
+		this.connected = false;
+	}
+
+	draw(ctx) {
+		if(!navigator.requestMIDIAccess) {
+			return;
+		}
+
+		let rectangle = this.margin.getRectangle(this.rectangle);
+
+		ctx.font = rectangle.h + "px Arial";
+		let x = (rectangle.x + rectangle.w / 2) | 0;
+		let y = (rectangle.y + rectangle.h / 2) | 0;
+		ctx.fillStyle = this.connected == true ? "#0b0" : "#ccc";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillText("MIDI", x, y);
+	}
+}
