@@ -43,7 +43,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.button_train.border_fillStyle = color1;
 		this.button_train.content_text_color = text_color;
 		this.button_train.addEventListener("click", () => {
-			this.getRoot().setChild(new MusicTrainer(this));
+			this.getRoot().setChild(new MusicTrainer());
 		});
 		this.stack.appendChild(this.button_train, 0.14);
 

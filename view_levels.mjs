@@ -59,7 +59,7 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 				MusicTrainerState.excercise = g_excercises.indexOf(excercise) + 1;
 				MusicTrainerState.level = excercise.levels.indexOf(level) + 1;
 				MusicTrainerState.persist();
-				this.getRoot().setChild(new MusicTrainer(this));
+				this.getRoot().setChild(new MusicTrainer());
 			});
 			this.stack.appendChild(menu, (1.0 - 0.20 - 0.14) / excercise.levels.length);
 			index += 1;
@@ -73,6 +73,5 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 		menu.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
-		this.stack.appendChild(menu, 0.14);
 	}
 }

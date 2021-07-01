@@ -11,16 +11,15 @@ import {
 } from "./base.mjs";
 import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
+import { MainMenu } from "./view_main_menu.mjs";
 
 function note_without_octave(note) {
 	return note.substring(0, 1) + note.substring(2, 3);
 }
 
 export class MusicTrainer extends AspectRatioControlContainer {
-	constructor(back) {
+	constructor() {
 		super(2);
-
-		this.back = back;
 
 		this.background_fillStyle = "black";
 
@@ -40,7 +39,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.button_back = new Button("<");
 		this.button_back.margin.setMargin(margin);
 		this.button_back.addEventListener("click", () => {
-			this.getRoot().setChild(this.back);
+			this.getRoot().setChild(new MainMenu());
 		});
 		this.header_stack.appendChild(this.button_back, 0.1);
 
