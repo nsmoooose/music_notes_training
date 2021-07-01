@@ -7,6 +7,7 @@ const assets = [
 	"/base.mjs",
 	"/help-sv.html",
 	"/main.mjs",
+	"/midi.mjs",
 	"/questions.mjs",
 	"/staff.mjs",
 	"/state.mjs",

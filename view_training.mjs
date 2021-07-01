@@ -13,6 +13,10 @@ import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
 import { MidiSupported } from "./images.mjs";
+import {
+	MidiConstants,
+	MidiPianoNotes
+} from "./midi.mjs";
 
 function note_without_octave(note) {
 	return note.substring(0, 1) + note.substring(2, 3);
@@ -90,19 +94,17 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		let note = message.data[1];
 		let velocity = (message.data.length > 2) ? message.data[2] : 0;
 
-		const midi_tones = {60: "C", 62: "D"};
-
 		switch (command) {
-		case 144:
+		case MidiConstants.CHANNEL1_NOTE_ON:
 			if (velocity > 0) {
-				if(note in midi_tones) {
-					this.process_answer(midi_tones[note]);
+				if(note in MidiPianoNotes) {
+					this.process_answer(MidiPianoNotes[note]);
 				}
 			} else {
 				/* off */
 			}
 			break;
-		case 128:
+		case MidiConstants.CHANNEL1_NOTE_OFF:
 			break;
 		}
 	}
