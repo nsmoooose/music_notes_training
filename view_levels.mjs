@@ -73,5 +73,6 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 		menu.addEventListener("click", () => {
 			this.getRoot().setChild(this.back);
 		});
+		this.stack.appendChild(menu, 0.14);
 	}
 }
