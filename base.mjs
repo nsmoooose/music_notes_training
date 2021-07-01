@@ -486,3 +486,24 @@ export class MenuOption extends StackContainer {
 		this.border_radius.bl = height;
 	}
 }
+
+export class LevelProgress extends Widget {
+	constructor(answers, pass) {
+		super();
+		this.answers = answers;
+		this.pass = pass;
+	}
+
+	draw(ctx) {
+		let rectangle = this.margin.getRectangle(this.rectangle);
+
+		ctx.font = rectangle.h + "px Arial";
+		let x = (rectangle.x + rectangle.w / 2) | 0;
+		let y = (rectangle.y + rectangle.h / 2) | 0;
+		ctx.fillStyle = "#aaaaaa";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		let text = this.answers == 0 ? "-" : ((this.pass / this.answers * 100) | 0) + "%";
+		ctx.fillText(text, x, y);
+	}
+}

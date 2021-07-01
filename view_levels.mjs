@@ -1,6 +1,7 @@
 import {
 	AspectRatioControlContainer,
 	Label,
+	LevelProgress,
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
@@ -12,6 +13,8 @@ import { MusicTrainer } from "./view_training.mjs";
 export class ExcerciseLevels extends AspectRatioControlContainer {
 	constructor(back, excercise) {
 		super(2);
+
+		MusicTrainerState.load();
 
 		this.back = back;
 
@@ -44,7 +47,9 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 
 		let index = 1;
 		for(let level of excercise.levels) {
-			let menu = new MenuOption(level.name, excercise.description, new Label(""));
+			let results = level.id in MusicTrainerState.results ? MusicTrainerState.results[level.id].answers : 0;
+			let pass = level.id in MusicTrainerState.results ? MusicTrainerState.results[level.id].pass : 0;
+			let menu = new MenuOption(level.name, excercise.description, new LevelProgress(results, pass));
 			menu.background_fillStyle = colors[index + 1];
 			menu.content_fillStyle = colors[index];
 			menu.border_fillStyle = colors[index];
