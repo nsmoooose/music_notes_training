@@ -73,6 +73,14 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.set_level(MusicTrainerState.excercise, MusicTrainerState.level);
 		this.new_question();
+
+		if(navigator.requestMIDIAccess) {
+			navigator.requestMIDIAccess().then(this.on_midi_success);
+		}
+	}
+
+	on_midi_success(midi_access) {
+		this.midi.connected = true;
 	}
 
 	on_click(x, y) {
