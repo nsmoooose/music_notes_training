@@ -132,6 +132,7 @@ export class Staff extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);

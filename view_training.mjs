@@ -7,13 +7,16 @@ import {
 	AspectRatioControlContainer,
 	Button,
 	Label,
-	ProgressBar,
+	MenuOption,
 	StackContainer
 } from "./base.mjs";
 import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
-import { MidiSupported } from "./images.mjs";
+import {
+	ImageBack,
+	MidiSupported
+ } from "./images.mjs";
 import {
 	MidiConstants,
 	MidiPianoNotes
@@ -36,31 +39,22 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		MusicTrainerState.load();
 
 		this.stack = new StackContainer("down");
-		this.stack.background_fillStyle = "white";
 		this.setChild(this.stack);
-
-		this.header_stack = new StackContainer("right");
-		this.stack.appendChild(this.header_stack, 0.05);
-
-		this.button_back = new Button("<");
-		this.button_back.margin.setMargin(margin);
-		this.button_back.addEventListener("click", () => {
-			this.getRoot().setChild(new MainMenu());
-		});
-		this.header_stack.appendChild(this.button_back, 0.15);
-
-		this.label_level = new Label("");
-		this.label_level.textAlign = "center";
-		this.label_level.margin.setMargin(10);
-		this.header_stack.appendChild(this.label_level, 0.7);
 
 		this.midi = new MidiSupported();
 		this.midi.margin.setMargin(20);
-		this.header_stack.appendChild(this.midi, 0.15);
+
+		this.level_label = new MenuOption("Nivå", "", this.midi);
+		this.level_label.background_fillStyle = "#ffffff";
+		this.level_label.content_fillStyle = "black";
+		this.level_label.border_fillStyle = "black";
+		this.level_label.content_text_color = "#ffffff";
+		this.stack.appendChild(this.level_label, 0.1);
 
 		this.staff = new Staff();
 		this.staff.margin.setMargin(margin);
-		this.stack.appendChild(this.staff, 0.545);
+		this.staff.background_fillStyle = "#ffffff"
+		this.stack.appendChild(this.staff, 0.4);
 
 		switch(MusicTrainerState.instrument) {
 		case "piano": this.instrument = new InstrumentPiano(); break;
@@ -69,11 +63,23 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		default: this.instrument = new InstrumentPiano(); break;
 		}
 		this.instrument.margin.setMargin(margin);
-		this.stack.appendChild(this.instrument, 0.405);
+		this.instrument.background_fillStyle = "#ffffff"
+		this.stack.appendChild(this.instrument, 0.4);
+
+		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		menu.background_fillStyle = "black";
+		menu.content_fillStyle = "black";
+		menu.border_fillStyle = "black";
+		menu.content_text_color = "#ffffff";
+		menu.addEventListener("click", () => {
+			this.getRoot().setChild(new MainMenu());
+		});
+		this.stack.appendChild(menu, 0.1);
 
 		this.excercise = g_excercises[MusicTrainerState.excercise - 1];
 		this.level = this.excercise.levels[MusicTrainerState.level - 1];
-		this.label_level.text = this.level.name;
+		this.level_label.label_title.text = this.level.name;
+		this.level_label.label_help.text = this.excercise.description;
 		this.new_question();
 
 		if(navigator.requestMIDIAccess) {

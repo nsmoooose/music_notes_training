@@ -50,6 +50,7 @@ export class InstrumentPiano extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let key_width = rectangle.w / 7;
 
