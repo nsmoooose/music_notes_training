@@ -30,6 +30,8 @@ export class Staff extends Widget {
 			"0-92.419-58.579-175.59-187.72-172.8-77.575 0-170.32 86.203-118 171.93zm328.1-89.88c0 17.852 14.471 32.323 " +
 			"32.323 32.323s32.323-14.471 32.323-32.323-14.471-32.323-32.323-32.323-32.323 14.471-32.323 32.323zm0 136.75c0 " +
 			"17.852 14.471 32.323 32.323 32.323s32.323-14.471 32.323-32.323-14.471-32.323-32.323-32.323-32.323 14.471-32.323 32.323z");
+
+		this.note = null;
 	}
 
 	update(delta) {
@@ -43,7 +45,7 @@ export class Staff extends Widget {
 		this.line_space = rectangle.h / 26;
 	}
 
-	draw_tone(ctx, note) {
+	draw_note(ctx, note) {
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
@@ -174,6 +176,10 @@ export class Staff extends Widget {
 			} else {
 				break;
 			}
+		}
+
+		if(this.note) {
+			this.draw_note(ctx, this.note);
 		}
 	}
 }

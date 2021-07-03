@@ -162,18 +162,11 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		return true;
 	}
 
-	draw(ctx) {
-		super.draw(ctx);
-
-		if(this.current_question) {
-			this.staff.draw_tone(ctx, this.current_question.note);
-		}
-	}
-
 	new_question() {
 		if(this.level.questions.length == 0) {
 			return;
 		}
 		this.current_question = this.level.questions[Math.floor(Math.random() * this.level.questions.length)];
+		this.staff.note = this.current_question.note;
 	}
 }
