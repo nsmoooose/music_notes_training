@@ -157,3 +157,37 @@ export class MidiSupported extends Widget {
 		ctx.fillText("MIDI", x, y);
 	}
 }
+
+export class Checkbox extends Widget {
+	constructor() {
+		super();
+		this.checked = false;
+	}
+
+	draw(ctx) {
+		super.draw(ctx);
+
+		let rectangle = this.margin.getRectangle(this.rectangle);
+		rectangle.w = rectangle.h = Math.min(rectangle.w, rectangle.h);
+		ctx.beginPath();
+		ctx.lineWidth = rectangle.w * 0.1;
+		ctx.strokeStyle = "#aaaaaa";
+		ctx.rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
+		ctx.stroke();
+
+		if(this.checked) {
+			let points = [
+				[rectangle.x, (rectangle.y + rectangle.h / 2) | 0],
+				[(rectangle.x + rectangle.w / 2) | 0, rectangle.y + rectangle.h],
+				[rectangle.x + rectangle.w, rectangle.y]
+			];
+			ctx.beginPath();
+			ctx.lineWidth = rectangle.w * 0.15;
+			ctx.strokeStyle = "#ffffff";
+			ctx.moveTo(points[0][0], points[0][1]);
+			ctx.lineTo(points[1][0], points[1][1]);
+			ctx.lineTo(points[2][0], points[2][1]);
+			ctx.stroke();
+		}
+	}
+}

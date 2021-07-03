@@ -5,6 +5,7 @@ import {
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { Checkbox } from "./images.mjs";
 import { ImageBack } from "./images.mjs";
 import { MusicTrainerState } from "./state.mjs";
 
@@ -52,7 +53,9 @@ export class Settings extends AspectRatioControlContainer {
 
 		let index = 1;
 		for(let instrument of instruments) {
-			let menu = new MenuOption(instrument.name, instrument.description, new Label(""));
+			let checkbox = new Checkbox();
+			checkbox.checked = MusicTrainerState.instrument == instrument.id;
+			let menu = new MenuOption(instrument.name, instrument.description, checkbox);
 			menu.background_fillStyle = colors[index + 1];
 			menu.content_fillStyle = colors[index];
 			menu.border_fillStyle = colors[index];
@@ -60,6 +63,9 @@ export class Settings extends AspectRatioControlContainer {
 			menu.addEventListener("click", () => {
 				MusicTrainerState.instrument = instrument.id;
 				MusicTrainerState.persist();
+				/* Ugly to create a new settings view. Should update existing
+				   controls. Back button animation will glitch a little as well. */
+				this.getRoot().setChild(new Settings(this.back));
 			});
 			this.stack.appendChild(menu, 0.1);
 			index += 1;
