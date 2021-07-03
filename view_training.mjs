@@ -3,6 +3,7 @@ import { InstrumentNotes } from "./instrument_notes.mjs";
 import { InstrumentViolin } from "./instrument_violin.mjs";
 import { Staff } from "./staff.mjs";
 import {
+	is_int,
 	AspectRatioControlContainer,
 	Button,
 	Label,
@@ -128,7 +129,20 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	process_answer(answer) {
-		let correct_answer = note_without_octave(this.current_question.note);
+		let correct_answer = null;
+
+		if(Array.isArray(answer)) {
+			if(answer[0].length >= 1 && is_int(parseInt(answer[0][1], 10))) {
+				correct_answer = this.current_question.note;
+			} else {
+				correct_answer = note_without_octave(this.current_question.note);
+			}
+		} else if(answer.length >= 1 && is_int(parseInt(answer[1], 10))) {
+			correct_answer = this.current_question.note;
+		} else {
+			correct_answer = note_without_octave(this.current_question.note);
+		}
+
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			MusicTrainerState.add_answer(this.level.id, true);
 			MusicTrainerState.level_results.push(1.0);

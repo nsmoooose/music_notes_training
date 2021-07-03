@@ -2,6 +2,10 @@ export function $(id) {
 	return document.getElementById(id);
 }
 
+export function is_int(s) {
+	return !isNaN(parseInt(s, 10));
+}
+
 export class EventTarget {
 	constructor() {
 		this.listeners = {};
