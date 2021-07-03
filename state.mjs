@@ -10,7 +10,6 @@ export class MusicTrainerState {
 	static reset() {
 		MusicTrainerState.excercise = 1;
 		MusicTrainerState.level = 1;
-		MusicTrainerState.level_results = [];
 		MusicTrainerState.instrument = "piano";
 		MusicTrainerState.results = {};
 		localStorage.removeItem("results");
@@ -22,20 +21,16 @@ export class MusicTrainerState {
 			x = JSON.parse(x);
 			if(x.version == 1) {
 				MusicTrainerState.level = x.level;
-				MusicTrainerState.level_results = x.level_results;
 			} else if(x.version == 2) {
 				MusicTrainerState.level = x.level;
-				MusicTrainerState.level_results = x.level_results;
 				MusicTrainerState.instrument = x.instrument;
 			} else if(x.version == 3) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
-				MusicTrainerState.level_results = x.level_results;
 				MusicTrainerState.instrument = x.instrument;
 			} else if (x.version == 4) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
-				MusicTrainerState.level_results = x.level_results;
 				MusicTrainerState.instrument = x.instrument;
 				MusicTrainerState.results = x.results;
 			}
@@ -47,7 +42,6 @@ export class MusicTrainerState {
 			"version": 4,
 			"excercise": MusicTrainerState.excercise,
 			"level": MusicTrainerState.level,
-			"level_results": MusicTrainerState.level_results,
 			"instrument": MusicTrainerState.instrument,
 			"results": MusicTrainerState.results
 		};
@@ -58,6 +52,5 @@ export class MusicTrainerState {
 
 MusicTrainerState.excercise = 1;
 MusicTrainerState.level = 1;
-MusicTrainerState.level_results = [];
 MusicTrainerState.instrument = "piano";
 MusicTrainerState.results = {};

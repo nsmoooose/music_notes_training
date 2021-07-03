@@ -58,11 +58,6 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.midi.margin.setMargin(20);
 		this.header_stack.appendChild(this.midi, 0.15);
 
-		this.progress = new ProgressBar();
-		this.progress.margin.setMargin(margin);
-		this.progress.setProgress(MusicTrainerState.level_results.length / 100);
-		this.stack.appendChild(this.progress, 0.03);
-
 		this.staff = new Staff();
 		this.staff.margin.setMargin(margin);
 		this.stack.appendChild(this.staff, 0.545);
@@ -74,9 +69,11 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		default: this.instrument = new InstrumentPiano(); break;
 		}
 		this.instrument.margin.setMargin(margin);
-		this.stack.appendChild(this.instrument, 0.375);
+		this.stack.appendChild(this.instrument, 0.405);
 
-		this.set_level(MusicTrainerState.excercise, MusicTrainerState.level);
+		this.excercise = g_excercises[MusicTrainerState.excercise - 1];
+		this.level = this.excercise.levels[MusicTrainerState.level - 1];
+		this.label_level.text = this.level.name;
 		this.new_question();
 
 		if(navigator.requestMIDIAccess) {
@@ -145,37 +142,14 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			MusicTrainerState.add_answer(this.level.id, true);
-			MusicTrainerState.level_results.push(1.0);
 			this.new_question();
 			this.staff.extra_note_size = 50;
 			this.staff.note_color = [0, 255, 0];
 		} else {
 			MusicTrainerState.add_answer(this.level.id, false);
-			MusicTrainerState.level_results.push(0.0);
 			this.new_question();
 			this.staff.extra_note_size = 50;
 			this.staff.note_color = [255, 0, 0];
-		}
-		if(MusicTrainerState.level_results.length > 100) {
-			MusicTrainerState.level_results.shift();
-		}
-
-		this.progress.setProgress(MusicTrainerState.level_results.length / 100);
-
-		let sum = 0;
-		MusicTrainerState.level_results.forEach(element => (sum += element));
-		let average = Math.trunc(sum / MusicTrainerState.level_results.length * 100);
-
-		if(average < 50) {
-			this.progress.style = "#bb0000";
-		} else if(average < 80) {
-			this.progress.style = "#bbbb00";
-		} else {
-			this.progress.style = "#00bb00";
-		}
-
-		if(average > 80 && MusicTrainerState.level_results.length == 100) {
-			this.set_level(MusicTrainerState.excercise, MusicTrainerState.level + 1);
 		}
 
 		MusicTrainerState.persist();
@@ -187,17 +161,6 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		if(this.current_question) {
 			this.staff.draw_tone(ctx, this.current_question.note);
-		}
-	}
-
-	set_level(excercise, level) {
-		this.excercise = g_excercises[excercise - 1];
-		this.level = this.excercise.levels[level - 1];
-		this.label_level.text = this.level.name;
-		if(level != MusicTrainerState.level) {
-			MusicTrainerState.level_results = [];
-			MusicTrainerState.level = level;
-			this.new_question();
 		}
 	}
 
