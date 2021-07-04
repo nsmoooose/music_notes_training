@@ -6,6 +6,7 @@ import { MainMenu } from "./view_main_menu.mjs";
 
 export let g_root = new Root();
 g_root.setChild(new MainMenu());
+let lock = null;
 
 function step(ts) {
 	let delta = ts / 1000 - g_root.state.now;
@@ -21,11 +22,18 @@ function step(ts) {
 }
 
 window.addEventListener("load", () => {
-	if ("serviceWorker" in navigator) {
+	if("serviceWorker" in navigator) {
 		navigator
 			.serviceWorker.register("service_worker.js")
 			.then(() => console.log("service worker registered"))
 			.catch(err => console.log("service worker not registered", err));
+	}
+
+	if("wakeLock" in navigator) {
+		navigator.wakeLock.request("screen").then(v => {
+			lock = v;
+			console.log("wakeLock aquired");
+		});
 	}
 
 	let canvas = $("canvas");
