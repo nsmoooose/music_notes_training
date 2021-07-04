@@ -1,6 +1,5 @@
 import {
 	AspectRatioControlContainer,
-	Button,
 	Label,
 	MenuOption,
 	StackContainer

@@ -5,8 +5,6 @@ import { Staff } from "./staff.mjs";
 import {
 	is_int,
 	AspectRatioControlContainer,
-	Button,
-	Label,
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
