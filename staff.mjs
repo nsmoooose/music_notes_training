@@ -31,6 +31,7 @@ export class Staff extends Widget {
 			"32.323 32.323s32.323-14.471 32.323-32.323-14.471-32.323-32.323-32.323-32.323 14.471-32.323 32.323zm0 136.75c0 " +
 			"17.852 14.471 32.323 32.323 32.323s32.323-14.471 32.323-32.323-14.471-32.323-32.323-32.323-32.323 14.471-32.323 32.323z");
 
+		this.feedback_notes = [];
 		this.note = null;
 	}
 
@@ -45,7 +46,12 @@ export class Staff extends Widget {
 		this.line_space = rectangle.h / 26;
 	}
 
-	draw_note(ctx, note) {
+	draw_note(ctx, note, color, radius_x, radius_y) {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = this.line_width;
+		ctx.strokeStyle = color;
+		ctx.fillStyle = color;
+
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
@@ -59,17 +65,7 @@ export class Staff extends Widget {
 
 		ctx.lineWidth = 4;
 		ctx.beginPath();
-		ctx.strokeStyle = "#" +
-			Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
-			Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +
-			Math.trunc(this.note_color[2]).toString(16).padStart(2, "0");
-
-		let speed = 6;
-		let now = this.getState().now * speed;
-		let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
-		let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
 		let rotation = -0.2;
-		// ctx.fillStyle = "#0000000";
 		ctx.ellipse(rectangle.x + center, rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
@@ -178,8 +174,23 @@ export class Staff extends Widget {
 			}
 		}
 
+		for(let note of this.feedback_notes) {
+			let radius_x = this.line_space / 2 * 1.25;
+			let radius_y = this.line_space / 2;
+			this.draw_note(ctx, note, "#999999", radius_x, radius_y);
+		}
+
 		if(this.note) {
-			this.draw_note(ctx, this.note);
+			let color = "#" +
+				Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
+				Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +
+				Math.trunc(this.note_color[2]).toString(16).padStart(2, "0");
+
+			let speed = 6;
+			let now = this.getState().now * speed;
+			let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
+			let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
+			this.draw_note(ctx, this.note, color, radius_x, radius_y);
 		}
 	}
 }

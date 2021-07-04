@@ -91,6 +91,18 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		}
 	}
 
+	feedback_note_add(note) {
+		if(Array.isArray(note)) {
+			this.staff.feedback_notes.push(note[0]);
+		} else {
+			this.staff.feedback_notes.push(note);
+		}
+	}
+
+	feedback_note_delete(note) {
+		this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != note);
+	}
+
 	on_midimessage(message) {
 		let command = message.data[0];
 		let note = message.data[1];
@@ -98,15 +110,21 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		switch (command) {
 		case MidiConstants.CHANNEL1_NOTE_ON:
-			if (velocity > 0) {
-				if(note in MidiPianoNotes) {
-					this.process_answer(MidiPianoNotes[note]);
+			if(note in MidiPianoNotes) {
+				let n = MidiPianoNotes[note];
+				if (velocity > 0) {
+					this.feedback_note_add(n);
+					this.process_answer(n);
+				} else {
+					this.feedback_note_delete(n);
 				}
-			} else {
-				/* off */
 			}
 			break;
 		case MidiConstants.CHANNEL1_NOTE_OFF:
+			if(note in MidiPianoNotes) {
+				let n = MidiPianoNotes[note];
+				this.feedback_note_delete(n);
+			}
 			break;
 		}
 	}
