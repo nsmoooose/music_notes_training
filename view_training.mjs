@@ -100,7 +100,14 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	feedback_note_delete(note) {
-		this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != note);
+		if(Array.isArray(note)) {
+			for(let n of note) {
+				this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != n);
+			}
+		}
+		else {
+			this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != note);
+		}
 	}
 
 	on_midimessage(message) {
