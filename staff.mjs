@@ -1,6 +1,8 @@
 import {
 	Widget
 } from "./base.mjs";
+import { Scales } from "./scale.mjs";
+
 
 export class Staff extends Widget {
 	constructor() {
@@ -9,6 +11,7 @@ export class Staff extends Widget {
 		this.top_note = "C8";
 		this.extra_note_size = 0;
 		this.note_color = [0, 0, 0];
+		this.scale = Scales["♮"];
 
 		this.treble_clef_m = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix();
 		this.treble_clef = new Path2D("m51.688 5.25c-5.427-0.1409-11.774 12.818-11.563 24.375 0.049 3.52 1.16 10.659 2.781 19.625-10.223 " +
@@ -46,7 +49,16 @@ export class Staff extends Widget {
 		this.line_space = rectangle.h / 26;
 	}
 
-	draw_note(ctx, note, color, radius_x, radius_y) {
+	_calc_note_y(rectangle, note) {
+		/* TODO adjust x, y to integer position */
+		const notes = ["C", "D", "E", "F", "G", "A", "B"];
+		const octave_note_index = notes.indexOf(note[0]);
+		const octave = parseInt(note[1]);
+		return rectangle.y + ((parseInt(this.top_note[1]) - octave) * 7 * this.line_space / 2 -
+			octave_note_index * this.line_space / 2);
+	}
+
+	_draw_note(ctx, note, color, radius_x, radius_y) {
 		ctx.strokeStyle = color;
 		ctx.lineWidth = this.line_width;
 		ctx.strokeStyle = color;
@@ -55,87 +67,119 @@ export class Staff extends Widget {
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
-		const notes = ["C", "D", "E", "F", "G", "A", "B"];
-		const octave_note_index = notes.indexOf(note[0]);
-		const octave = parseInt(note[1]);
 
-		const diff =
-            (parseInt(this.top_note[1]) - octave) * 7 * this.line_space / 2 -
-            octave_note_index * this.line_space / 2;
+		const y = this._calc_note_y(rectangle, note);
 
 		ctx.lineWidth = 4;
 		ctx.beginPath();
 		let rotation = -0.2;
-		ctx.ellipse(rectangle.x + center, rectangle.y + diff, radius_x, radius_y, rotation, 0, Math.PI * 2);
+		ctx.ellipse(rectangle.x + center, y, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
 		if(note.length == 3) {
 			ctx.fillStyle = ctx.strokeStyle;
+			this._draw_key(ctx, note, rectangle.x + center - radius_x * 2, y);
+		}
+	}
 
-			let x = rectangle.x + center - radius_x * 2;
-			let y = rectangle.y + diff;
-			if(note[2] == "♯") {
-				const character_half_width = 5;
-				const character_half_height = 7;
-				const x_extra = 4;
-				const y_extra = 7;
-				const tilt = 3;
-				ctx.lineWidth = 3;
-				ctx.moveTo(x - character_half_width - x_extra, y - character_half_height + tilt);
-				ctx.lineTo(x + character_half_width + x_extra, y - character_half_height - tilt);
-				ctx.stroke();
+	_draw_flat(ctx, x, y) {
+		/* TODO scale flat with size of staff */
+		/* TODO adjust height half of its size up for better positioning. */
+		/* TODO adjust x, y to integer position */
+		const character_half_width = 5;
+		const character_half_height = 13;
+		const extra = 6;
+		const tilt = 10;
+		const badjust = 0.5;
 
-				ctx.moveTo(x - character_half_width - x_extra, y + character_half_height + tilt);
-				ctx.lineTo(x + character_half_width + x_extra, y + character_half_height - tilt);
-				ctx.stroke();
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.moveTo(x - character_half_width, y - character_half_height);
+		ctx.lineTo(x - character_half_width, y + character_half_height);
+		ctx.stroke();
 
-				ctx.lineWidth = 2;
-				ctx.moveTo(x + character_half_width, y - character_half_height - y_extra - tilt * (tilt / y_extra));
-				ctx.lineTo(x + character_half_width, y + character_half_height + y_extra - tilt * (tilt / y_extra));
-				ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(
+			x - character_half_width,
+			y + character_half_height - character_half_height * badjust);
+		ctx.bezierCurveTo(
+			x + character_half_width, y + character_half_height - character_half_height * badjust - tilt,
+			x + character_half_width, y + character_half_height - character_half_height * badjust,
+			x - character_half_width, y + character_half_height
+		);
+		ctx.bezierCurveTo(
+			x + character_half_width + extra, y + character_half_height - character_half_height * badjust,
+			x + character_half_width + extra, y + character_half_height - character_half_height * badjust - tilt - extra,
+			x - character_half_width, y + character_half_height - character_half_height * badjust
+		);
+		ctx.fill();
+	}
 
-				ctx.moveTo(x - character_half_width, y - character_half_height - y_extra + tilt * (tilt / y_extra));
-				ctx.lineTo(x - character_half_width, y + character_half_height + y_extra + tilt * (tilt / y_extra));
-				ctx.stroke();
-			}
-			else if(note[2] == "♭") {
-				const character_half_width = 5;
-				const character_half_height = 13;
-				const extra = 6;
-				const tilt = 10;
-				const badjust = 0.5;
+	_draw_sharp(ctx, x, y) {
+		/* TODO scale with size of staff */
+		/* TODO adjust x, y to integer position */
+		const character_half_width = 5;
+		const character_half_height = 7;
+		const x_extra = 4;
+		const y_extra = 7;
+		const tilt = 3;
 
-				ctx.lineWidth = 2;
-				ctx.moveTo(x - character_half_width, y - character_half_height);
-				ctx.lineTo(x - character_half_width, y + character_half_height);
-				ctx.stroke();
+		ctx.lineWidth = this.line_width;
+		ctx.strokeStyle = "#000000";
+		ctx.fillStyle = "#000000";
 
-				ctx.beginPath();
-				ctx.moveTo(
-					x - character_half_width,
-					y + character_half_height - character_half_height * badjust);
-				ctx.bezierCurveTo(
-					x + character_half_width, y + character_half_height - character_half_height * badjust - tilt,
-					x + character_half_width, y + character_half_height - character_half_height * badjust,
-					x - character_half_width, y + character_half_height
-				);
-				ctx.bezierCurveTo(
-					x + character_half_width + extra, y + character_half_height - character_half_height * badjust,
-					x + character_half_width + extra, y + character_half_height - character_half_height * badjust - tilt - extra,
-					x - character_half_width, y + character_half_height - character_half_height * badjust
-				);
-				ctx.fill();
-			}
+		ctx.beginPath();
+		ctx.lineWidth = 3;
+		ctx.moveTo(x - character_half_width - x_extra, y - character_half_height + tilt);
+		ctx.lineTo(x + character_half_width + x_extra, y - character_half_height - tilt);
+		ctx.stroke();
+
+		ctx.moveTo(x - character_half_width - x_extra, y + character_half_height + tilt);
+		ctx.lineTo(x + character_half_width + x_extra, y + character_half_height - tilt);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.moveTo(x + character_half_width, y - character_half_height - y_extra - tilt * (tilt / y_extra));
+		ctx.lineTo(x + character_half_width, y + character_half_height + y_extra - tilt * (tilt / y_extra));
+		ctx.stroke();
+
+		ctx.moveTo(x - character_half_width, y - character_half_height - y_extra + tilt * (tilt / y_extra));
+		ctx.lineTo(x - character_half_width, y + character_half_height + y_extra + tilt * (tilt / y_extra));
+		ctx.stroke();
+	}
+
+	_draw_key(ctx, note, x, y) {
+		if(note[2] == "♯") {
+			this._draw_sharp(ctx, x, y);
+		} else if(note[2] == "♭") {
+			this._draw_flat(ctx, x, y);
+		}
+	}
+
+	_draw_key_signatures(ctx, rectangle) {
+		let x = rectangle.x + this.line_space * 4;
+		for(let note of this.scale.treble_notes) {
+			const y = this._calc_note_y(rectangle, note);
+			this._draw_key(ctx, note, x, y);
+			x += this.line_space;
+		}
+
+		x = rectangle.x + this.line_space * 4;
+		for(let note of this.scale.bass_notes) {
+			const y = this._calc_note_y(rectangle, note);
+			this._draw_key(ctx, note, x, y);
+			x += this.line_space;
 		}
 	}
 
 	draw(ctx) {
+		/* TODO adjust x, y to integer position */
 		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
 		this._calc(rectangle);
 
-		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = this.line_width;
 		ctx.strokeStyle = "#000000";
 		ctx.fillStyle = "#000000";
@@ -174,10 +218,12 @@ export class Staff extends Widget {
 			}
 		}
 
+		this._draw_key_signatures(ctx, rectangle);
+
 		for(let note of this.feedback_notes) {
 			let radius_x = this.line_space / 2 * 1.25;
 			let radius_y = this.line_space / 2;
-			this.draw_note(ctx, note, "#999999", radius_x, radius_y);
+			this._draw_note(ctx, note, "#999999", radius_x, radius_y);
 		}
 
 		if(this.note) {
@@ -190,7 +236,7 @@ export class Staff extends Widget {
 			let now = this.getState().now * speed;
 			let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
 			let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
-			this.draw_note(ctx, this.note, color, radius_x, radius_y);
+			this._draw_note(ctx, this.note, color, radius_x, radius_y);
 		}
 	}
 }
