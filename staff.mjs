@@ -174,7 +174,6 @@ export class Staff extends Widget {
 	}
 
 	draw(ctx) {
-		/* TODO adjust x, y to integer position */
 		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
@@ -199,13 +198,13 @@ export class Staff extends Widget {
 		ctx.fill(p);
 
 		for(let i=0; i < 26; i++) {
-			let y = rectangle.y + i * this.line_space;
+			let y = (rectangle.y + i * this.line_space) | 0;
 			if((i >= 0 && i <= 8) ||
                 i == 14 ||
                (i >= 20 && i <= 25)) {
 				ctx.beginPath();
-				ctx.moveTo(rectangle.x + center - this.line_space * 1.5, y);
-				ctx.lineTo(rectangle.x + center + this.line_space * 1.5, y);
+				ctx.moveTo((rectangle.x + center - this.line_space * 1.5) | 0, y);
+				ctx.lineTo((rectangle.x + center + this.line_space * 1.5) | 0, y);
 				ctx.stroke();
 			} else if((i >= 9 && i <= 13) ||
                       (i >= 15 && i <= 19)) {
