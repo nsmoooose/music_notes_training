@@ -1,3 +1,4 @@
+import { color_ramp } from "./base.mjs";
 import {
 	AspectRatioControlContainer,
 	Label,
@@ -18,24 +19,9 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 
 		this.back = back;
 
-		let colors = [
-			"#6666ee",
-			"#4444cc",
-			"#2222aa",
-			"#000099",
-			"#000088",
-			"#000099",
-			"#000088",
-			"#000077",
-			"#000077",
-			"#000099",
-			"#000088",
-			"#000077",
-			"#000066",
-			"#000055",
-			"#000044",
-		];
+		let colors = color_ramp("#6666ee", "#000044", 16);
 		let text_color = "#ffffff";
+		console.log(colors);
 
 		this.background_fillStyle = "black";
 

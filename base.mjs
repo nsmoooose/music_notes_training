@@ -6,6 +6,20 @@ export function is_int(s) {
 	return !isNaN(parseInt(s, 10));
 }
 
+export function color_ramp(from, to, count) {
+	const f = [parseInt(from.substring(1, 3), 16), parseInt(from.substring(3, 5), 16), parseInt(from.substring(5, 7), 16)];
+	const t = [parseInt(to.substring(1, 3), 16), parseInt(to.substring(3, 5), 16), parseInt(to.substring(5, 7), 16)];
+	const d = [(t[0] - f[0]) / count, (t[1] - f[1]) / count, (t[2] - f[2]) / count];
+	let r = [];
+	for(let x = 0; x < count; x++) {
+		r.push("#" +
+			Math.abs(Math.trunc(f[0] + x * d[0])).toString(16).padStart(2, "0") +
+			Math.abs(Math.trunc(f[1] + x * d[1])).toString(16).padStart(2, "0") +
+			Math.abs(Math.trunc(f[2] + x * d[2])).toString(16).padStart(2, "0"));
+	}
+	return r;
+}
+
 export class EventTarget {
 	constructor() {
 		this.listeners = {};
