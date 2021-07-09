@@ -114,10 +114,8 @@ export class Staff extends Widget {
 	}
 
 	_draw_sharp(ctx, x, y) {
-		/* TODO scale with size of staff */
-		/* TODO adjust x, y to integer position */
-		const character_half_width = 5;
-		const character_half_height = 7;
+		const character_half_width = this.line_space / 5;
+		const character_half_height = this.line_space / 3;
 		const x_extra = 4;
 		const y_extra = 7;
 		const tilt = 3;
@@ -127,7 +125,7 @@ export class Staff extends Widget {
 		ctx.fillStyle = "#000000";
 
 		ctx.beginPath();
-		ctx.lineWidth = 3;
+		ctx.lineWidth = 4;
 		ctx.moveTo(x - character_half_width - x_extra, y - character_half_height + tilt);
 		ctx.lineTo(x + character_half_width + x_extra, y - character_half_height - tilt);
 		ctx.stroke();
@@ -138,12 +136,12 @@ export class Staff extends Widget {
 
 		ctx.beginPath();
 		ctx.lineWidth = 2;
-		ctx.moveTo(x + character_half_width, y - character_half_height - y_extra - tilt * (tilt / y_extra));
-		ctx.lineTo(x + character_half_width, y + character_half_height + y_extra - tilt * (tilt / y_extra));
+		ctx.moveTo((x + character_half_width) | 0, (y - character_half_height - y_extra - tilt * (tilt / y_extra)) | 0);
+		ctx.lineTo((x + character_half_width) | 0, (y + character_half_height + y_extra - tilt * (tilt / y_extra)) | 0);
 		ctx.stroke();
 
-		ctx.moveTo(x - character_half_width, y - character_half_height - y_extra + tilt * (tilt / y_extra));
-		ctx.lineTo(x - character_half_width, y + character_half_height + y_extra + tilt * (tilt / y_extra));
+		ctx.moveTo((x - character_half_width) | 0, (y - character_half_height - y_extra + tilt * (tilt / y_extra)) | 0);
+		ctx.lineTo((x - character_half_width) | 0, (y + character_half_height + y_extra + tilt * (tilt / y_extra)) | 0);
 		ctx.stroke();
 	}
 
@@ -156,18 +154,18 @@ export class Staff extends Widget {
 	}
 
 	_draw_key_signatures(ctx, rectangle) {
-		let x = rectangle.x + this.line_space * 4;
+		let x = rectangle.x + this.line_space * 5;
 		for(let note of this.scale.treble_notes) {
 			const y = this._calc_note_y(rectangle, note);
 			this._draw_key(ctx, note, x, y);
-			x += this.line_space;
+			x += this.line_space * 0.7;
 		}
 
-		x = rectangle.x + this.line_space * 4;
+		x = rectangle.x + this.line_space * 5;
 		for(let note of this.scale.bass_notes) {
 			const y = this._calc_note_y(rectangle, note);
 			this._draw_key(ctx, note, x, y);
-			x += this.line_space;
+			x += this.line_space * 0.7;
 		}
 	}
 
