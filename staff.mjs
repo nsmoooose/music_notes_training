@@ -83,14 +83,12 @@ export class Staff extends Widget {
 	}
 
 	_draw_flat(ctx, x, y) {
-		/* TODO scale flat with size of staff */
-		/* TODO adjust height half of its size up for better positioning. */
-		/* TODO adjust x, y to integer position */
-		const character_half_width = 5;
-		const character_half_height = 13;
-		const extra = 6;
-		const tilt = 10;
-		const badjust = 0.5;
+		y = y - this.line_space / 2;
+		const character_half_width = this.line_space / 3;
+		const character_half_height = this.line_space;
+		const extra = this.line_space / 3;
+		const tilt = this.line_space - this.line_space / 2;
+		const badjust = 0.7;
 
 		ctx.beginPath();
 		ctx.lineWidth = 2;
