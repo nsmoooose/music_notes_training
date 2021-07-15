@@ -4,6 +4,7 @@ import {
 	MenuOption,
 	StackContainer
 } from "./base.mjs";
+import { Violin } from "./images.mjs";
 import {
 	ImageHelp,
 	ImageSettings
@@ -67,7 +68,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_options, 0.14);
 
-		this.button_help = new MenuOption("Hjälp", "Frågor och svar hittar du här", new ImageHelp());
+		this.button_help = new MenuOption("Hjälp", "Frågor och svar hittar du här", new Violin());
 		this.button_help.background_fillStyle = "black";
 		this.button_help.content_fillStyle = color4;
 		this.button_help.border_fillStyle = color4;
