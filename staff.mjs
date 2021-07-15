@@ -35,7 +35,7 @@ export class Staff extends Widget {
 			"17.852 14.471 32.323 32.323 32.323s32.323-14.471 32.323-32.323-14.471-32.323-32.323-32.323-32.323 14.471-32.323 32.323z");
 
 		this.feedback_notes = [];
-		this.note = null;
+		this.notes = [];
 	}
 
 	update(delta) {
@@ -58,11 +58,13 @@ export class Staff extends Widget {
 			octave_note_index * this.line_space / 2);
 	}
 
-	_draw_note(ctx, note, color, radius_x, radius_y) {
+	_draw_note(ctx, note, color, radius_x, radius_y, index) {
 		ctx.strokeStyle = color;
 		ctx.lineWidth = this.line_width;
 		ctx.strokeStyle = color;
 		ctx.fillStyle = color;
+
+		const offset = index * this.line_space * 3;
 
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		let center = rectangle.w / 2;
@@ -73,12 +75,12 @@ export class Staff extends Widget {
 		ctx.lineWidth = 4;
 		ctx.beginPath();
 		let rotation = -0.2;
-		ctx.ellipse(rectangle.x + center, y, radius_x, radius_y, rotation, 0, Math.PI * 2);
+		ctx.ellipse(rectangle.x + center + offset, y, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
 		if(note.length == 3) {
 			ctx.fillStyle = ctx.strokeStyle;
-			this._draw_key(ctx, note, rectangle.x + center - radius_x * 2, y);
+			this._draw_key(ctx, note, rectangle.x + center - radius_x * 2 + offset, y);
 		}
 	}
 
@@ -218,20 +220,29 @@ export class Staff extends Widget {
 		for(let note of this.feedback_notes) {
 			let radius_x = this.line_space / 2 * 1.25;
 			let radius_y = this.line_space / 2;
-			this._draw_note(ctx, note, "#999999", radius_x, radius_y);
+			this._draw_note(ctx, note, "#999999", radius_x, radius_y, 0);
 		}
 
-		if(this.note) {
-			let color = "#" +
-				Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
-				Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +
-				Math.trunc(this.note_color[2]).toString(16).padStart(2, "0");
+		let i = 0;
+		for(let j = 0; j < this.notes.length; j++) {
+			let note = this.notes[j];
+			if(j == 0) {
+				let color = "#" +
+					Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
+					Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +
+					Math.trunc(this.note_color[2]).toString(16).padStart(2, "0");
 
-			let speed = 6;
-			let now = this.getState().now * speed;
-			let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
-			let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
-			this._draw_note(ctx, this.note, color, radius_x, radius_y);
+				let speed = 6;
+				let now = this.getState().now * speed;
+				let radius_x = this.line_space / 2 * 1.25 + Math.sin(now) * 2 + 2 + this.extra_note_size;
+				let radius_y = this.line_space / 2 + Math.sin(now) * 2 + this.extra_note_size;
+				this._draw_note(ctx, note, color, radius_x, radius_y, i);
+			} else {
+				let radius_x = this.line_space / 2 * 1.25;
+				let radius_y = this.line_space / 2;
+				this._draw_note(ctx, note, "#000000", radius_x, radius_y, i);
+			}
+			i++;
 		}
 	}
 }

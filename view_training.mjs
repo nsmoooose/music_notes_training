@@ -32,7 +32,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		let margin = 3;
 
-		this.current_question = null;
+		this.questions = [];
 
 		MusicTrainerState.load();
 
@@ -143,7 +143,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 			return handled;
 		}
 
-		if(this.current_question == null) {
+		if(this.questions.length <= 0) {
 			return true;
 		}
 
@@ -157,18 +157,21 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 	process_answer(answer) {
 		let correct_answer = null;
+		let current_question = this.questions[0];
 
 		if(Array.isArray(answer)) {
 			if(answer[0].length >= 1 && is_int(parseInt(answer[0][1], 10))) {
-				correct_answer = this.current_question.note;
+				correct_answer = current_question.note;
 			} else {
-				correct_answer = note_without_octave(this.current_question.note);
+				correct_answer = note_without_octave(current_question.note);
 			}
 		} else if(answer.length >= 1 && is_int(parseInt(answer[1], 10))) {
-			correct_answer = this.current_question.note;
+			correct_answer = current_question.note;
 		} else {
-			correct_answer = note_without_octave(this.current_question.note);
+			correct_answer = note_without_octave(current_question.note);
 		}
+
+		this.questions.shift();
 
 		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			MusicTrainerState.add_answer(this.level.id, true);
@@ -190,7 +193,9 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		if(this.level.questions.length == 0) {
 			return;
 		}
-		this.current_question = this.level.questions[Math.floor(Math.random() * this.level.questions.length)];
-		this.staff.note = this.current_question.note;
+		while(this.questions.length < 5) {
+			this.questions.push(this.level.questions[Math.floor(Math.random() * this.level.questions.length)]);
+		}
+		this.staff.notes = Array.from(this.questions, element => element.note);
 	}
 }
