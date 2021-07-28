@@ -8,6 +8,7 @@ import {
 	ImageHelp,
 	ImageSettings
 } from "./images.mjs";
+import { _ } from "./translation.mjs";
 import { Excercises } from "./view_excercises.mjs";
 import { Settings } from "./view_settings.mjs";
 
@@ -31,13 +32,13 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
-		this.title = new Label("Not träning");
+		this.title = new Label(_("Note training"));
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = color0;
 		this.title.text_fillStyle = text_color;
 		this.stack.appendChild(this.title, 0.20);
 
-		this.button_train = new MenuOption("Träna", "Fortsätt där du slutade", new Label(""));
+		this.button_train = new MenuOption(_("Train"), _("Continue where you left"), new Label(""));
 		this.button_train.background_fillStyle = color2;
 		this.button_train.content_fillStyle = color1;
 		this.button_train.border_fillStyle = color1;
@@ -47,7 +48,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_train, 0.14);
 
-		this.button_excercises = new MenuOption("Övningar", "Noter, Fiss, Bess", new Label(""));
+		this.button_excercises = new MenuOption(_("Exercises"), _("Notes, F#, Bb"), new Label(""));
 		this.button_excercises.background_fillStyle = color3;
 		this.button_excercises.content_fillStyle = color2;
 		this.button_excercises.border_fillStyle = color2;
@@ -57,7 +58,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_excercises, 0.14);
 
-		this.button_options = new MenuOption("Inställningar", "Språk och instrument", new ImageSettings());
+		this.button_options = new MenuOption(_("Settings"), _("Language and instrument"), new ImageSettings());
 		this.button_options.background_fillStyle = color4;
 		this.button_options.content_fillStyle = color3;
 		this.button_options.border_fillStyle = color3;
@@ -67,7 +68,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_options, 0.14);
 
-		this.button_help = new MenuOption("Hjälp", "Frågor och svar hittar du här", new ImageHelp());
+		this.button_help = new MenuOption(_("Help"), _("Questions and answers are here"), new ImageHelp());
 		this.button_help.background_fillStyle = "black";
 		this.button_help.content_fillStyle = color4;
 		this.button_help.border_fillStyle = color4;

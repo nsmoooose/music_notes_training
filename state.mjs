@@ -28,28 +28,36 @@ export class MusicTrainerState {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;
-			} else if (x.version == 4) {
+			} else if(x.version == 4) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;
 				MusicTrainerState.results = x.results;
+			} else if(x.version == 5) {
+				MusicTrainerState.excercise = x.excercise;
+				MusicTrainerState.level = x.level;
+				MusicTrainerState.instrument = x.instrument;
+				MusicTrainerState.results = x.results;
+				MusicTrainerState.language = x.language;
 			}
 		}
 	}
 
 	static persist() {
 		let x = {
-			"version": 4,
+			"version": 5,
 			"excercise": MusicTrainerState.excercise,
 			"level": MusicTrainerState.level,
 			"instrument": MusicTrainerState.instrument,
-			"results": MusicTrainerState.results
+			"results": MusicTrainerState.results,
+			"language": MusicTrainerState.language
 		};
 		let s = JSON.stringify(x);
 		localStorage.setItem("results", s);
 	}
 }
 
+MusicTrainerState.language = navigator.languages[0].substring(0, 2);
 MusicTrainerState.excercise = 1;
 MusicTrainerState.level = 1;
 MusicTrainerState.instrument = "piano";

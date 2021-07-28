@@ -7,23 +7,23 @@ import {
 import { Checkbox } from "./images.mjs";
 import { ImageBack } from "./images.mjs";
 import { MusicTrainerState } from "./state.mjs";
+import { language_set } from "./translation.mjs";
+import { MainMenu } from "./view_main_menu.mjs";
 
 export class Settings extends AspectRatioControlContainer {
-	constructor(back) {
+	constructor() {
 		super(2);
 
-		this.back = back;
-
 		let colors = [
-			"#6666ee",
+			"#44ee44",
+			"#44ee44",
+			"#44cc44",
 			"#4444cc",
 			"#2222aa",
 			"#000099",
 			"#aa0000",
-			"#000077",
-			"#000066",
-			"#000055",
-			"#000044",
+			"#000000",
+			"#000000",
 		];
 		let text_color = "#ffffff";
 
@@ -39,7 +39,32 @@ export class Settings extends AspectRatioControlContainer {
 		this.title.text_fillStyle = text_color;
 		this.stack.appendChild(this.title, 0.20);
 
-		// TODO Language
+		let index = 1;
+
+		let languages = [
+			{id: "en", name: "Engelska", description: ""},
+			{id: "sv", name: "Svenska", description: ""}
+		];
+
+		for(let language of languages) {
+			let checkbox = new Checkbox();
+			checkbox.checked = MusicTrainerState.language == language.id;
+			let menu = new MenuOption(language.name, language.description, checkbox);
+			menu.background_fillStyle = colors[index + 1];
+			menu.content_fillStyle = colors[index];
+			menu.border_fillStyle = colors[index];
+			menu.content_text_color = text_color;
+			menu.addEventListener("click", () => {
+				MusicTrainerState.language = language.id;
+				MusicTrainerState.persist();
+				language_set(language.id);
+				/* Ugly to create a new settings view. Should update existing
+				   controls. Back button animation will glitch a little as well. */
+				this.getRoot().setChild(new Settings(this.back));
+			});
+			this.stack.appendChild(menu, 0.1);
+			index += 1;
+		}
 
 		let instruments = [
 			{id: "notes", name: "Noter", description: "Lär dig noternas namn"},
@@ -47,10 +72,6 @@ export class Settings extends AspectRatioControlContainer {
 			{id: "violin", name: "Fiol", description: "Var ska jag trycka"}
 		];
 
-		colors[instruments.length + 1 + 1] = "black";
-		colors[instruments.length + 1 + 2] = "black";
-
-		let index = 1;
 		for(let instrument of instruments) {
 			let checkbox = new Checkbox();
 			checkbox.checked = MusicTrainerState.instrument == instrument.id;
@@ -88,7 +109,7 @@ export class Settings extends AspectRatioControlContainer {
 		menu.border_fillStyle = colors[index];
 		menu.content_text_color = text_color;
 		menu.addEventListener("click", () => {
-			this.getRoot().setChild(this.back);
+			this.getRoot().setChild(new MainMenu());
 		});
 		this.stack.appendChild(menu, 0.14);
 	}

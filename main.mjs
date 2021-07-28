@@ -2,10 +2,11 @@ import {
 	$,
 	Root
 } from "./base.mjs";
+import { MusicTrainerState } from "./state.mjs";
+import { language_set } from "./translation.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
 
-export let g_root = new Root();
-g_root.setChild(new MainMenu());
+export let g_root = null;
 let lock = null;
 
 function step(ts) {
@@ -22,6 +23,12 @@ function step(ts) {
 }
 
 window.addEventListener("load", () => {
+	MusicTrainerState.load();
+	language_set(MusicTrainerState.language);
+
+	g_root = new Root();
+	g_root.setChild(new MainMenu());
+
 	if("serviceWorker" in navigator) {
 		navigator
 			.serviceWorker.register("service_worker.js")
