@@ -7,7 +7,10 @@ import {
 import { Checkbox } from "./images.mjs";
 import { ImageBack } from "./images.mjs";
 import { MusicTrainerState } from "./state.mjs";
-import { language_set } from "./translation.mjs";
+import {
+	_,
+	language_set
+} from "./translation.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
 
 export class Settings extends AspectRatioControlContainer {
@@ -103,7 +106,7 @@ export class Settings extends AspectRatioControlContainer {
 		this.stack.appendChild(menu, 0.1);
 		index += 1;
 
-		menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = colors[index + 1];
 		menu.content_fillStyle = colors[index];
 		menu.border_fillStyle = colors[index];

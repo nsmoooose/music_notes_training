@@ -10,12 +10,11 @@ import { ImageBack } from "./images.mjs";
 import { g_excercises } from "./questions.mjs";
 import { MusicTrainerState } from "./state.mjs";
 import { MusicTrainer } from "./view_training.mjs";
+import { _ } from "./translation.mjs";
 
 export class ExcerciseLevels extends AspectRatioControlContainer {
 	constructor(back, excercise) {
 		super(2);
-
-		MusicTrainerState.load();
 
 		this.back = back;
 
@@ -28,7 +27,7 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
-		this.title = new Label("Övningar");
+		this.title = new Label(_("Levels"));
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = colors[0];
 		this.title.text_fillStyle = text_color;
@@ -57,7 +56,7 @@ export class ExcerciseLevels extends AspectRatioControlContainer {
 			index += 1;
 		}
 
-		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = colors[index + 1];
 		menu.content_fillStyle = colors[index];
 		menu.border_fillStyle = colors[index];

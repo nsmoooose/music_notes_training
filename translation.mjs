@@ -17,17 +17,29 @@ export function language_set(language) {
 }
 
 let translations = {
+	"Back": {
+		"en": "Back",
+		"sv": "Tillbaka"
+	},
 	"Continue where you left": {
 		"en": "Continue where you left",
 		"sv": "Fortsätt där du slutade"
 	},
 	"Exercises": {
-		"en": "Excercises",
+		"en": "Exercises",
 		"sv": "Övningar"
+	},
+	"Help": {
+		"en": "Help",
+		"sv": "Hjälp"
 	},
 	"Language and instrument": {
 		"en": "Language and instrument",
 		"sv": "Språk och instrument"
+	},
+	"Levels": {
+		"en": "Levels",
+		"sv": "Nivå"
 	},
 	"Note training": {
 		"en": "Note training",
@@ -44,6 +56,10 @@ let translations = {
 	"Settings": {
 		"en": "Settings",
 		"sv": "Inställningar"
+	},
+	"To the main menu": {
+		"en": "To the main menu",
+		"sv": "Till huvudmenyn"
 	},
 	"Train": {
 		"en": "Train",

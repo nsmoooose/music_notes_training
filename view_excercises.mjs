@@ -8,6 +8,7 @@ import {
 import { ImageBack } from "./images.mjs";
 import { g_excercises } from "./questions.mjs";
 import { ExcerciseLevels } from "./view_levels.mjs";
+import { _ } from "./translation.mjs";
 
 export class Excercises extends AspectRatioControlContainer {
 	constructor(back) {
@@ -23,7 +24,7 @@ export class Excercises extends AspectRatioControlContainer {
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
-		this.title = new Label("Övningar");
+		this.title = new Label(_("Exercises"));
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = colors[0];
 		this.title.text_fillStyle = text_color;
@@ -46,7 +47,7 @@ export class Excercises extends AspectRatioControlContainer {
 			index += 1;
 		}
 
-		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = colors[index + 1];
 		menu.content_fillStyle = colors[index];
 		menu.border_fillStyle = colors[index];
