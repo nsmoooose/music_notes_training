@@ -11,6 +11,7 @@ const assets = [
 	"/questions.mjs",
 	"/staff.mjs",
 	"/state.mjs",
+	"/translation.mjs",
 	"/instrument_notes.mjs",
 	"/instrument_piano.mjs",
 	"/instrument_violin.mjs",

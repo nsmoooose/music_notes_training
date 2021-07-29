@@ -19,6 +19,7 @@ import {
 	MidiConstants,
 	MidiPianoNotes
 } from "./midi.mjs";
+import { _ } from "./translation.mjs";
 
 function note_without_octave(note) {
 	return note.substring(0, 1) + note.substring(2, 3);
@@ -64,7 +65,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.instrument.background_fillStyle = "#ffffff"
 		this.stack.appendChild(this.instrument, 0.4);
 
-		let menu = new MenuOption("Tillbaka", "Till huvudmenyn", new ImageBack());
+		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = "black";
 		menu.content_fillStyle = "black";
 		menu.border_fillStyle = "black";
