@@ -30,7 +30,6 @@ export class Settings extends AspectRatioControlContainer {
 		];
 		let text_color = "#ffffff";
 
-		let margin = 3;
 		this.background_fillStyle = "black";
 
 		this.stack = new StackContainer("down");
@@ -63,7 +62,7 @@ export class Settings extends AspectRatioControlContainer {
 				language_set(language.id);
 				/* Ugly to create a new settings view. Should update existing
 				   controls. Back button animation will glitch a little as well. */
-				this.getRoot().setChild(new Settings(this.back));
+				this.getRoot().setChild(new Settings());
 			});
 			this.stack.appendChild(menu, 0.1);
 			index += 1;
@@ -88,7 +87,7 @@ export class Settings extends AspectRatioControlContainer {
 				MusicTrainerState.persist();
 				/* Ugly to create a new settings view. Should update existing
 				   controls. Back button animation will glitch a little as well. */
-				this.getRoot().setChild(new Settings(this.back));
+				this.getRoot().setChild(new Settings());
 			});
 			this.stack.appendChild(menu, 0.1);
 			index += 1;
