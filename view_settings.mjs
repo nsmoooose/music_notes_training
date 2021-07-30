@@ -36,7 +36,7 @@ export class Settings extends AspectRatioControlContainer {
 		this.stack = new StackContainer("down");
 		this.setChild(this.stack);
 
-		this.title = new Label("Inställningar");
+		this.title = new Label(_("Settings"));
 		this.title.margin.setMargin(30);
 		this.title.background_fillStyle = colors[0];
 		this.title.text_fillStyle = text_color;
@@ -45,7 +45,7 @@ export class Settings extends AspectRatioControlContainer {
 		let index = 1;
 
 		let languages = [
-			{id: "en", name: "Engelska", description: ""},
+			{id: "en", name: "English", description: ""},
 			{id: "sv", name: "Svenska", description: ""}
 		];
 
@@ -70,9 +70,9 @@ export class Settings extends AspectRatioControlContainer {
 		}
 
 		let instruments = [
-			{id: "notes", name: "Noter", description: "Lär dig noternas namn"},
-			{id: "piano", name: "Piano", description: "Tangenterna placering"},
-			{id: "violin", name: "Fiol", description: "Var ska jag trycka"}
+			{id: "notes", name: _("Notes"), description: "Lär dig noternas namn"},
+			{id: "piano", name: _("Piano"), description: "Tangenterna placering"},
+			{id: "violin", name: _("Violin"), description: "Var ska jag trycka"}
 		];
 
 		for(let instrument of instruments) {

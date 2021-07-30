@@ -45,9 +45,17 @@ let translations = {
 		"en": "Note training",
 		"sv": "Not träning"
 	},
+	"Notes": {
+		"en": "Notes",
+		"sv": "Noter"
+	},
 	"Notes, F#, Bb": {
 		"en": "Notes, F#, Bb",
 		"sv": "Noter, Fiss och Bess"
+	},
+	"Piano": {
+		"en": "Piano",
+		"sv": "Piano"
 	},
 	"Questions and answers are here": {
 		"en": "Questions and answers are here",
@@ -64,5 +72,9 @@ let translations = {
 	"Train": {
 		"en": "Train",
 		"sv": "Träna"
+	},
+	"Violin": {
+		"en": "Violin",
+		"sv": "Fiol"
 	}
 }
