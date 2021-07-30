@@ -70,9 +70,9 @@ export class Settings extends AspectRatioControlContainer {
 		}
 
 		let instruments = [
-			{id: "notes", name: _("Notes"), description: "Lär dig noternas namn"},
-			{id: "piano", name: _("Piano"), description: "Tangenterna placering"},
-			{id: "violin", name: _("Violin"), description: "Var ska jag trycka"}
+			{id: "notes", name: _("Notes"), description: _("Learn the notes names")},
+			{id: "piano", name: _("Piano"), description: _("Key placement")},
+			{id: "violin", name: _("Violin"), description: _("Where to push string")}
 		];
 
 		for(let instrument of instruments) {
@@ -94,7 +94,7 @@ export class Settings extends AspectRatioControlContainer {
 			index += 1;
 		}
 
-		let menu = new MenuOption("!! Starta om !!", "Din lagrade statistik försvinner", new Label(""));
+		let menu = new MenuOption(_("!! Restart !!"), _("Your progress will be lost"), new Label(""));
 		menu.background_fillStyle = colors[index + 1];
 		menu.content_fillStyle = colors[index];
 		menu.border_fillStyle = colors[index];

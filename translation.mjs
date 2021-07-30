@@ -17,6 +17,10 @@ export function language_set(language) {
 }
 
 let translations = {
+	"!! Restart !!": {
+		"en": "!! Restart !!",
+		"sv": "!! Starta om !!"
+	},
 	"Back": {
 		"en": "Back",
 		"sv": "Tillbaka"
@@ -33,9 +37,17 @@ let translations = {
 		"en": "Help",
 		"sv": "Hjälp"
 	},
+	"Key placement": {
+		"en": "Key placement",
+		"sv": "Tangenternas placering"
+	},
 	"Language and instrument": {
 		"en": "Language and instrument",
 		"sv": "Språk och instrument"
+	},
+	"Learn the notes names": {
+		"en": "Learn the notes names",
+		"sv": "Lär dig noternas namn"
 	},
 	"Levels": {
 		"en": "Levels",
@@ -76,5 +88,13 @@ let translations = {
 	"Violin": {
 		"en": "Violin",
 		"sv": "Fiol"
+	},
+	"Where to push string": {
+		"en": "Where to push string",
+		"sv": "Var ska jag trycka"
+	},
+	"Your progress will be lost": {
+		"en": "Your progress will be lost",
+		"sv": "Din lagrade statistik försvinner"
 	}
 }
