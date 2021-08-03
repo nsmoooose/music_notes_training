@@ -10,6 +10,10 @@ import {
 import { Staff } from "./staff.mjs";
 import { _ } from "./translation.mjs";
 import { MainMenu } from "./view_main_menu.mjs";
+import {
+	MidiConstants,
+	MidiPianoNotes
+} from "./midi.mjs";
 
 export class Notes extends AspectRatioControlContainer {
 	constructor() {
