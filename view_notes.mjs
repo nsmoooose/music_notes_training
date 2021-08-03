@@ -79,7 +79,6 @@ export class Notes extends AspectRatioControlContainer {
 	}
 
 	on_midimessage(message) {
-        alert("Midi message");
 		let command = message.data[0];
 		let note = message.data[1];
 		let velocity = (message.data.length > 2) ? message.data[2] : 0;
