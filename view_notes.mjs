@@ -51,9 +51,8 @@ export class Notes extends AspectRatioControlContainer {
 
 		if(navigator.requestMIDIAccess) {
 			navigator.requestMIDIAccess().then((midi_access) => {
-				this.midi.connected = true;
-
 				for(let input of midi_access.inputs.values()) {
+                    this.midi.connected = true;
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
 			});
@@ -80,6 +79,7 @@ export class Notes extends AspectRatioControlContainer {
 	}
 
 	on_midimessage(message) {
+        alert("Midi message");
 		let command = message.data[0];
 		let note = message.data[1];
 		let velocity = (message.data.length > 2) ? message.data[2] : 0;

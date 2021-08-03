@@ -84,9 +84,8 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		if(navigator.requestMIDIAccess) {
 			navigator.requestMIDIAccess().then((midi_access) => {
-				this.midi.connected = true;
-
 				for(let input of midi_access.inputs.values()) {
+					this.midi.connected = true;
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
 			});
