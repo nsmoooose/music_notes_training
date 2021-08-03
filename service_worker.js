@@ -18,6 +18,7 @@ const assets = [
 	"/view_excercises.mjs",
 	"/view_levels.mjs",
 	"/view_main_menu.mjs",
+	"/view_notes.mjs",
 	"/view_settings.mjs",
 	"/view_training.mjs"
 ];

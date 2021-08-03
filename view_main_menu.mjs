@@ -10,6 +10,7 @@ import {
 } from "./images.mjs";
 import { _ } from "./translation.mjs";
 import { Excercises } from "./view_excercises.mjs";
+import { Notes } from "./view_notes.mjs";
 import { Settings } from "./view_settings.mjs";
 
 import {
@@ -25,6 +26,7 @@ export class MainMenu extends AspectRatioControlContainer {
 		let color2 = "#ee6666";
 		let color3 = "#cc4444";
 		let color4 = "#aa2222";
+		let color5 = "#880000";
 		let text_color = "#ffffff";
 
 		this.background_fillStyle = "black";
@@ -48,10 +50,20 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_train, 0.14);
 
+		this.button_notes = new MenuOption(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""));
+		this.button_notes.background_fillStyle = color3;
+		this.button_notes.content_fillStyle = color2;
+		this.button_notes.border_fillStyle = color2;
+		this.button_notes.content_text_color = text_color;
+		this.button_notes.addEventListener("click", () => {
+			this.getRoot().setChild(new Notes());
+		});
+		this.stack.appendChild(this.button_notes, 0.14);
+
 		this.button_excercises = new MenuOption(_("Exercises"), _("Notes, F#, Bb"), new Label(""));
-		this.button_excercises.background_fillStyle = color3;
-		this.button_excercises.content_fillStyle = color2;
-		this.button_excercises.border_fillStyle = color2;
+		this.button_excercises.background_fillStyle = color4;
+		this.button_excercises.content_fillStyle = color3;
+		this.button_excercises.border_fillStyle = color3;
 		this.button_excercises.content_text_color = text_color;
 		this.button_excercises.addEventListener("click", () => {
 			this.getRoot().setChild(new Excercises(this));
@@ -59,9 +71,9 @@ export class MainMenu extends AspectRatioControlContainer {
 		this.stack.appendChild(this.button_excercises, 0.14);
 
 		this.button_options = new MenuOption(_("Settings"), _("Language and instrument"), new ImageSettings());
-		this.button_options.background_fillStyle = color4;
-		this.button_options.content_fillStyle = color3;
-		this.button_options.border_fillStyle = color3;
+		this.button_options.background_fillStyle = color5;
+		this.button_options.content_fillStyle = color4;
+		this.button_options.border_fillStyle = color4;
 		this.button_options.content_text_color = text_color;
 		this.button_options.addEventListener("click", () => {
 			this.getRoot().setChild(new Settings(this));
@@ -70,8 +82,8 @@ export class MainMenu extends AspectRatioControlContainer {
 
 		this.button_help = new MenuOption(_("Help"), _("Questions and answers are here"), new ImageHelp());
 		this.button_help.background_fillStyle = "black";
-		this.button_help.content_fillStyle = color4;
-		this.button_help.border_fillStyle = color4;
+		this.button_help.content_fillStyle = color5;
+		this.button_help.border_fillStyle = color5;
 		this.button_help.content_text_color = text_color;
 		this.button_help.addEventListener("click", () => {
 			window.location = "help-sv.html";

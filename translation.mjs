@@ -69,6 +69,10 @@ let translations = {
 		"en": "Piano",
 		"sv": "Piano"
 	},
+	"Plain notes with MIDI feedback": {
+		"en": "Plain notes with MIDI feedback",
+		"sv": "Noter med MIDI feedback"
+	},
 	"Questions and answers are here": {
 		"en": "Questions and answers are here",
 		"sv": "Frågor och svar hittar du här"
