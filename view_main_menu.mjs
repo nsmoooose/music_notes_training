@@ -50,25 +50,25 @@ export class MainMenu extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(this.button_train, 0.14);
 
-		this.button_notes = new MenuOption(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""));
-		this.button_notes.background_fillStyle = color3;
-		this.button_notes.content_fillStyle = color2;
-		this.button_notes.border_fillStyle = color2;
-		this.button_notes.content_text_color = text_color;
-		this.button_notes.addEventListener("click", () => {
-			this.getRoot().setChild(new Notes());
-		});
-		this.stack.appendChild(this.button_notes, 0.14);
-
 		this.button_excercises = new MenuOption(_("Exercises"), _("Notes, F#, Bb"), new Label(""));
-		this.button_excercises.background_fillStyle = color4;
-		this.button_excercises.content_fillStyle = color3;
-		this.button_excercises.border_fillStyle = color3;
+		this.button_excercises.background_fillStyle = color3;
+		this.button_excercises.content_fillStyle = color2;
+		this.button_excercises.border_fillStyle = color2;
 		this.button_excercises.content_text_color = text_color;
 		this.button_excercises.addEventListener("click", () => {
 			this.getRoot().setChild(new Excercises(this));
 		});
 		this.stack.appendChild(this.button_excercises, 0.14);
+
+		this.button_notes = new MenuOption(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""));
+		this.button_notes.background_fillStyle = color4;
+		this.button_notes.content_fillStyle = color3;
+		this.button_notes.border_fillStyle = color3;
+		this.button_notes.content_text_color = text_color;
+		this.button_notes.addEventListener("click", () => {
+			this.getRoot().setChild(new Notes());
+		});
+		this.stack.appendChild(this.button_notes, 0.14);
 
 		this.button_options = new MenuOption(_("Settings"), _("Language and instrument"), new ImageSettings());
 		this.button_options.background_fillStyle = color5;
