@@ -1,8 +1,6 @@
 import {
-	AspectRatioControlContainer,
 	Label,
-	MenuOption,
-	StackContainer
+	MenuView,
 } from "./base.mjs";
 import {
 	ImageHelp,
@@ -12,82 +10,37 @@ import { _ } from "./translation.mjs";
 import { Excercises } from "./view_excercises.mjs";
 import { Notes } from "./view_notes.mjs";
 import { Settings } from "./view_settings.mjs";
+import { MusicTrainer } from "./view_training.mjs";
 
-import {
-	MusicTrainer
-} from "./view_training.mjs";
-
-export class MainMenu extends AspectRatioControlContainer {
+export class MainMenu extends MenuView {
 	constructor() {
-		super(2);
+		super();
 
-		let color0 = "#ffaaaa";
-		let color1 = "#ff8888";
-		let color2 = "#ee6666";
-		let color3 = "#cc4444";
-		let color4 = "#aa2222";
-		let color5 = "#880000";
-		let text_color = "#ffffff";
+		this.colors = [
+			"#ffaaaa",
+			"#ff8888",
+			"#ee6666",
+			"#cc4444",
+			"#aa2222",
+			"#880000"
+		];
 
-		this.background_fillStyle = "black";
+		this.add_view_title(_("Note training"));
 
-		this.stack = new StackContainer("down");
-		this.setChild(this.stack);
-
-		this.title = new Label(_("Note training"));
-		this.title.margin.setMargin(30);
-		this.title.background_fillStyle = color0;
-		this.title.text_fillStyle = text_color;
-		this.stack.appendChild(this.title, 0.20);
-
-		this.button_train = new MenuOption(_("Train"), _("Continue where you left"), new Label(""));
-		this.button_train.background_fillStyle = color2;
-		this.button_train.content_fillStyle = color1;
-		this.button_train.border_fillStyle = color1;
-		this.button_train.content_text_color = text_color;
-		this.button_train.addEventListener("click", () => {
+		this.add_view_menuitem(_("Train"), _("Continue where you left"), new Label(""), () => {
 			this.getRoot().setChild(new MusicTrainer());
 		});
-		this.stack.appendChild(this.button_train, 0.14);
-
-		this.button_excercises = new MenuOption(_("Exercises"), _("Notes, F#, Bb"), new Label(""));
-		this.button_excercises.background_fillStyle = color3;
-		this.button_excercises.content_fillStyle = color2;
-		this.button_excercises.border_fillStyle = color2;
-		this.button_excercises.content_text_color = text_color;
-		this.button_excercises.addEventListener("click", () => {
+		this.add_view_menuitem(_("Exercises"), _("Notes, F#, Bb"), new Label(""), () => {
 			this.getRoot().setChild(new Excercises(this));
 		});
-		this.stack.appendChild(this.button_excercises, 0.14);
-
-		this.button_notes = new MenuOption(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""));
-		this.button_notes.background_fillStyle = color4;
-		this.button_notes.content_fillStyle = color3;
-		this.button_notes.border_fillStyle = color3;
-		this.button_notes.content_text_color = text_color;
-		this.button_notes.addEventListener("click", () => {
+		this.add_view_menuitem(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""), () => {
 			this.getRoot().setChild(new Notes());
 		});
-		this.stack.appendChild(this.button_notes, 0.14);
-
-		this.button_options = new MenuOption(_("Settings"), _("Language and instrument"), new ImageSettings());
-		this.button_options.background_fillStyle = color5;
-		this.button_options.content_fillStyle = color4;
-		this.button_options.border_fillStyle = color4;
-		this.button_options.content_text_color = text_color;
-		this.button_options.addEventListener("click", () => {
+		this.add_view_menuitem(_("Settings"), _("Language and instrument"), new ImageSettings(), () => {
 			this.getRoot().setChild(new Settings(this));
 		});
-		this.stack.appendChild(this.button_options, 0.14);
-
-		this.button_help = new MenuOption(_("Help"), _("Questions and answers are here"), new ImageHelp());
-		this.button_help.background_fillStyle = "black";
-		this.button_help.content_fillStyle = color5;
-		this.button_help.border_fillStyle = color5;
-		this.button_help.content_text_color = text_color;
-		this.button_help.addEventListener("click", () => {
+		this.add_view_menuitem(_("Help"), _("Questions and answers are here"), new ImageHelp(), () => {
 			window.location = "help-sv.html";
 		});
-		this.stack.appendChild(this.button_help, 0.14);
 	}
 }

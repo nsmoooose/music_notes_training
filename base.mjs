@@ -525,3 +525,34 @@ export class LevelProgress extends Widget {
 		ctx.fillText(text, x, y);
 	}
 }
+
+export class MenuView extends AspectRatioControlContainer {
+	constructor() {
+		super(2);
+
+		this.stack = new StackContainer("down");
+		this.setChild(this.stack);
+
+		this.text_color = "#ffffff";
+		this.background_fillStyle = "black";
+		this.colors = [];
+	}
+
+	add_view_title(title) {
+		let x = new Label(title);
+		x.margin.setMargin(30);
+		x.background_fillStyle = this.colors[0];
+		x.text_fillStyle = this.text_color;
+		this.stack.appendChild(x, 0.20);
+	}
+
+	add_view_menuitem(title, desc, ctrl, cb) {
+		let x = new MenuOption(title, desc, ctrl);
+		x.background_fillStyle = this.colors[this.stack.children.length + 1];
+		x.content_fillStyle = this.colors[this.stack.children.length];
+		x.border_fillStyle = this.colors[this.stack.children.length];
+		x.content_text_color = this.text_color;
+		x.addEventListener("click", cb);
+		this.stack.appendChild(x, 0.14);
+	}
+}
