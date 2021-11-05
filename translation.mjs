@@ -100,5 +100,13 @@ let translations = {
 	"Your progress will be lost": {
 		"en": "Your progress will be lost",
 		"sv": "Din lagrade statistik försvinner"
+	},
+	"Songs with MIDI feedback": {
+		"en": "Songs with MIDI feedback",
+		"sv": "Låtar med MIDI feedback"
+	},
+	"Songs": {
+		"en": "Songs",
+		"sv": "Låtar"
 	}
 }
