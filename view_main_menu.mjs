@@ -11,6 +11,7 @@ import { Excercises } from "./view_excercises.mjs";
 import { Notes } from "./view_notes.mjs";
 import { Settings } from "./view_settings.mjs";
 import { MusicTrainer } from "./view_training.mjs";
+import { SongsMenu } from "./view_songs.mjs";
 
 export class MainMenu extends MenuView {
 	constructor() {
@@ -22,7 +23,8 @@ export class MainMenu extends MenuView {
 			"#ee6666",
 			"#cc4444",
 			"#aa2222",
-			"#880000"
+			"#880000",
+			"#660000",
 		];
 
 		this.add_view_title(_("Note training"));
@@ -35,6 +37,9 @@ export class MainMenu extends MenuView {
 		});
 		this.add_view_menuitem(_("Notes"), _("Plain notes with MIDI feedback"), new Label(""), () => {
 			this.getRoot().setChild(new Notes());
+		});
+		this.add_view_menuitem(_("Songs"), _("Songs with MIDI feedback"), new Label(""), () => {
+			this.getRoot().setChild(new SongsMenu(this));
 		});
 		this.add_view_menuitem(_("Settings"), _("Language and instrument"), new ImageSettings(), () => {
 			this.getRoot().setChild(new Settings(this));
