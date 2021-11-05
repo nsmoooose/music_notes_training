@@ -9,6 +9,8 @@ const assets = [
 	"/main.mjs",
 	"/midi.mjs",
 	"/questions.mjs",
+	"/scale.mjs",
+	"/songs.mjs",
 	"/staff.mjs",
 	"/state.mjs",
 	"/translation.mjs",
@@ -20,6 +22,7 @@ const assets = [
 	"/view_main_menu.mjs",
 	"/view_notes.mjs",
 	"/view_settings.mjs",
+	"/view_songs.mjs",
 	"/view_training.mjs"
 ];
 
