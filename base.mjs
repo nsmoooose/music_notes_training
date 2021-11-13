@@ -536,6 +536,13 @@ export class MenuView extends AspectRatioControlContainer {
 		this.text_color = "#ffffff";
 		this.background_fillStyle = "black";
 		this.colors = [];
+
+		this.title_size = 0.20;
+		this.menuitem_size = 0.14;
+	}
+
+	calc_menuitem_size(count) {
+		this.menuitem_size = (1.0 - this.title_size) / count;
 	}
 
 	add_view_title(title) {
@@ -543,7 +550,7 @@ export class MenuView extends AspectRatioControlContainer {
 		x.margin.setMargin(30);
 		x.background_fillStyle = this.colors[0];
 		x.text_fillStyle = this.text_color;
-		this.stack.appendChild(x, 0.20);
+		this.stack.appendChild(x, this.title_size);
 	}
 
 	add_view_menuitem(title, desc, ctrl, cb) {
@@ -553,6 +560,6 @@ export class MenuView extends AspectRatioControlContainer {
 		x.border_fillStyle = this.colors[this.stack.children.length];
 		x.content_text_color = this.text_color;
 		x.addEventListener("click", cb);
-		this.stack.appendChild(x, 0.14);
+		this.stack.appendChild(x, this.menuitem_size);
 	}
 }

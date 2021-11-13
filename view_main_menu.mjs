@@ -28,6 +28,7 @@ export class MainMenu extends MenuView {
 		];
 
 		this.add_view_title(_("Note training"));
+		this.calc_menuitem_size(6);
 
 		this.add_view_menuitem(_("Train"), _("Continue where you left"), new Label(""), () => {
 			this.getRoot().setChild(new MusicTrainer());
