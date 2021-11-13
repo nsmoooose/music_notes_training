@@ -10,7 +10,7 @@ const assets = [
 	"/midi.mjs",
 	"/questions.mjs",
 	"/scale.mjs",
-	"/songs.mjs",
+	"/song.mjs",
 	"/staff.mjs",
 	"/state.mjs",
 	"/translation.mjs",
