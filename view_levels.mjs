@@ -1,7 +1,6 @@
 import { color_ramp } from "./base.mjs";
 import {
 	LevelProgress,
-	MenuOption,
 	MenuView
 } from "./base.mjs";
 import { ImageBack } from "./images.mjs";
