@@ -19,7 +19,7 @@ export class Excercises extends MenuView {
 
 		this.add_view_title(_("Exercises"));
 
-		for(let excercise of g_excercises) {
+		for (let excercise of g_excercises) {
 			this.add_view_menuitem(excercise.name, excercise.description, new Label(""), () => {
 				this.getRoot().setChild(new ExcerciseLevels(this, excercise));
 			});

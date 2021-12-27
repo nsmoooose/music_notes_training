@@ -8,7 +8,7 @@ import {
 import { Scales } from "./scale.mjs";
 
 export class ScaleMenu extends MenuView {
-    constructor(back, cb_accept) {
+	constructor(back, cb_accept) {
 		super();
 
 		this.back = back;
@@ -23,7 +23,7 @@ export class ScaleMenu extends MenuView {
 		this.add_view_title(_("Select scale"));
 		this.calc_menuitem_size(scales.length + 1);
 
-		for(let scale of Object.values(Scales)) {
+		for (let scale of Object.values(Scales)) {
 			this.add_view_menuitem(_(scale.name), scale.id, new Label(""), () => {
 				cb_accept(scale);
 			});

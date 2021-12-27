@@ -38,9 +38,9 @@ export class InstrumentNotes extends Widget {
 
 		let level = MusicTrainerState.level - 1;
 		let notes = [];
-		for(let note of all_notes) {
-			if(note[1] != 0) {
-				if(level.hints & note[1]) {
+		for (let note of all_notes) {
+			if (note[1] != 0) {
+				if (level.hints & note[1]) {
 					notes.push(note[0]);
 				}
 			} else {
@@ -52,9 +52,9 @@ export class InstrumentNotes extends Widget {
 		const note_height = this.rectangle.h / this.h;
 		let rects = [];
 		let i = 0;
-		for(let row=0; row < this.h; row++) {
-			for(let col=0; col < this.w; col++) {
-				if(i >= notes.length) {
+		for (let row = 0; row < this.h; row++) {
+			for (let col = 0; col < this.w; col++) {
+				if (i >= notes.length) {
 					return rects;
 				}
 				const x = this.rectangle.x + note_width * col;
@@ -76,8 +76,8 @@ export class InstrumentNotes extends Widget {
 
 	click(x, y) {
 		const note_rects = this.calc_rects();
-		for(let r of note_rects) {
-			if(r.contains(x, y)) {
+		for (let r of note_rects) {
+			if (r.contains(x, y)) {
 				return r.note;
 			}
 		}
@@ -91,7 +91,7 @@ export class InstrumentNotes extends Widget {
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 
-		for(let r of this.calc_rects()) {
+		for (let r of this.calc_rects()) {
 			ctx.beginPath();
 			ctx.rect(r.x, r.y, r.w, r.h);
 			ctx.stroke();

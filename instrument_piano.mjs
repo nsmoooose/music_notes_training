@@ -22,8 +22,8 @@ export class InstrumentPiano extends Widget {
 			["G♯", "A♭"],
 			["A♯", "B♭"],
 		];
-		for(let i = 0; i < 6; i++) {
-			if(i == 2) {
+		for (let i = 0; i < 6; i++) {
+			if (i == 2) {
 				continue;
 			}
 			let x = (i + 1) * key_width + rectangle.x - key_width / 4;
@@ -34,7 +34,7 @@ export class InstrumentPiano extends Widget {
 		}
 
 		const notes = ["C", "D", "E", "F", "G", "A", "B"];
-		for(let i = 0; i < 7; i++) {
+		for (let i = 0; i < 7; i++) {
 			let x = i * key_width + rectangle.x;
 			let y = rectangle.y;
 			let r = new Rectangle(x, y, key_width, rectangle.h);
@@ -42,8 +42,8 @@ export class InstrumentPiano extends Widget {
 			note_rects.push(r);
 		}
 
-		for(let r of note_rects) {
-			if(r.contains(x, y)) {
+		for (let r of note_rects) {
+			if (r.contains(x, y)) {
 				return r.note;
 			}
 		}
@@ -56,7 +56,7 @@ export class InstrumentPiano extends Widget {
 
 		ctx.lineWidth = this.line_width;
 
-		for(let i=0; i < 7; i++) {
+		for (let i = 0; i < 7; i++) {
 			ctx.strokeStyle = "gray";
 			ctx.beginPath();
 			let x = i * key_width + rectangle.x;
@@ -67,8 +67,8 @@ export class InstrumentPiano extends Widget {
 			ctx.fillRect(x + this.line_width / 2, y + this.line_width / 2, key_width - this.line_width, rectangle.h - this.line_width);
 		}
 
-		for(let i=0; i < 6; i++) {
-			if(i == 2) {
+		for (let i = 0; i < 6; i++) {
+			if (i == 2) {
 				continue;
 			}
 			ctx.fillStyle = "rgb(0, 0, 0)";

@@ -29,7 +29,7 @@ export class ImageSettings extends Widget {
 
 		let segments = 22;
 		let segment_angle = Math.PI * 2 / segments;
-		for(let i = 0; i < segments; i++) {
+		for (let i = 0; i < segments; i++) {
 			let v = this.start_angle + i * segment_angle;
 			let v_sin = Math.sin(v);
 			let v_cos = Math.cos(v);
@@ -78,7 +78,7 @@ export class ImageBack extends Widget {
 
 	draw(ctx) {
 		let rectangle = this.margin.getRectangle(this.rectangle);
-		if(this.position < rectangle.x || this.position > rectangle.x + rectangle.w) {
+		if (this.position < rectangle.x || this.position > rectangle.x + rectangle.w) {
 			this.position = rectangle.x + rectangle.w;
 		}
 
@@ -142,7 +142,7 @@ export class MidiSupported extends Widget {
 	}
 
 	draw(ctx) {
-		if(!navigator.requestMIDIAccess) {
+		if (!navigator.requestMIDIAccess) {
 			return;
 		}
 
@@ -175,7 +175,7 @@ export class Checkbox extends Widget {
 		ctx.rect(rectangle.x, rectangle.y, rectangle.w, rectangle.h);
 		ctx.stroke();
 
-		if(this.checked) {
+		if (this.checked) {
 			let points = [
 				[rectangle.x, (rectangle.y + rectangle.h / 2) | 0],
 				[(rectangle.x + rectangle.w / 2) | 0, rectangle.y + rectangle.h],

@@ -1,7 +1,7 @@
 export class MusicTrainerState {
 	static add_answer(id, pass) {
-		if(!(id in MusicTrainerState.results)) {
-			MusicTrainerState.results[id] = {answers: 0, pass: 0};
+		if (!(id in MusicTrainerState.results)) {
+			MusicTrainerState.results[id] = { answers: 0, pass: 0 };
 		}
 		MusicTrainerState.results[id].answers++;
 		MusicTrainerState.results[id].pass += pass ? 1 : 0;
@@ -17,23 +17,23 @@ export class MusicTrainerState {
 
 	static load() {
 		let x = localStorage.getItem("results");
-		if(x != null) {
+		if (x != null) {
 			x = JSON.parse(x);
-			if(x.version == 1) {
+			if (x.version == 1) {
 				MusicTrainerState.level = x.level;
-			} else if(x.version == 2) {
+			} else if (x.version == 2) {
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;
-			} else if(x.version == 3) {
+			} else if (x.version == 3) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;
-			} else if(x.version == 4) {
+			} else if (x.version == 4) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;
 				MusicTrainerState.results = x.results;
-			} else if(x.version == 5) {
+			} else if (x.version == 5) {
 				MusicTrainerState.excercise = x.excercise;
 				MusicTrainerState.level = x.level;
 				MusicTrainerState.instrument = x.instrument;

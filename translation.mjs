@@ -3,8 +3,8 @@ import { is_int } from "./base.mjs";
 let current_language = "een";
 
 export function _(s) {
-	if(s in translations) {
-		if(current_language in translations[s]) {
+	if (s in translations) {
+		if (current_language in translations[s]) {
 			return translations[s][current_language];
 		}
 	}

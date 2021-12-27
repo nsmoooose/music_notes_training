@@ -3,7 +3,7 @@ import { Scales } from "./scale.mjs";
 export class Question {
 	constructor(note) {
 		/* Scientific pitch notation:
-           https://en.wikipedia.org/wiki/Scientific_pitch_notation  */
+		   https://en.wikipedia.org/wiki/Scientific_pitch_notation  */
 		this.note = note;
 	}
 }

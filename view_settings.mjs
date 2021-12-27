@@ -44,11 +44,11 @@ export class Settings extends AspectRatioControlContainer {
 		let index = 1;
 
 		let languages = [
-			{id: "en", name: "English", description: ""},
-			{id: "sv", name: "Svenska", description: ""}
+			{ id: "en", name: "English", description: "" },
+			{ id: "sv", name: "Svenska", description: "" }
 		];
 
-		for(let language of languages) {
+		for (let language of languages) {
 			let checkbox = new Checkbox();
 			checkbox.checked = MusicTrainerState.language == language.id;
 			let menu = new MenuOption(language.name, language.description, checkbox);
@@ -69,12 +69,12 @@ export class Settings extends AspectRatioControlContainer {
 		}
 
 		let instruments = [
-			{id: "notes", name: _("Notes"), description: _("Learn the notes names")},
-			{id: "piano", name: _("Piano"), description: _("Key placement")},
-			{id: "violin", name: _("Violin"), description: _("Where to push string")}
+			{ id: "notes", name: _("Notes"), description: _("Learn the notes names") },
+			{ id: "piano", name: _("Piano"), description: _("Key placement") },
+			{ id: "violin", name: _("Violin"), description: _("Where to push string") }
 		];
 
-		for(let instrument of instruments) {
+		for (let instrument of instruments) {
 			let checkbox = new Checkbox();
 			checkbox.checked = MusicTrainerState.instrument == instrument.id;
 			let menu = new MenuOption(instrument.name, instrument.description, checkbox);

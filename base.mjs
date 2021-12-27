@@ -11,7 +11,7 @@ export function color_ramp(from, to, count) {
 	const t = [parseInt(to.substring(1, 3), 16), parseInt(to.substring(3, 5), 16), parseInt(to.substring(5, 7), 16)];
 	const d = [(t[0] - f[0]) / count, (t[1] - f[1]) / count, (t[2] - f[2]) / count];
 	let r = [];
-	for(let x = 0; x < count; x++) {
+	for (let x = 0; x < count; x++) {
 		r.push("#" +
 			Math.abs(Math.trunc(f[0] + x * d[0])).toString(16).padStart(2, "0") +
 			Math.abs(Math.trunc(f[1] + x * d[1])).toString(16).padStart(2, "0") +
@@ -38,7 +38,7 @@ export class EventTarget {
 		}
 		var stack = this.listeners[type];
 		for (var i = 0, l = stack.length; i < l; i++) {
-			if (stack[i] === callback){
+			if (stack[i] === callback) {
 				stack.splice(i, 1);
 				return;
 			}
@@ -63,9 +63,9 @@ export class Gfx {
 		ctx.lineWidth = 1;
 		ctx.fillStyle = fill_style;
 		if (typeof radius === "number") {
-			radius = {tl: radius, tr: radius, br: radius, bl: radius};
+			radius = { tl: radius, tr: radius, br: radius, bl: radius };
 		} else {
-			var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
+			var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
 			for (var side in defaultRadius) {
 				radius[side] = radius[side] || defaultRadius[side];
 			}
@@ -105,18 +105,18 @@ export class Widget extends EventTarget {
 	}
 
 	draw(ctx) {
-		if(this.background_fillStyle != null) {
+		if (this.background_fillStyle != null) {
 			ctx.fillStyle = this.background_fillStyle;
 			ctx.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.w, this.rectangle.h);
 		}
-		if(this.border) {
+		if (this.border) {
 			let rectangle = this.margin.getRectangle(this.rectangle);
 			Gfx.round_rect(ctx, this.border_fillStyle, this.content_fillStyle, rectangle, this.border_radius, true);
 		}
 	}
 
 	getRoot() {
-		if(this.parent == null) {
+		if (this.parent == null) {
 			return this;
 		}
 		return this.parent.getRoot();
@@ -140,11 +140,11 @@ export class Widget extends EventTarget {
 		this.rectangle.y = y;
 	}
 
-	update(/* delta */) {}
+	update(/* delta */) { }
 
 	on_click(x, y) {
 		let handled = false;
-		if(this.visible == true && this.rectangle.contains(x, y)) {
+		if (this.visible == true && this.rectangle.contains(x, y)) {
 			handled = this.dispatchEvent("click", null);
 		}
 		return handled;
@@ -159,14 +159,14 @@ export class SingleControlContainer extends Widget {
 
 	draw(ctx) {
 		super.draw(ctx);
-		if(this.child && this.child.visible) {
+		if (this.child && this.child.visible) {
 			this.child.draw(ctx);
 		}
 	}
 
 	resize(width, height) {
 		super.resize(width, height);
-		if(this.child) {
+		if (this.child) {
 			this.child.resize(width, height);
 		}
 	}
@@ -178,14 +178,14 @@ export class SingleControlContainer extends Widget {
 	}
 
 	on_click(x, y) {
-		if(this.child) {
+		if (this.child) {
 			return this.child.on_click(x, y);
 		}
 		return false;
 	}
 
 	update(delta) {
-		if(this.child) {
+		if (this.child) {
 			this.child.update(delta);
 		}
 	}
@@ -207,7 +207,7 @@ export class Root extends SingleControlContainer {
 export class AspectRatioControlContainer extends SingleControlContainer {
 	/*
 	ratio = positive ratio means that the containing control will be
-		    higher than wider. A ratio of 1 means that width is equal
+			higher than wider. A ratio of 1 means that width is equal
 			to the height.
 	*/
 	constructor(ratio) {
@@ -217,8 +217,8 @@ export class AspectRatioControlContainer extends SingleControlContainer {
 
 	resize(width, height) {
 		super.resize(width, height);
-		if(this.child) {
-			if(width * this.ratio <= height) {
+		if (this.child) {
+			if (width * this.ratio <= height) {
 				this.child.rectangle.x = 0;
 				this.child.rectangle.y = 0;
 				this.child.resize(width, (width * this.ratio) | 0);
@@ -251,7 +251,7 @@ export class Container extends Widget {
 	draw(ctx) {
 		super.draw(ctx);
 		for (const widget of this.children) {
-			if(widget.visible == false) {
+			if (widget.visible == false) {
 				continue;
 			}
 			widget.draw(ctx);
@@ -268,7 +268,7 @@ export class Container extends Widget {
 		let handled = false;
 		for (const widget of this.children) {
 			handled = widget.on_click(x, y);
-			if(handled) {
+			if (handled) {
 				return handled;
 			}
 		}
@@ -292,28 +292,28 @@ export class StackContainer extends Container {
 
 		let rectangle = this.margin.getRectangle(this.rectangle);
 
-		if(this.direction == "down") {
+		if (this.direction == "down") {
 			let y = rectangle.y;
 
-			for(let widget of this.children) {
+			for (let widget of this.children) {
 				widget.rectangle.x = rectangle.x;
 				widget.rectangle.y = y;
 				widget.resize(rectangle.w, (rectangle.h * widget.stackAmount) | 0);
 
 				y += widget.rectangle.h;
 			}
-		} else if(this.direction == "right") {
+		} else if (this.direction == "right") {
 			let x = rectangle.x;
 
-			for(let widget of this.children) {
+			for (let widget of this.children) {
 				widget.rectangle.x = x;
 				widget.rectangle.y = rectangle.y;
 				widget.resize((rectangle.w * widget.stackAmount) | 0, rectangle.h);
 
 				x += widget.rectangle.w;
 			}
-		} else if(this.direction == "none") {
-			for(let widget of this.children) {
+		} else if (this.direction == "none") {
+			for (let widget of this.children) {
 				widget.rectangle.x = rectangle.x;
 				widget.rectangle.y = rectangle.y;
 				widget.resize(rectangle.w, rectangle.h);
@@ -357,7 +357,7 @@ export class Rectangle {
 
 	contains(x, y) {
 		return this.x <= x && x <= this.x + this.w &&
-               this.y <= y && y <= this.y + this.h;
+			this.y <= y && y <= this.y + this.h;
 	}
 }
 
@@ -375,25 +375,25 @@ export class Label extends Widget {
 		super.draw(ctx);
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		ctx.lineWidth = 1;
-		if(this.font == null) {
+		if (this.font == null) {
 			ctx.font = rectangle.h + "px Arial";
-		} else  {
+		} else {
 			ctx.font = this.font;
 		}
 		ctx.textAlign = this.textAlign;
 		ctx.textBaseline = this.textBaseline;
 		ctx.fillStyle = this.text_fillStyle;
 		let x = rectangle.x;
-		if(this.textAlign == "center") {
+		if (this.textAlign == "center") {
 			x = (rectangle.x + rectangle.w / 2) | 0;
-		} else if(this.textAlign == "right") {
+		} else if (this.textAlign == "right") {
 			x = rectangle.x + rectangle.w;
 		}
 
 		let y = this.rectangle.y;
-		if(this.textBaseline == "middle") {
+		if (this.textBaseline == "middle") {
 			y = (rectangle.y + rectangle.h / 2) | 0;
-		} else if(this.textBaseline == "bottom") {
+		} else if (this.textBaseline == "bottom") {
 			y = rectangle.y + rectangle.h;
 		}
 
@@ -414,9 +414,9 @@ export class Button extends Widget {
 		let rectangle = this.margin.getRectangle(this.rectangle);
 		const padding = 0.3;
 
-		if(this.font == null) {
+		if (this.font == null) {
 			ctx.font = ((rectangle.h - padding * rectangle.h) | 0) + "px Arial";
-		} else  {
+		} else {
 			ctx.font = this.font;
 		}
 		ctx.textAlign = "center";
@@ -462,7 +462,7 @@ export class MenuOption extends StackContainer {
 		super("none");
 
 		this.border = true;
-		this.border_radius = {tl: 0, tr: 0, bl: 10, br: 0};
+		this.border_radius = { tl: 0, tr: 0, bl: 10, br: 0 };
 
 		image.margin.left = 20;
 		image.margin.right = 20;

@@ -17,7 +17,7 @@ import {
 
 export class Notes extends AspectRatioControlContainer {
 	constructor(scale) {
-    	super(2);
+		super(2);
 
 		this.background_fillStyle = "black";
 
@@ -34,13 +34,13 @@ export class Notes extends AspectRatioControlContainer {
 		this.level_label.content_text_color = "#ffffff";
 		this.stack.appendChild(this.level_label, 0.1);
 
-        this.staff = new Staff();
+		this.staff = new Staff();
 		this.staff.scale = scale;
 		this.staff.margin.setMargin(0);
 		this.staff.background_fillStyle = "#ffffff"
 		this.stack.appendChild(this.staff, 0.8);
 
-        let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
+		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = "black";
 		menu.content_fillStyle = "black";
 		menu.border_fillStyle = "black";
@@ -50,18 +50,18 @@ export class Notes extends AspectRatioControlContainer {
 		});
 		this.stack.appendChild(menu, 0.1);
 
-		if(navigator.requestMIDIAccess) {
+		if (navigator.requestMIDIAccess) {
 			navigator.requestMIDIAccess().then((midi_access) => {
-				for(let input of midi_access.inputs.values()) {
-                    this.midi.connected = true;
+				for (let input of midi_access.inputs.values()) {
+					this.midi.connected = true;
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
 			});
 		}
-    }
+	}
 
 	feedback_note_add(note) {
-		if(Array.isArray(note)) {
+		if (Array.isArray(note)) {
 			this.staff.feedback_notes.push(note[0]);
 		} else {
 			this.staff.feedback_notes.push(note);
@@ -69,8 +69,8 @@ export class Notes extends AspectRatioControlContainer {
 	}
 
 	feedback_note_delete(note) {
-		if(Array.isArray(note)) {
-			for(let n of note) {
+		if (Array.isArray(note)) {
+			for (let n of note) {
 				this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != n);
 			}
 		}
@@ -85,22 +85,22 @@ export class Notes extends AspectRatioControlContainer {
 		let velocity = (message.data.length > 2) ? message.data[2] : 0;
 
 		switch (command) {
-		case MidiConstants.CHANNEL1_NOTE_ON:
-			if(note in MidiPianoNotes) {
-				let n = MidiPianoNotes[note];
-				if (velocity > 0) {
-					this.feedback_note_add(n);
-				} else {
+			case MidiConstants.CHANNEL1_NOTE_ON:
+				if (note in MidiPianoNotes) {
+					let n = MidiPianoNotes[note];
+					if (velocity > 0) {
+						this.feedback_note_add(n);
+					} else {
+						this.feedback_note_delete(n);
+					}
+				}
+				break;
+			case MidiConstants.CHANNEL1_NOTE_OFF:
+				if (note in MidiPianoNotes) {
+					let n = MidiPianoNotes[note];
 					this.feedback_note_delete(n);
 				}
-			}
-			break;
-		case MidiConstants.CHANNEL1_NOTE_OFF:
-			if(note in MidiPianoNotes) {
-				let n = MidiPianoNotes[note];
-				this.feedback_note_delete(n);
-			}
-			break;
+				break;
 		}
 	}
 }

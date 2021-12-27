@@ -34,8 +34,8 @@ export class SongsMenu extends AspectRatioControlContainer {
 
 		let index = 1;
 
-		for(let song of Songs) {
-		    let menu = new MenuOption(song.name, song.author, new Label(""));
+		for (let song of Songs) {
+			let menu = new MenuOption(song.name, song.author, new Label(""));
 			menu.background_fillStyle = colors[index + 1];
 			menu.content_fillStyle = colors[index];
 			menu.border_fillStyle = colors[index];
@@ -45,7 +45,7 @@ export class SongsMenu extends AspectRatioControlContainer {
 			});
 			this.stack.appendChild(menu, 0.1);
 			index += 1;
-        }
+		}
 
 		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = colors[index + 1];
@@ -56,5 +56,5 @@ export class SongsMenu extends AspectRatioControlContainer {
 			this.getRoot().setChild(this.back);
 		});
 		this.stack.appendChild(menu, 0.14);
-    }
+	}
 }

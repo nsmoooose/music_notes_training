@@ -78,7 +78,7 @@ export class Staff extends Widget {
 		ctx.ellipse(rectangle.x + center + offset, y, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
-		if(note.length == 3) {
+		if (note.length == 3) {
 			ctx.fillStyle = ctx.strokeStyle;
 			this._draw_key(ctx, note, rectangle.x + center - radius_x * 2 + offset, y);
 		}
@@ -148,23 +148,23 @@ export class Staff extends Widget {
 	}
 
 	_draw_key(ctx, note, x, y) {
-		if(note[2] == "♯") {
+		if (note[2] == "♯") {
 			this._draw_sharp(ctx, x, y);
-		} else if(note[2] == "♭") {
+		} else if (note[2] == "♭") {
 			this._draw_flat(ctx, x, y);
 		}
 	}
 
 	_draw_key_signatures(ctx, rectangle) {
 		let x = rectangle.x + this.line_space * 5;
-		for(let note of this.scale.treble_notes) {
+		for (let note of this.scale.treble_notes) {
 			const y = this._calc_note_y(rectangle, note);
 			this._draw_key(ctx, note, x, y);
 			x += this.line_space * 0.7;
 		}
 
 		x = rectangle.x + this.line_space * 5;
-		for(let note of this.scale.bass_notes) {
+		for (let note of this.scale.bass_notes) {
 			const y = this._calc_note_y(rectangle, note);
 			this._draw_key(ctx, note, x, y);
 			x += this.line_space * 0.7;
@@ -195,17 +195,17 @@ export class Staff extends Widget {
 		p.addPath(this.bass_clef, m1);
 		ctx.fill(p);
 
-		for(let i=0; i < 26; i++) {
+		for (let i = 0; i < 26; i++) {
 			let y = (rectangle.y + i * this.line_space) | 0;
-			if((i >= 0 && i <= 8) ||
-                i == 14 ||
-               (i >= 20 && i <= 25)) {
+			if ((i >= 0 && i <= 8) ||
+				i == 14 ||
+				(i >= 20 && i <= 25)) {
 				ctx.beginPath();
 				ctx.moveTo((rectangle.x + center - this.line_space * 1.5) | 0, y);
 				ctx.lineTo((rectangle.x + center + this.line_space * 1.5) | 0, y);
 				ctx.stroke();
-			} else if((i >= 9 && i <= 13) ||
-                      (i >= 15 && i <= 19)) {
+			} else if ((i >= 9 && i <= 13) ||
+				(i >= 15 && i <= 19)) {
 				ctx.beginPath();
 				ctx.moveTo(rectangle.x, y);
 				ctx.lineTo(rectangle.x + rectangle.w, y);
@@ -217,16 +217,16 @@ export class Staff extends Widget {
 
 		this._draw_key_signatures(ctx, rectangle);
 
-		for(let note of this.feedback_notes) {
+		for (let note of this.feedback_notes) {
 			let radius_x = this.line_space / 2 * 1.25;
 			let radius_y = this.line_space / 2;
 			this._draw_note(ctx, note, "#999999", radius_x, radius_y, 0);
 		}
 
 		let i = 0;
-		for(let j = 0; j < this.notes.length; j++) {
+		for (let j = 0; j < this.notes.length; j++) {
 			let note = this.notes[j];
-			if(j == 0) {
+			if (j == 0) {
 				let color = "#" +
 					Math.trunc(this.note_color[0]).toString(16).padStart(2, "0") +
 					Math.trunc(this.note_color[1]).toString(16).padStart(2, "0") +

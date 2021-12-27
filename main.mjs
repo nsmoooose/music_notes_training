@@ -29,14 +29,14 @@ window.addEventListener("load", () => {
 	g_root = new Root();
 	g_root.setChild(new MainMenu());
 
-	if("serviceWorker" in navigator) {
+	if ("serviceWorker" in navigator) {
 		navigator
 			.serviceWorker.register("service_worker.js")
 			.then(() => console.log("service worker registered"))
 			.catch(err => console.log("service worker not registered", err));
 	}
 
-	if("wakeLock" in navigator) {
+	if ("wakeLock" in navigator) {
 		navigator.wakeLock.request("screen").then(v => {
 			lock = v;
 			console.log("wakeLock aquired");
@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
 		const rect = canvas.getBoundingClientRect();
 		const x = event.clientX - rect.left;
 		const y = event.clientY - rect.top;
-		if(g_root.rectangle.contains(x, y)) {
+		if (g_root.rectangle.contains(x, y)) {
 			g_root.on_click(x, y);
 		}
 	});

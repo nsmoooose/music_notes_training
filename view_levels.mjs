@@ -22,7 +22,7 @@ export class ExcerciseLevels extends MenuView {
 
 		this.calc_menuitem_size(excercise.levels.length + 1);
 
-		for(let level of excercise.levels) {
+		for (let level of excercise.levels) {
 			let results = level.id in MusicTrainerState.results ? MusicTrainerState.results[level.id].answers : 0;
 			let pass = level.id in MusicTrainerState.results ? MusicTrainerState.results[level.id].pass : 0;
 			this.add_view_menuitem(level.name, excercise.description, new LevelProgress(results, pass), () => {

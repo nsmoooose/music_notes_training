@@ -14,7 +14,7 @@ import { MainMenu } from "./view_main_menu.mjs";
 import {
 	ImageBack,
 	MidiSupported
- } from "./images.mjs";
+} from "./images.mjs";
 import {
 	MidiConstants,
 	MidiPianoNotes
@@ -55,11 +55,11 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.staff.background_fillStyle = "#ffffff"
 		this.stack.appendChild(this.staff, 0.4);
 
-		switch(MusicTrainerState.instrument) {
-		case "piano": this.instrument = new InstrumentPiano(); break;
-		case "notes": this.instrument = new InstrumentNotes(); break;
-		case "violin": this.instrument = new InstrumentViolin(); break;
-		default: this.instrument = new InstrumentPiano(); break;
+		switch (MusicTrainerState.instrument) {
+			case "piano": this.instrument = new InstrumentPiano(); break;
+			case "notes": this.instrument = new InstrumentNotes(); break;
+			case "violin": this.instrument = new InstrumentViolin(); break;
+			default: this.instrument = new InstrumentPiano(); break;
 		}
 		this.instrument.margin.setMargin(margin);
 		this.instrument.background_fillStyle = "#ffffff"
@@ -82,9 +82,9 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.staff.scale = this.level.scale;
 		this.new_question();
 
-		if(navigator.requestMIDIAccess) {
+		if (navigator.requestMIDIAccess) {
 			navigator.requestMIDIAccess().then((midi_access) => {
-				for(let input of midi_access.inputs.values()) {
+				for (let input of midi_access.inputs.values()) {
 					this.midi.connected = true;
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
@@ -93,7 +93,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	feedback_note_add(note) {
-		if(Array.isArray(note)) {
+		if (Array.isArray(note)) {
 			this.staff.feedback_notes.push(note[0]);
 		} else {
 			this.staff.feedback_notes.push(note);
@@ -101,8 +101,8 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	feedback_note_delete(note) {
-		if(Array.isArray(note)) {
-			for(let n of note) {
+		if (Array.isArray(note)) {
+			for (let n of note) {
 				this.staff.feedback_notes = this.staff.feedback_notes.filter(v => v != n);
 			}
 		}
@@ -117,38 +117,38 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		let velocity = (message.data.length > 2) ? message.data[2] : 0;
 
 		switch (command) {
-		case MidiConstants.CHANNEL1_NOTE_ON:
-			if(note in MidiPianoNotes) {
-				let n = MidiPianoNotes[note];
-				if (velocity > 0) {
-					this.feedback_note_add(n);
-					this.process_answer(n);
-				} else {
+			case MidiConstants.CHANNEL1_NOTE_ON:
+				if (note in MidiPianoNotes) {
+					let n = MidiPianoNotes[note];
+					if (velocity > 0) {
+						this.feedback_note_add(n);
+						this.process_answer(n);
+					} else {
+						this.feedback_note_delete(n);
+					}
+				}
+				break;
+			case MidiConstants.CHANNEL1_NOTE_OFF:
+				if (note in MidiPianoNotes) {
+					let n = MidiPianoNotes[note];
 					this.feedback_note_delete(n);
 				}
-			}
-			break;
-		case MidiConstants.CHANNEL1_NOTE_OFF:
-			if(note in MidiPianoNotes) {
-				let n = MidiPianoNotes[note];
-				this.feedback_note_delete(n);
-			}
-			break;
+				break;
 		}
 	}
 
 	on_click(x, y) {
 		let handled = super.on_click(x, y);
-		if(handled) {
+		if (handled) {
 			return handled;
 		}
 
-		if(this.questions.length <= 0) {
+		if (this.questions.length <= 0) {
 			return true;
 		}
 
 		const answer = this.instrument.click(x, y);
-		if(answer == null) {
+		if (answer == null) {
 			return true;
 		}
 
@@ -159,13 +159,13 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		let correct_answer = null;
 		let current_question = this.questions[0];
 
-		if(Array.isArray(answer)) {
-			if(answer[0].length >= 1 && is_int(parseInt(answer[0][1], 10))) {
+		if (Array.isArray(answer)) {
+			if (answer[0].length >= 1 && is_int(parseInt(answer[0][1], 10))) {
 				correct_answer = current_question.note;
 			} else {
 				correct_answer = note_without_octave(current_question.note);
 			}
-		} else if(answer.length >= 1 && is_int(parseInt(answer[1], 10))) {
+		} else if (answer.length >= 1 && is_int(parseInt(answer[1], 10))) {
 			correct_answer = current_question.note;
 		} else {
 			correct_answer = note_without_octave(current_question.note);
@@ -173,7 +173,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 
 		this.questions.shift();
 
-		if(answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
+		if (answer == correct_answer || (Array.isArray(answer) && answer.indexOf(correct_answer) != -1)) {
 			MusicTrainerState.add_answer(this.level.id, true);
 			this.new_question();
 			this.staff.extra_note_size = 50;
@@ -190,10 +190,10 @@ export class MusicTrainer extends AspectRatioControlContainer {
 	}
 
 	new_question() {
-		if(this.level.questions.length == 0) {
+		if (this.level.questions.length == 0) {
 			return;
 		}
-		while(this.questions.length < 5) {
+		while (this.questions.length < 5) {
 			this.questions.push(this.level.questions[Math.floor(Math.random() * this.level.questions.length)]);
 		}
 		this.staff.notes = Array.from(this.questions, element => element.note);

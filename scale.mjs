@@ -31,7 +31,7 @@ function generate_scales() {
     ];
 
     let result = {};
-    for(let scale of scales) {
+    for (let scale of scales) {
         result[scale.id] = scale;
     }
     return result;

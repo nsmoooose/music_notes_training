@@ -24,12 +24,12 @@ function generate_midi_notes() {
 
 	/* A0 = 21 */
 	const start_offset = 21 - answers.indexOf("A");
-	for(let i = 21; i <= 108; i++ ) {
+	for (let i = 21; i <= 108; i++) {
 		let octave = Math.floor((i - start_offset) / answers.length);
 		let note = (i - start_offset) % answers.length;
 
 		let x = answers[note];
-		if(Array.isArray(answers[note])) {
+		if (Array.isArray(answers[note])) {
 			result[i] = answers[note].map(x => x[0] + octave + x[1]);
 		} else {
 			result[i] = answers[note] + octave;
