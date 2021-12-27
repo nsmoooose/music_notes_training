@@ -108,5 +108,61 @@ let translations = {
 	"Songs": {
 		"en": "Songs",
 		"sv": "Låtar"
-	}
+	},
+	"Select scale": {
+		"en": "Select scale",
+		"sv": "Durskala"
+	},
+	"C major": {
+		"en": "C major",
+		"sv": "C dur"
+	},
+	"G major": {
+		"en": "G major",
+		"sv": "G dur"
+	},
+	"D major": {
+		"en": "D major",
+		"sv": "D dur"
+	},
+	"A major": {
+		"en": "A major",
+		"sv": "A dur"
+	},
+	"E major": {
+		"en": "E major",
+		"sv": "E dur"
+	},
+	"B major": {
+		"en": "B major",
+		"sv": "B dur"
+	},
+	"F♯ major": {
+		"en": "F♯ major",
+		"sv": "F♯ dur"
+	},
+	"F major": {
+		"en": "F major",
+		"sv": "F dur"
+	},
+	"B♭ major": {
+		"en": "B♭ major",
+		"sv": "B♭ dur"
+	},
+	"E♭ major": {
+		"en": "E♭ major",
+		"sv": "E♭ dur"
+	},
+	"A♭ major": {
+		"en": "A♭ major",
+		"sv": "A♭ dur"
+	},
+	"D♭ major": {
+		"en": "D♭ major",
+		"sv": "D♭ dur"
+	},
+	"Gb major": {
+		"en": "G♭ major",
+		"sv": "G♭ dur"
+	},
 }

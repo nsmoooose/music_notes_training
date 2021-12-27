@@ -16,7 +16,7 @@ import {
 } from "./midi.mjs";
 
 export class Notes extends AspectRatioControlContainer {
-	constructor() {
+	constructor(scale) {
     	super(2);
 
 		this.background_fillStyle = "black";
@@ -35,6 +35,7 @@ export class Notes extends AspectRatioControlContainer {
 		this.stack.appendChild(this.level_label, 0.1);
 
         this.staff = new Staff();
+		this.staff.scale = scale;
 		this.staff.margin.setMargin(0);
 		this.staff.background_fillStyle = "#ffffff"
 		this.stack.appendChild(this.staff, 0.8);
