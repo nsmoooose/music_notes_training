@@ -21,6 +21,7 @@ const assets = [
 	"/view_levels.mjs",
 	"/view_main_menu.mjs",
 	"/view_notes.mjs",
+	"/view_scale.mjs",
 	"/view_settings.mjs",
 	"/view_songs.mjs",
 	"/view_training.mjs"
