@@ -40,6 +40,12 @@ window.addEventListener("load", () => {
 		navigator.wakeLock.request("screen").then(v => {
 			lock = v;
 			console.log("wakeLock aquired");
+		}).catch((err) => {
+			/* This is a common error when running page from inside Visual Studio Code:
+			 DOMException: Failed to execute 'request' on 'WakeLock': Access to
+			 Screen Wake Lock features is disallowed by permissions policy
+			 at http://127.0.0.1:3000/main.mjs:40:22 */
+			console.log("service worker failed to aquire wakeLock");
 		});
 	}
 
