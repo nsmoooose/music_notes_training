@@ -80,6 +80,7 @@ export class MusicTrainer extends AspectRatioControlContainer {
 		this.level_label.label_title.text = this.level.name;
 		this.level_label.label_help.text = this.excercise.description;
 		this.staff.scale = this.level.scale;
+		this.instrument.hints = this.level.hints;
 		this.new_question();
 
 		if (navigator.requestMIDIAccess) {

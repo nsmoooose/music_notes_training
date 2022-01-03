@@ -12,6 +12,7 @@ export class InstrumentNotes extends Widget {
 		super();
 		this.w = 5;
 		this.h = 4;
+		this.hints = 0;
 	}
 
 	calc_rects() {
@@ -36,11 +37,10 @@ export class InstrumentNotes extends Widget {
 		];
 
 
-		let level = MusicTrainerState.level - 1;
 		let notes = [];
 		for (let note of all_notes) {
 			if (note[1] != 0) {
-				if (level.hints & note[1]) {
+				if (this.hints & note[1]) {
 					notes.push(note[0]);
 				}
 			} else {
@@ -84,6 +84,7 @@ export class InstrumentNotes extends Widget {
 	}
 
 	draw(ctx) {
+		super.draw(ctx);
 		ctx.font = Math.min(
 			Math.abs(this.rectangle.h / this.h * 0.6),
 			Math.abs(this.rectangle.w / this.w * 0.6)) + "px Arial";
