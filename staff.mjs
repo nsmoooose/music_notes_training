@@ -78,10 +78,48 @@ export class Staff extends Widget {
 		ctx.ellipse(rectangle.x + center + offset, y, radius_x, radius_y, rotation, 0, Math.PI * 2);
 		ctx.stroke();
 
+		if (this.scale.in_scale(note)) {
+			return;
+		}
+
+		const x = rectangle.x + center - radius_x * 2 + offset;
 		if (note.length == 3) {
 			ctx.fillStyle = ctx.strokeStyle;
-			this._draw_key(ctx, note, rectangle.x + center - radius_x * 2 + offset, y);
+			this._draw_key(ctx, note, x, y);
+		} else {
+			this._draw_reset(ctx, x, y);
 		}
+	}
+
+	_draw_reset(ctx, x, y) {
+		const character_half_width = this.line_space / 5;
+		const character_half_height = this.line_space / 3;
+		const y_extra = 7;
+		const tilt = 3;
+
+		ctx.lineWidth = this.line_width;
+		ctx.strokeStyle = "#000000";
+		ctx.fillStyle = "#000000";
+
+		ctx.beginPath();
+		ctx.lineWidth = 3;
+		ctx.moveTo(x - character_half_width, y - character_half_height + tilt);
+		ctx.lineTo(x + character_half_width, y - character_half_height - tilt);
+		ctx.stroke();
+
+		ctx.moveTo(x - character_half_width, y + character_half_height + tilt);
+		ctx.lineTo(x + character_half_width, y + character_half_height - tilt);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.moveTo((x + character_half_width) | 0, (y - character_half_height - tilt) | 0);
+		ctx.lineTo((x + character_half_width) | 0, (y + character_half_height + y_extra) | 0);
+		ctx.stroke();
+
+		ctx.moveTo((x - character_half_width) | 0, (y - character_half_height - y_extra) | 0);
+		ctx.lineTo((x - character_half_width) | 0, (y + character_half_height + tilt) | 0);
+		ctx.stroke();
 	}
 
 	_draw_flat(ctx, x, y) {
