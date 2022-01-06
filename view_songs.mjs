@@ -8,6 +8,7 @@ import {
 import { ImageBack } from "./images.mjs";
 import { Songs } from "./song.mjs";
 import { _ } from "./translation.mjs";
+import { SongTraining } from "./view_song_training.mjs";
 
 export class SongsMenu extends AspectRatioControlContainer {
 	constructor(back) {
@@ -41,7 +42,7 @@ export class SongsMenu extends AspectRatioControlContainer {
 			menu.border_fillStyle = colors[index];
 			menu.content_text_color = text_color;
 			menu.addEventListener("click", () => {
-				// this.getRoot().setChild(new ExcerciseLevels(this, excercise));
+				this.getRoot().setChild(new SongTraining(song));
 			});
 			this.stack.appendChild(menu, 0.1);
 			index += 1;
