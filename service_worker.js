@@ -24,6 +24,7 @@ const assets = [
 	"/view_scale.mjs",
 	"/view_settings.mjs",
 	"/view_songs.mjs",
+	"/view_song_training.mjs",
 	"/view_training.mjs"
 ];
 
