@@ -109,10 +109,10 @@ export class SongTraining extends AspectRatioControlContainer {
 				if (note in MidiPianoNotes) {
 					let n = MidiPianoNotes[note];
 					if (velocity > 0) {
-						this.nextnote();
 						this.feedback_note_add(n);
 					} else {
 						this.feedback_note_delete(n);
+						this.nextnote();
 					}
 				}
 				break;
@@ -120,6 +120,7 @@ export class SongTraining extends AspectRatioControlContainer {
 				if (note in MidiPianoNotes) {
 					let n = MidiPianoNotes[note];
 					this.feedback_note_delete(n);
+					this.nextnote();
 				}
 				break;
 		}
