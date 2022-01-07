@@ -55,6 +55,10 @@ export class EventTarget {
 		}
 		return true;
 	}
+
+	dispose() {
+		this.listeners = {};
+	}
 }
 
 export class Gfx {
@@ -172,6 +176,9 @@ export class SingleControlContainer extends Widget {
 	}
 
 	setChild(child) {
+		if (this.child) {
+			this.child.dispose();
+		}
 		this.child = child;
 		child.parent = this;
 		child.resize(this.rectangle.w, this.rectangle.h);
@@ -246,6 +253,7 @@ export class Container extends Widget {
 		let i = this.children.indexOf(child);
 		this.children.splice(i, 1);
 		child.parent = null;
+		child.dispose();
 	}
 
 	draw(ctx) {
