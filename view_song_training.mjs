@@ -40,7 +40,7 @@ export class SongTraining extends AspectRatioControlContainer {
 		this.staff.background_fillStyle = "#ffffff"
 		this.stack.appendChild(this.staff, 0.8);
 
-		this.staff.notes = song.notes;
+		this.staff.notes = song.notes.slice();
 
 		let menu = new MenuOption(_("Back"), _("To the main menu"), new ImageBack());
 		menu.background_fillStyle = "black";
@@ -59,6 +59,24 @@ export class SongTraining extends AspectRatioControlContainer {
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
 			});
+		}
+
+		document.addEventListener("keydown", this.keydown.bind(this));
+	}
+
+	dispose() {
+		super.dispose();
+		document.removeEventListener("keydown", this.keydown.bind(this));
+	}
+
+	nextnote() {
+		this.staff.notes.splice(0, 1);
+	}
+
+	keydown(event) {
+		if(event.key == " ") {
+			this.nextnote();
+			return;
 		}
 	}
 
@@ -91,6 +109,7 @@ export class SongTraining extends AspectRatioControlContainer {
 				if (note in MidiPianoNotes) {
 					let n = MidiPianoNotes[note];
 					if (velocity > 0) {
+						this.nextnote();
 						this.feedback_note_add(n);
 					} else {
 						this.feedback_note_delete(n);
