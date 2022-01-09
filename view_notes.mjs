@@ -56,7 +56,7 @@ export class Notes extends AspectRatioControlContainer {
 					this.midi.connected = true;
 					input.onmidimessage = this.on_midimessage.bind(this);
 				}
-			});
+			}).catch(err => console.log("midi access failed"));
 		}
 	}
 
