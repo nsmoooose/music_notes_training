@@ -19,6 +19,8 @@ export class SongTraining extends AspectRatioControlContainer {
 	constructor(song) {
 		super(0.5);
 
+		this.song = song;
+
 		this.background_fillStyle = "black";
 
 		this.stack = new StackContainer("down");
@@ -71,10 +73,13 @@ export class SongTraining extends AspectRatioControlContainer {
 
 	nextnote() {
 		this.staff.notes.splice(0, 1);
+		if (this.staff.notes.length == 0) {
+			this.staff.notes = this.song.notes.slice();
+		}
 	}
 
 	keydown(event) {
-		if(event.key == " ") {
+		if (event.key == " ") {
 			this.nextnote();
 			return;
 		}
